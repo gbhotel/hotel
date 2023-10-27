@@ -1,0 +1,52 @@
+name: Laravel Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  laravel_tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: db
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: pass
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Create .env file
+        run: cp .env.example .env
+        working-directory: ${{ github.workspace }}
+
+      - name: Generate application key
+        run: php artisan key:generate
+        working-directory: ${{ github.workspace }}
+
+      - name: Run Migrations
+        run: php artisan migrate --seed
+        working-directory: ${{ github.workspace }}
+
+      - name: Run Tests
+        run: php artisan test
+        working-directory: ${{ github.workspace }}
