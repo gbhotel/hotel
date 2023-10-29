@@ -18,6 +18,7 @@ return new class extends Migration
                   ->constrained('categories')->cascadeOnDelete();
             $table->foreignId('id_status')
                   ->constrained('statuses')->cascadeOnDelete();
+            $table ->json('comfort');
         });
     }
 
