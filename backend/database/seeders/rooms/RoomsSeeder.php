@@ -44,7 +44,7 @@ class RoomsSeeder extends Seeder
                 'roomsNumber' => fake()->numberBetween(1,3)
             ];
 
-            if($comfort['toilet'] == 'in the room' || $comfort['shower'] == 'in the room' ) {
+            if($comfort['toilet'] == 'on the floor' || $comfort['shower'] == 'on the floor' ) {
                 $id_status = 1;
             } elseif ($comfort['roomsNumber'] == 2) {
                 $id_status = 3;
