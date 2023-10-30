@@ -19,14 +19,18 @@ class StatusSeeder extends Seeder
             ],
             2 => [
                 'id' => 2,
-                'status' => 'occupied',
+                'status' => 'booked',
             ],
             3 => [
                 'id' => 3,
-                'status' => 'cleaning',
+                'status' => 'occupied',
             ],
             4=> [
                 'id' => 4,
+                'status' => 'cleaning',
+            ],
+            5=> [
+                'id' => 5,
                 'status' => 'prohibited',
             ]
 
