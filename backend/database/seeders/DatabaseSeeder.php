@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\people\GuestsSeeder;
+use Database\Seeders\people\RolesSeeder;
+use Database\Seeders\people\StaffSeeder;
+use Database\Seeders\rooms\BookingSeeder;
 use Database\Seeders\rooms\CategoriesSeeder;
 use Database\Seeders\rooms\RoomsSeeder;
 use Database\Seeders\rooms\StatusSeeder;
@@ -18,7 +22,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategoriesSeeder::class,
             StatusSeeder::class,
-            RoomsSeeder::class
+            RoomsSeeder::class,
+            GuestsSeeder::class,
+            RolesSeeder::class,
+            StaffSeeder::class,
+            BookingSeeder::class
         ]);
 
         // \App\Models\User::factory(10)->create();
