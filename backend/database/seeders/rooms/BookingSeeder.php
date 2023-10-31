@@ -26,7 +26,7 @@ class BookingSeeder extends Seeder
             $bookings[] = [
                 'id_guest' => fake()->numberBetween(1, 10),
                 'id_room' =>fake()->numberBetween(1,10),
-                'id_admin' => fake()->numberBetween(1,10),
+                'id_admin' => fake()->numberBetween(1,2),
                 'check_in' => fake()->date(),
                 'check_out' => fake()->date(),
             ];
