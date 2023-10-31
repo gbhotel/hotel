@@ -3,10 +3,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        @vite(['resources/sass/app.scss', 'resources/js/index.jsx'])
 
-        <title>Hotel</title>
+        <title>The Hotel</title>
     </head>
     <body>
-        <h1>Welcome, Guest!</h1>
-        </body>
+        <div id="root"></div>
+    </body>
 </html>
