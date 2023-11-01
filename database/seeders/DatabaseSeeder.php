@@ -8,6 +8,7 @@ use Database\Seeders\people\RolesSeeder;
 use Database\Seeders\people\StaffSeeder;
 use Database\Seeders\rooms\BookingSeeder;
 use Database\Seeders\rooms\CategoriesSeeder;
+use Database\Seeders\rooms\CheckInSeeder;
 use Database\Seeders\rooms\RoomsSeeder;
 use Database\Seeders\rooms\StatusSeeder;
 use Illuminate\Database\Seeder;
@@ -26,7 +27,8 @@ class DatabaseSeeder extends Seeder
             GuestsSeeder::class,
             RolesSeeder::class,
             StaffSeeder::class,
-            BookingSeeder::class
+            BookingSeeder::class,
+            CheckInSeeder::class
         ]);
 
         // \App\Models\User::factory(10)->create();
