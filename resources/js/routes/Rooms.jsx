@@ -26,8 +26,8 @@ export default function Rooms() {
     return (
         <>
             <div className=" my-4 container row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {data.map((item)=>(
-                    <div className="col">
+                {data.map((item,index)=>(
+                    <div key={index} className="col">
                         <div className="card shadow-sm">
                             <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
                                  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
