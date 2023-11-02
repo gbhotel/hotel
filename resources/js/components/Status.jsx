@@ -5,7 +5,4 @@ export default function StatusBtn (props) {
     }else {
         return  <button type="button" className=" green-button btn btn-sm btn-outline-secondary">{props.status}</button>
     }
-
-
-
 }

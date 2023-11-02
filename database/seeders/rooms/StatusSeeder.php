@@ -15,23 +15,23 @@ class StatusSeeder extends Seeder
         return [
             1 => [
                 'id' => 1,
-                'status' => 'free',
+                'name' => 'free',
             ],
             2 => [
                 'id' => 2,
-                'status' => 'booked',
+                'name' => 'booked',
             ],
             3 => [
                 'id' => 3,
-                'status' => 'occupied',
+                'name' => 'occupied',
             ],
             4=> [
                 'id' => 4,
-                'status' => 'cleaning',
+                'name' => 'cleaning',
             ],
             5=> [
                 'id' => 5,
-                'status' => 'prohibited',
+                'name' => 'prohibited',
             ]
 
         ];
