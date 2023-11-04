@@ -27,8 +27,8 @@ class RoomsController extends Controller
         $checkIn = DB::table('rooms')
             ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
-            ->whereDate('booking.check_in', '<', $date)
-            ->whereDate('booking.check_out', '>', $date)
+            ->whereDate('booking.check_in', '<=', $date)
+            ->whereDate('booking.check_out', '>=', $date)
             ->where( 'check_in.id_booking', '>', 0)
             ->select('rooms.id', 'rooms.number')
             ->get();
@@ -40,8 +40,8 @@ class RoomsController extends Controller
         $booking = DB::table('rooms')
             ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
-            ->whereDate('booking.check_in', '<', $date)
-            ->whereDate('booking.check_out', '>', $date)
+            ->whereDate('booking.check_in', '<=', $date)
+            ->whereDate('booking.check_out', '>=', $date)
             ->whereNull( 'check_in.id_booking')
             ->select('rooms.id', 'rooms.number')
             ->get();
@@ -52,8 +52,8 @@ class RoomsController extends Controller
 
         $free = DB::table('rooms')
             ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
-            ->whereDate('booking.check_out', '<', $date)
-            ->orWhereDate('booking.check_in', '>', $date)
+            ->whereDate('booking.check_out', '<=', $date)
+            ->orWhereDate('booking.check_in', '>=', $date)
             ->orderBy('rooms.number')
             ->select('rooms.id', 'rooms.number')
             ->distinct('rooms.number')
