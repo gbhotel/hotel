@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rooms;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RoomsController extends Controller
@@ -64,6 +65,25 @@ class RoomsController extends Controller
         }
 
         $data = [...$free, ...$checkIn, ...$booking, ];
+
+        return response()->json($data);
+    }
+
+    public function getFreeRoomsPeriod(Request $request)
+    {
+        $dateIn = $request['dateIn'];
+        $dateOut = $request['dateOut'];
+
+        $data = DB::table('rooms')
+            ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
+            ->whereDate('booking.check_out', '<', $dateIn)
+            ->orWhereDate('booking.check_in', '>', $dateOut)
+            ->orderBy('rooms.number')
+            ->select('rooms.id', 'rooms.number')
+            ->distinct('rooms.number')
+            ->get();
+
+
 
         return response()->json($data);
     }
