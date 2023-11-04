@@ -1,10 +1,15 @@
 import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 export default function Staff() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('/api/admin/staff')
+        const abortController = new AbortController();
+
+        fetch('/api/admin/staff', {
+            signal: abortController.signal,
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.status}`);
@@ -18,19 +23,24 @@ export default function Staff() {
             .catch(error => {
                 console.error(error);
             });
-    }, [])
+
+        return () => {
+            abortController.abort();
+        }
+    }, []);
+
     return (
         <>
             <div
                 className="d-flex container justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 className="h2">Staff page</h1>
+                <h1 className="h2">Сотрудники</h1>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     {/*<div className="btn-group me-2">*/}
                     {/*    <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>*/}
                     {/*    <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>*/}
                     {/*</div>*/}
                     <button type="button" className="btn btn-sm btn-outline-secondary">
-                        Add Staff
+                        Принять на работу
                     </button>
                 </div>
             </div>
@@ -49,16 +59,17 @@ export default function Staff() {
                         <tbody>
             {
                 data.map((item,index) =>(
-                    <tr className="">
-                        <td>{item.first_name}</td>
-                        <td>{item.last_name}</td>
-                        <td>{item.phone}</td>
-                        <td>{item.email}</td>
-                        <td className=" col-8 d-flex justify-content-end btn-group me-2">
-                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                            <button type="button" className="btn btn-sm btn-outline-secondary">Delete</button>
-                        </td>
-                    </tr>
+
+                        <tr  key={index}>
+                                <td>{item.first_name}</td>
+                                <td>{item.last_name}</td>
+                                <td>{item.phone}</td>
+                                <td>{item.email}</td>
+                                <td >
+                                    <Link to={`/employee/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
+                                </td>
+                        </tr>
+
                 ))
             }
                         </tbody>
