@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name')->nullable();
             $table->string('phone');
+            $table->string('email');
             $table->string('passport')->nullable();
             $table->foreignId('position')
                     ->constrained('roles')
