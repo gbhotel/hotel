@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\admin\StaffController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomsController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +26,6 @@ Route::put('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('a
 Route::put('admin/room/cancel-book-room', [RoomController::class, 'cancelBookRoom'])->name('admin.room.cancel-book-room');
 Route::post('admin/room/check-in-room', [RoomController::class, 'checkInRoom'])->name('admin.room.check-in-room');
 Route::put('admin/room/eviction-from-room', [RoomController::class, 'evictionFromRoom'])->name('admin.eviction-from-room');
+
+
+Route::get('admin/staff', [StaffController::class, 'getStaff'])->name('admin.staff');
