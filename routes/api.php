@@ -29,3 +29,4 @@ Route::put('admin/room/eviction-from-room', [RoomController::class, 'evictionFro
 
 
 Route::get('admin/staff', [StaffController::class, 'getStaff'])->name('admin.staff');
+Route::get('admin/employee/{id}', [StaffController::class, 'getEmployee'])->name('admin.employee');

@@ -14,4 +14,13 @@ class StaffController extends Controller
 
        return response()->json($staff);
     }
+
+    public function getEmployee($id) {
+        $employee = DB::table('staff')
+                     ->join('roles', 'staff.position', '=','roles.id')
+                     ->where('staff.id', "=", $id)
+                     ->first();
+
+        return response()->json($employee);
+    }
 }
