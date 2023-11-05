@@ -19,7 +19,7 @@ class GuestsSeeder extends Seeder
 
     public function getGuests():array {
         $guests = [];
-        $quantity = 10;
+        $quantity = 12;
 
         for($i = 1; $i <= $quantity; $i ++) {
 

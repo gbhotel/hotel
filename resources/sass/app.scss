@@ -6,3 +6,25 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+.container {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.red-button {
+    background-color: #e1a2a2;
+    color: #fffdfd;
+    border: #e1a2a2;
+
+}
+
+.green-button {
+    background-color: #c0e1a2;
+    color: #fffdfd;
+    border: #c0e1a2;
+
+}
+.custom-h3-style {
+    margin-right: auto;
+}
