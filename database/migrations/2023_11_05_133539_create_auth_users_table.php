@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('check_in', function (Blueprint $table) {
+        Schema::create('auth_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_admin')
-                ->constrained('staff')
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->foreignId('role_id')
+                ->constrained('roles')
                 ->cascadeOnDelete();
-            $table->foreignId('id_booking')
-                ->constrained('booking')
-                ->cascadeOnDelete();
-            $table->timestamp('checkIn');
-            $table->dateTime('checkOut');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('check_in');
+        Schema::dropIfExists('auth_users');
     }
 };
