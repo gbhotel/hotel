@@ -25,6 +25,27 @@
     border: #c0e1a2;
 
 }
-.custom-h3-style {
+.mr_auto {
     margin-right: auto;
+}
+
+.no-outline-on-hover:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.h-37 {
+    height: 37.2px;
+}
+
+//input::placeholder {
+//    font-family: 'Times New Roman, serif', serif; /* Установите желаемый шрифт */
+//    font-size: 22px; /* Установите желаемый размер шрифта */
+//    color: black; /* Установите желаемый цвет шрифта */
+//}
+
+input {
+    font-family: 'Times New Roman, serif', serif; /* Установите желаемый шрифт */
+    font-size: 22px; /* Установите желаемый размер шрифта */
+    color: black; /* Установите желаемый цвет шрифта */
 }
