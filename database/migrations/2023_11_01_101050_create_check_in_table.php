@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('check_in', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_admin')
-                  ->constrained('staff')
-                  ->cascadeOnDelete();
+                ->constrained('staff')
+                ->cascadeOnDelete();
             $table->foreignId('id_booking')
-                  ->constrained('booking')
-                  ->cascadeOnDelete();
+                ->constrained('booking')
+                ->cascadeOnDelete();
             $table->timestamp('checkIn');
-            $table->timestamp('checkOut');
+            $table->dateTime('checkOut');
         });
     }
 
