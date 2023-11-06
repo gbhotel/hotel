@@ -12,19 +12,6 @@ class RoomsController extends Controller
     {
         $date = now()->toDateTimeString();
 
-        $rooms = Rooms::query()
-            ->with('status')
-            ->get(['id', 'number', 'id_status']);
-
-        $data = [];
-        foreach ($rooms as $room) {
-            $data[] = [
-                'id' => $room->id,
-                'number' => $room->number,
-                'status' => $room->status->name,
-            ];
-        }
-
         $checkIn = DB::table('rooms')
             ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')

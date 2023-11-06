@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,30 +25,40 @@ class RoomController extends Controller
 
     public function bookRoom(Request $request)
     {
-        //Нужно дорабртать базу данных, пока костыли
-        $data = $request->all();
+        //Получаем данные из формы "booking"
+        $dataGuest = $request->only(['first_name', 'last_name', 'phone', 'passport']);
+        $dataBooking = $request->only(['id_room', 'id_guest', 'id_admin', 'check_in', 'check_out']);
 
-        DB::table('rooms')
-            ->where('id', $data['id_room'])
-            ->update(['id_status' => 4]);
+        //Проверяем, занята ли комната на выбраные даты (возвращает true если занята, false если свободна)
+        $boolBooking = DB::table('booking')
+            ->join('rooms', 'booking.id_room', '=', 'rooms.id')
+            ->whereDate('booking.check_in',  '<', $dataBooking['check_out'])
+            ->whereDate('booking.check_out',  '>', $dataBooking['check_in'])
+            ->where('rooms.id', '=', $dataBooking['id_room'])
+            ->exists();
 
-        $data['book'] = 'ok';
+        //Если комната занята, возвращаем сообщение от ошибке
+        $errorBooking = ['booking' => 'error', 'message' => 'Выбранная комната занята на указанные даты'];
+        if($boolBooking){
+            return response()->json($errorBooking);
+        }
 
-        return response()->json($data);
-    }
+        try {
+            //Выполняем транзакцию
+            DB::transaction(function () use ($dataBooking, $dataGuest) {
+                DB::table('guests')->insert($dataGuest);
+                DB::table('booking')->insert($dataBooking);
+            });
+        }catch (Exception $e)
+        {
+            //если транзакция нарушена то сообщаем об ошибке
+            $err['booking'] = 'error';
+            $err['message'] = 'Error - ' . $e->getCode() . ' Ошибка выполнения транзакции по сохранению информации в базу данных';
 
-    public function cancelBookRoom(Request $request)
-    {
-        //Нужно дорабртать базу данных, пока костыли
-        $data = $request->all();
+            return response()->json($err);
+        }
 
-        DB::table('rooms')
-            ->where('id', $data['id_room'])
-            ->update(['id_status' => 1]);
-
-        $data['free'] = 'ok';
-
-        return response()->json($data);
+        return response()->json(['booking'=>'ok', 'message' => 'Комната успешно забронирована']);
     }
 
     public function checkInRoom(Request $request)
