@@ -37,15 +37,30 @@
 .h-37 {
     height: 37.2px;
 }
+.font-22 {
+    font-size: 22px;
+}
 
-//input::placeholder {
-//    font-family: 'Times New Roman, serif', serif; /* Установите желаемый шрифт */
-//    font-size: 22px; /* Установите желаемый размер шрифта */
-//    color: black; /* Установите желаемый цвет шрифта */
-//}
+
+
+input::placeholder {
+    font-family: 'Times New Roman, serif', serif; /* Установите желаемый шрифт */
+    font-size: 24px; /* Установите желаемый размер шрифта */
+    color: black; /* Установите желаемый цвет шрифта */
+}
 
 input {
     font-family: 'Times New Roman, serif', serif; /* Установите желаемый шрифт */
     font-size: 22px; /* Установите желаемый размер шрифта */
     color: black; /* Установите желаемый цвет шрифта */
 }
+
+select:disabled {
+    background-color: #f8f9fa !important;
+}
+
+select:focus {
+    border: none !important;
+    outline: none !important;
+}
+

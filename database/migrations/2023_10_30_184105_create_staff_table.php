@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email');
             $table->string('passport')->nullable();
-            $table->foreignId('position')
+            $table->foreignId('id_role')
                     ->constrained('roles')
                     ->cascadeOnDelete();
             $table->date('employment_date');
