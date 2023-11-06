@@ -7,8 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rooms extends Model
 {
-    public function status() {
+    use HasFactory;
+    protected $table = 'rooms';
 
-        return $this->belongsTo(Statuses::class, 'id_status');
+    public function category() {
+
+        return $this->belongsTo(Categories::class, 'id_category');
+    }
+
+    public function booking() {
+
+        return $this->hasMany(Booking::class, 'id_room');
     }
 }

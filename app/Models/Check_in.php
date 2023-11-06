@@ -14,4 +14,9 @@ class Check_in extends Model
     public function booking() {
         return $this->belongsTo(Booking::class, 'id_booking');
     }
+
+    public function staff() {
+
+        return $this->belongsTo(Categories::class, 'checkIn');
+    }
 }
