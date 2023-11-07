@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import StatusBtn from "@/components/Status.jsx";
+import StatusBtn from "../components/Status.jsx";
 
 export default function Rooms() {
 
@@ -7,14 +7,8 @@ export default function Rooms() {
 
     useEffect(() => {
         fetch('/api/admin/rooms')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.status}`);
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                console.log(data);
                 setData(data);
             })
             .catch(error => {

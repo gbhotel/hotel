@@ -27,3 +27,6 @@ Route::get('/getrole', [AuthController::class, 'getRole']);
 //заглушки, чтобы никто не мог сам зарегистрироваться и зайти на сайт
 Route::get('/register', [HomeController::class, 'index']);
 Route::get('/password/reset', [HomeController::class, 'index']);
+
+// оставить последним
+Route::fallback([\App\Http\Controllers\HomeController::class, 'index']);

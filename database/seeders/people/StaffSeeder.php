@@ -18,7 +18,7 @@ class StaffSeeder extends Seeder
                 'phone' => fake()->phoneNumber(),
                 'email' => fake()->email(),
                 'passport' => rand(100000, 999999),
-                'position' => 1,
+                'id_role' => 1,
                 'employment_date' => fake()->date()
             ],
             ['first_name' => fake()->firstName(),
@@ -26,7 +26,7 @@ class StaffSeeder extends Seeder
                 'phone' => fake()->phoneNumber(),
                 'email' => fake()->email(),
                 'passport' => rand(100000, 999999),
-                'position' => 1,
+                'id_role' => 1,
                 'employment_date' => fake()->date()
             ],
         ];
@@ -46,7 +46,7 @@ class StaffSeeder extends Seeder
                 'phone' => fake()->phoneNumber(),
                 'email' => fake()->email(),
                 'passport' => rand(100000, 999999),
-                'position' => fake()->numberBetween(2, 4),
+                'id_role' => fake()->numberBetween(2, 4),
                 'employment_date' => fake()->date()
             ];
         }
