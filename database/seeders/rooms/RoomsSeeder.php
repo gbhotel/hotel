@@ -14,19 +14,24 @@ class RoomsSeeder extends Seeder
     public function getRooms():array {
 
         $beds = [
-            'single bed',
-            'twin size bed',
-            'two single bed'
+            'Односпальная кровать',
+            'Две односпальные кровати',
+            'Двуспальная кровать'
         ];
 
         $toilets = [
-            'in the room',
-            'on the floor'
+            'В номере',
+            'На этаже'
         ];
 
         $shower = [
-            'in the room',
-            'on the floor'
+            'В номере',
+            'На этаже'
+        ];
+
+        $conditioner = [
+            'Да',
+            'Нет'
         ];
 
 
@@ -37,32 +42,21 @@ class RoomsSeeder extends Seeder
         for($i = 1; $i <= $quantity; $i ++) {
 
             $comfort = [
-                'wifi' =>'WIFI',
+                'wifi' =>'Да',
+                'conditioner' => $conditioner[fake()->numberBetween(0,1)],
                 'bed' => $beds[fake()->numberBetween(0,2)],
                 'toilet' => $toilets[fake()->numberBetween(0,1)],
                 'shower' => $shower[fake()->numberBetween(0,1)],
                 'roomsNumber' => fake()->numberBetween(1,3)
             ];
 
-            if($comfort['toilet'] == 'on the floor' || $comfort['shower'] == 'on the floor' ) {
-                $id_status = 1;
-            } elseif ($comfort['roomsNumber'] == 2) {
-                $id_status = 3;
-            }elseif ($comfort['roomsNumber'] == 3) {
-                $id_status = 4;
-            } else {
-                $id_status = 2;
-            }
-
             $rooms[] = [
                 'number' => $i,
                 'id_category' => fake()->numberBetween(1,4),
-                'id_status' => $id_status,
                 'comfort' => json_encode($comfort),
             ];
         }
 
         return $rooms;
     }
-
 }

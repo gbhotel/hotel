@@ -10,7 +10,6 @@ use Database\Seeders\rooms\BookingSeeder;
 use Database\Seeders\rooms\CategoriesSeeder;
 use Database\Seeders\rooms\CheckInSeeder;
 use Database\Seeders\rooms\RoomsSeeder;
-use Database\Seeders\rooms\StatusSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +21,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CategoriesSeeder::class,
-            StatusSeeder::class,
             RoomsSeeder::class,
             GuestsSeeder::class,
             RolesSeeder::class,
