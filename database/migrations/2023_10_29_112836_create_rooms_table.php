@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('number')->unique();
             $table->foreignId('id_category')
-                  ->constrained('categories')->cascadeOnDelete();
-            $table->foreignId('id_status')
-                  ->constrained('statuses')->cascadeOnDelete();
+                ->constrained('categories')->cascadeOnDelete();
             $table ->json('comfort');
         });
     }
