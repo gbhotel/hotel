@@ -58,20 +58,29 @@ class RoomsController extends Controller
 
     public function getFreeRoomsPeriod(Request $request)
     {
-        $dateIn = $request['dateIn'];
-        $dateOut = $request['dateOut'];
+        $dateIn = $request['checkinDate'];
+        $dateOut = $request['checkoutDate'];
+
+        $freeRooms = [];
 
         $data = DB::table('rooms')
             ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
+            ->join( 'categories', 'rooms.id_category', '=', 'categories.id')
             ->whereDate('booking.check_out', '<', $dateIn)
             ->orWhereDate('booking.check_in', '>', $dateOut)
             ->orderBy('rooms.number')
-            ->select('rooms.id', 'rooms.number')
             ->distinct('rooms.number')
             ->get();
 
+        foreach ($data as $oneData) {
+            $freeRooms[] = [
+                'id' => $oneData->id_room,
+                'number' => $oneData->number,
+                'category' => $oneData->category,
+                'comfort' => $oneData->comfort
+            ];
+        }
 
-
-        return response()->json($data);
+        return response()->json($freeRooms);
     }
 }

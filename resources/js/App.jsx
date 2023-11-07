@@ -5,6 +5,7 @@ import Rooms from './routes/Rooms';
 import Navibar from "./components/Navibar";
 import Staff from "@/routes/Staff.jsx";
 import Employee from "@/routes/Employee.jsx";
+import Booking from "./routes/Booking.jsx";
 
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
 
                 <Routes>
                     <Route path="/" element={<Root />} />
+                    <Route path="/booking" element={<Booking />} />
                     <Route path="/rooms" element={<Rooms />} />
                     <Route path="/staff" element={<Staff />} />
                     <Route path="/employee/:id" element={<Employee />} />
