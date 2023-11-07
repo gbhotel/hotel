@@ -7,6 +7,10 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+.main-container {
+    width: 1500px;
+    margin: 0 auto;
+}
 .container {
     width: 1000px;
     margin: 0 auto;
@@ -23,8 +27,13 @@
     background-color: #c0e1a2;
     color: #fffdfd;
     border: #c0e1a2;
-
 }
+
+.blue-color {
+    background-color: #a2cbd7;
+}
+
+
 .mr_auto {
     margin-right: auto;
 }
@@ -41,18 +50,16 @@
     font-size: 22px;
 }
 
-
-
 input::placeholder {
-    font-family: 'Times New Roman, serif', serif; /* Установите желаемый шрифт */
-    font-size: 24px; /* Установите желаемый размер шрифта */
-    color: black; /* Установите желаемый цвет шрифта */
+    font-family: 'Times New Roman, serif', serif;
+    font-size: 24px;
+    color: black;
 }
 
 input {
-    font-family: 'Times New Roman, serif', serif; /* Установите желаемый шрифт */
-    font-size: 22px; /* Установите желаемый размер шрифта */
-    color: black; /* Установите желаемый цвет шрифта */
+    font-family: 'Times New Roman, serif', serif;
+    font-size: 22px;
+    color: black;
 }
 
 select:disabled {
@@ -63,4 +70,9 @@ select:focus {
     border: none !important;
     outline: none !important;
 }
+
+.invisible {
+    display: none;
+}
+
 
