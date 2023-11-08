@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import StatusBtn from "@/components/Status.jsx";
+import {useEffect, useState} from "react";
+import StatusBtn from "../components/Status.jsx";
 
 export default function Rooms() {
     document.getElementById('auth').innerHTML = '';
@@ -48,7 +48,7 @@ export default function Rooms() {
                             </div>
                         </div>
                     </div>
-                ))
-                } </div>
-        </>)
+                ))}
+            </div>
+        </> )
 }
