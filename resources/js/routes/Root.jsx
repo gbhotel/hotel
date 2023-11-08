@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Root() {
+    document.getElementById('auth').innerHTML = '';
     return (
         <>
             <div className="container">

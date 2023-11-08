@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Staff() {
     const [data, setData] = useState([]);
-
+    document.getElementById('auth').innerHTML = '';
     useEffect(() => {
         const abortController = new AbortController();
 
@@ -44,34 +44,34 @@ export default function Staff() {
                     </button>
                 </div>
             </div>
-            <div  className="my-5 container justify-content-center">
+            <div className="my-5 container justify-content-center">
                 <div className="  table-responsive">
                     <table className=" no-border table table-striped table-sm">
                         <thead className="no-border">
-                        <tr className="no-border">
-                            <th scope="col">Имя</th>
-                            <th scope="col">Фамилия</th>
-                            <th scope="col">Телефон</th>
-                            <th scope="col">Почта</th>
-                            <th></th>
-                        </tr>
+                            <tr className="no-border">
+                                <th scope="col">Имя</th>
+                                <th scope="col">Фамилия</th>
+                                <th scope="col">Телефон</th>
+                                <th scope="col">Почта</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-            {
-                data.map((item,index) =>(
+                            {
+                                data.map((item, index) => (
 
-                        <tr  key={index}>
-                                <td>{item.first_name}</td>
-                                <td>{item.last_name}</td>
-                                <td>{item.phone}</td>
-                                <td>{item.email}</td>
-                                <td >
-                                    <Link to={`/employee/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
-                                </td>
-                        </tr>
+                                    <tr key={index}>
+                                        <td>{item.first_name}</td>
+                                        <td>{item.last_name}</td>
+                                        <td>{item.phone}</td>
+                                        <td>{item.email}</td>
+                                        <td >
+                                            <Link to={`/employee/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
+                                        </td>
+                                    </tr>
 
-                ))
-            }
+                                ))
+                            }
                         </tbody>
                     </table>
                 </div>
