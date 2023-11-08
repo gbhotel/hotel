@@ -6,6 +6,7 @@ import Navibar from "./components/Navibar";
 import Staff from "@/routes/Staff.jsx";
 import Employee from "@/routes/Employee.jsx";
 import Booking from "./routes/Booking.jsx";
+import Room from "./routes/Room.jsx";
 
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
                     <Route path="/" element={<Root />} />
                     <Route path="/booking" element={<Booking />} />
                     <Route path="/rooms" element={<Rooms />} />
+                    <Route path="/room/:id" element={<Room />} />
                     <Route path="/staff" element={<Staff />} />
                     <Route path="/employee/:id" element={<Employee />} />
                 </Routes>

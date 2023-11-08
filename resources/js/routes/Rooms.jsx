@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import StatusBtn from "../components/Status.jsx";
+import {Link} from "react-router-dom";
 
 export default function Rooms() {
 
@@ -34,6 +35,7 @@ export default function Rooms() {
                                 <p className="card-text">Room number: {item.id}</p>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="btn-group">
+                                        <Link to={`/room/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
                                         {/*<button type="button" className="btn btn-sm btn-outline-secondary">booking</button>*/}
                                         {/*<button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>*/}
                                     </div>
