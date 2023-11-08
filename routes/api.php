@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('admin/rooms', [RoomsController::class, 'getRooms'])->name('admin.rooms');
 Route::post('admin/free-rooms-period', [RoomsController::class, 'getFreeRoomsPeriod'])->name('admin.free-rooms-period');
 Route::get('admin/room/{id}/get-room', [RoomController::class, 'getRoom'])->name('admin.room.get-room');
-Route::put('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room');
+Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room');
 Route::put('admin/room/cancel-book-room', [RoomController::class, 'cancelBookRoom'])->name('admin.room.cancel-book-room');
 Route::post('admin/room/check-in-room', [RoomController::class, 'checkInRoom'])->name('admin.room.check-in-room');
 Route::put('admin/room/eviction-from-room', [RoomController::class, 'evictionFromRoom'])->name('admin.eviction-from-room');
