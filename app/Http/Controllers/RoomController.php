@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
+
     public function getRoom($id)
     {
         $date = now()->toDateTimeString();
@@ -103,16 +104,38 @@ class RoomController extends Controller
 
     public function bookRoom(Request $request)
     {
-        //Нужно дорабртать базу данных, пока костыли
-        $data = $request->all();
+        $response =[];
 
-        DB::table('rooms')
-            ->where('id', $data['id_room'])
-            ->update(['id_status' => 4]);
+        $data = $request->only([
+            'first_name',
+            'last_name',
+            'phone',
+            'id_room',
+            'checkinDate',
+            'checkoutDate',
+        ]);
 
-        $data['book'] = 'ok';
+        if (!empty($data)) {
+            $newGuestId  = DB::table('guests')
+              ->insertGetId ([
+                  'first_name' => $data['first_name'],
+                  'last_name' => $data['last_name'],
+                  'phone' => $data['phone'],
+              ]);
 
-        return response()->json($data);
+            $newBooking = DB::table('booking')
+              ->insertGetId ([
+                  'id_guest' => $newGuestId,
+                  'id_room' => $data['id_room'],
+                  'check_in' => date($data['checkinDate']),
+                  'check_out' => date($data['checkoutDate']),
+                  'id_admin' => 1
+              ]);
+
+            $response['bookingId'] = $newBooking;
+        }
+
+        return response()->json($response);
     }
 
     public function cancelBookRoom(Request $request)

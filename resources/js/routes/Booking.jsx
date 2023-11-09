@@ -77,7 +77,7 @@ export default function Booking() {
                     </div>
                 </div>
             </div>
-            <FreeRooms  freeRooms = {freeRooms}></FreeRooms>
+            <FreeRooms checkinDate = {checkinDate}  checkoutDate = {checkoutDate} freeRooms = {freeRooms}></FreeRooms>
         </div>
 
     );
