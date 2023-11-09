@@ -53,6 +53,7 @@ export default function Staff() {
                                 <th scope="col">Фамилия</th>
                                 <th scope="col">Телефон</th>
                                 <th scope="col">Почта</th>
+                                <th scope="col">Должность</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -65,6 +66,7 @@ export default function Staff() {
                                         <td>{item.last_name}</td>
                                         <td>{item.phone}</td>
                                         <td>{item.email}</td>
+                                        <td>{item.role.role}</td>
                                         <td >
                                             <Link to={`/employee/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
                                         </td>

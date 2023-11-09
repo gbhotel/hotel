@@ -20,7 +20,7 @@ export default function Navibar() {
                         </Nav>
                     </Navbar.Collapse>
                     <Nav>
-                        <Button variant="primary">Вход</Button>
+                        <Button variant="primary">LogOut</Button>
                     </Nav>
                 </div>
             </Navbar>
