@@ -11,6 +11,7 @@ use Database\Seeders\rooms\CategoriesSeeder;
 use Database\Seeders\rooms\CheckInSeeder;
 use Database\Seeders\rooms\RoomsSeeder;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,11 +30,44 @@ class DatabaseSeeder extends Seeder
             CheckInSeeder::class
         ]);
 
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::query()->create([
+            'first_name' => 'Владелец',
+            'last_name' => 'Владыков',
+            'username' => 'user1',
+            'phone' => '89997654321',
+            'email' => 'user1@htl.ru',
+            'role_id' => 1,
+            'password' => Hash::make(123),
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\User::query()->create([
+            'first_name' => 'Администратор',
+            'last_name' => 'Жизни',
+            'username' => 'user2',
+            'phone' => '89997654322',
+            'email' => 'user2@htl.ru',
+            'role_id' => 2,
+            'password' => Hash::make(123),
+        ]);
+
+        \App\Models\User::query()->create([
+            'first_name' => 'Горничная',
+            'last_name' => 'Мойдодыр',
+            'username' => 'user3',
+            'phone' => '89997654323',
+            'email' => 'user3@htl.ru',
+            'role_id' => 3,
+            'password' => Hash::make(123),
+        ]);
+
+        \App\Models\User::query()->create([
+            'first_name' => 'Гость',
+            'last_name' => 'Василий',
+            'username' => 'user4',
+            'phone' => '89997654324',
+            'email' => 'user4@htl.ru',
+            'role_id' => 4,
+            'password' => Hash::make(123),
+        ]);
     }
 }
