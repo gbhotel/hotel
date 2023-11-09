@@ -10,6 +10,11 @@ class Staff extends Model
     use HasFactory;
     protected $table = 'staff';
 
+    public function role() {
+
+        return $this->belongsTo(Roles::class, 'id_role');
+    }
+
     public function booking() {
 
         return $this->belongsTo(Booking::class, 'id_admin');

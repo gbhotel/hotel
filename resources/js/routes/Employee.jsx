@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 import {request} from "../services/http.js";
 
@@ -56,7 +56,7 @@ export default function Employee() {
                             <h3 className="mb-0">Должность: </h3>
                             <select
                                 disabled={disable}
-                                className="border-0 form-control font-22"
+                                className="no-box-shadow form-control font-22"
                                 value={employee.role}
                                 onChange={(e) => updateEmployee(e, 'role')}
                             >
@@ -74,7 +74,7 @@ export default function Employee() {
                             disabled={disable}
                             type="text"
                             placeholder={employee.first_name}
-                            className=" border-0 bg-light no-outline-on-hover align-bottom"
+                            className=" border-0 mb-2 no-outline-on-hover align-bottom"
                             onChange={(e) => updateEmployee(e, 'first_name')}
                         />
                     </div>
@@ -84,7 +84,7 @@ export default function Employee() {
                             disabled={disable}
                             type="text"
                             placeholder={employee.last_name}
-                            className=" border-0 bg-light no-outline-on-hover align-bottom"
+                            className=" border-0 mb-2 no-outline-on-hover align-bottom"
                             onChange={(e) => updateEmployee(e, 'last_name')}
                         />
                     </div>
@@ -94,7 +94,7 @@ export default function Employee() {
                             disabled={disable}
                             type="text"
                             placeholder={employee.phone}
-                            className=" border-0 bg-light no-outline-on-hover align-bottom"
+                            className=" border-0 mb-2 no-outline-on-hover align-bottom"
                             onChange={(e) => updateEmployee(e, 'phone')}
                         />
                     </div>
@@ -104,7 +104,7 @@ export default function Employee() {
                             disabled={disable}
                             type="text"
                             placeholder={employee.email}
-                            className=" border-0 bg-light no-outline-on-hover align-bottom"
+                            className=" border-0  mb-2 no-outline-on-hover align-bottom"
                             onChange={(e) => updateEmployee(e, 'email')}
                         />
                     </div>
@@ -115,7 +115,7 @@ export default function Employee() {
                                 disabled={disable}
                                 type="text"
                                 placeholder={employee.employment_date}
-                                className=" border-0 bg-light  p-0 no-outline-on-hover align-bottom"
+                                className=" border-0 mb-2  p-0 no-outline-on-hover align-bottom"
                                 onChange={(e) => updateEmployee(e, 'employment_date')}
                             />
                         </div>
@@ -131,7 +131,7 @@ export default function Employee() {
                             className="btn btn-sm  btn-outline-secondary"
                             onClick={saveChanges}
                         >
-                            Сохранить
+                            <Link to={`/staff`} className=" mr-5 text-decoration-none text-dark "> Сохранить </Link>
                         </button>
                     </div>
                 </div>

@@ -1,85 +1,88 @@
-import React, {useState} from 'react';
-import FreeRooms from "../components/FreeRooms.jsx";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 export default function Booking() {
 
-    const [checkinDate, setCheckinDate] = useState('');
-    const [checkoutDate, setCheckoutDate] = useState('');
-    const [freeRooms, setFreeRooms] = useState([]);
+    const [booking, setBooking] = useState([]);
 
-    const handleSearchRooms = async () => {
-        try {
-            // Создаем объект с данными для отправки
-            const requestData = {
-                checkinDate,
-                checkoutDate,
-            };
+    document.getElementById('auth').innerHTML = '';
 
-            const response = await fetch('/api/admin/free-rooms-period', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestData),
+    useEffect(() => {
+        const abortController = new AbortController();
+
+        fetch('/api/admin/booking', {
+            signal: abortController.signal,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                setBooking(data);
+            })
+            .catch(error => {
+                console.error(error);
             });
 
-            if (response.ok) {
-                // Обработка успешного ответа от сервера
-                const data = await response.json();
-                setFreeRooms(data);
-                console.log(data);
-            } else {
-                // Обработка ошибки
-                console.error('Ошибка при выполнении fetch-запроса');
-            }
-        } catch (error) {
-            console.error('Произошла ошибка:', error);
+        return () => {
+            abortController.abort();
         }
-    };
-
-
+    }, []);
     return (
-        <div  >
-            <div className=" mt-5 container">
-                <div className="row">
-                    <div className="col-md-4">
-                        <div className="form-group">
-                            <label htmlFor=" checkinDate">Дата заезда</label>
-                            <input
-                                type="date"
-                                className="form-control"
-                                id="checkinDate"
-                                onChange={(e) => setCheckinDate(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="form-group">
-                            <label htmlFor="checkoutDate">Дата выезда</label>
-                            <input
-                                type="date"
-                                className="form-control"
-                                id="checkoutDate"
-                                onChange={(e) => setCheckoutDate(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div className=" align-self-end col-md-4">
-                        <div className="form-group">
-                            <button
-                                type="submit"
-                                className="btn text-20 h-37  btn-sm btn-outline-secondary"
-                                onClick={handleSearchRooms}
-                            >
-                                Найти свободные комнаты
-                            </button>
-                        </div>
-                    </div>
+        <>
+            <div
+                className="d-flex main-container justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 className="h2">Брони</h1>
+                <div className="btn-toolbar mb-2 mb-md-0">
+                    <button type="button" className="btn btn-sm btn-outline-secondary">
+                        <Link to="/addBooking" className=" mr-5 text-decoration-none text-dark "> Добавить бронь </Link>
+                    </button>
                 </div>
             </div>
-            <FreeRooms checkinDate = {checkinDate}  checkoutDate = {checkoutDate} freeRooms = {freeRooms}></FreeRooms>
-        </div>
+            <div className="my-5 container justify-content-center">
+                <div className="  table-responsive">
+                    <table className=" no-border table table-striped table-sm">
+                        <thead className="no-border">
+                        <tr className="no-border">
+                            <th scope="col">Номер брони</th>
+                            <th scope="col">Номер комнаты</th>
+                            <th scope="col">На кого бронь</th>
+                            <th scope="col">Телефон</th>
+                            <th scope="col">дата заезда</th>
+                            <th scope="col">дата выезда</th>
+                            <th scope="col">Кто забронировал</th>
+                            {/*<th scope="col"></th>*/}
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            booking.map((item, index) => (
 
-    );
+                                <tr key={index}>
+                                    <td>{item.booking_number}</td>
+                                    <td>{item.room_number}</td>
+                                    <td>{item.guest_name}</td>
+                                    <td>{item.guest_phone}</td>
+                                    <td>{item.check_in}</td>
+                                    <td>{item.check_out}</td>
+                                    <td>{item.admin_name}</td>
+                                    <div className="btn-group me-2">
+                                        <button type="button" className="btn btn-sm btn-outline-secondary">Редактировать</button>
+                                        <button type="button" className="btn btn-sm btn-outline-secondary">Удалить</button>
+                                    </div>
+                                </tr>
 
+                            ))
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </>
+    )
 }

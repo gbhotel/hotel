@@ -12,7 +12,7 @@
     margin: 0 auto;
 }
 .container {
-    width: 1000px;
+    width: 1200px;
     margin: 0 auto;
 }
 
@@ -51,24 +51,31 @@
 }
 
 input::placeholder {
-    font-family: 'Times New Roman, serif', serif;
-    font-size: 24px;
-    color: black;
+    color: #888585;
 }
 
 input {
     font-family: 'Times New Roman, serif', serif;
     font-size: 22px;
+    background-color: #f8f9fa;
+}
+
+input:disabled {
+    background-color: #f8f9fa;
+}
+
+input:disabled::placeholder {
     color: black;
 }
 
 select:disabled {
     background-color: #f8f9fa !important;
+    color: black;
+    border: none;
 }
 
-select:focus {
-    border: none !important;
-    outline: none !important;
+.no-box-shadow {
+    box-shadow: none !important;
 }
 
 .invisible {

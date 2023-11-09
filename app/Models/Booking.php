@@ -10,7 +10,7 @@ class Booking extends Model
     use HasFactory;
     protected $table = 'booking';
 
-    public function rooms() {
+    public function room() {
 
         return $this->belongsTo(Rooms::class, 'id_room');
     }
@@ -18,7 +18,7 @@ class Booking extends Model
 
         return $this->belongsTo(Guests::class, 'id_guest');
     }
-    public function staff() {
+    public function employee() {
 
         return $this->belongsTo(Staff::class, 'id_admin');
     }

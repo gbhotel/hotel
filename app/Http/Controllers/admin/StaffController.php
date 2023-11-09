@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Error;
@@ -11,7 +12,11 @@ class StaffController extends Controller
 {
     public function getStaff() {
 
-       $staff =  DB::table('staff')->get();
+       $staff =  Staff::query()
+           ->with('role')
+           ->orderByDesc('id')
+           ->get();
+
 
        return response()->json($staff);
     }
@@ -19,6 +24,7 @@ class StaffController extends Controller
     public function getEmployee($id) {
 
         $result = [];
+
         $employee = DB::table('staff')
                      ->join('roles', 'staff.id_role', '=','roles.id')
                      ->where('staff.id', "=", $id)
