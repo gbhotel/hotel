@@ -4,12 +4,14 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\people\GuestsSeeder;
+use Database\Seeders\people\PositionSeeder;
 use Database\Seeders\people\RolesSeeder;
 use Database\Seeders\people\StaffSeeder;
 use Database\Seeders\rooms\BookingSeeder;
 use Database\Seeders\rooms\CategoriesSeeder;
 use Database\Seeders\rooms\CheckInSeeder;
 use Database\Seeders\rooms\RoomsSeeder;
+use Database\Seeders\tasks\TasksSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,10 +26,12 @@ class DatabaseSeeder extends Seeder
             CategoriesSeeder::class,
             RoomsSeeder::class,
             GuestsSeeder::class,
-            RolesSeeder::class,
+            PositionSeeder::class,
             StaffSeeder::class,
             BookingSeeder::class,
-            CheckInSeeder::class
+            CheckInSeeder::class,
+            TasksSeeder::class,
+            RolesSeeder::class
         ]);
 
         \App\Models\User::query()->create([
