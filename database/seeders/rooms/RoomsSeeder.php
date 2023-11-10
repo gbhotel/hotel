@@ -43,10 +43,11 @@ class RoomsSeeder extends Seeder
 
             $comfort = [
                 'wifi' =>'Да',
-                'кондиционер' => $conditioner[fake()->numberBetween(0,1)],
-                'кровать' => $beds[fake()->numberBetween(0,2)],
-                'туалет' => $toilets[fake()->numberBetween(0,1)],
-                'душ' => $shower[fake()->numberBetween(0,1)]
+                'conditioner' => $conditioner[fake()->numberBetween(0,1)],
+                'bed' => $beds[fake()->numberBetween(0,2)],
+                'toilet' => $toilets[fake()->numberBetween(0,1)],
+                'shower' => $shower[fake()->numberBetween(0,1)],
+                'roomsNumber' => fake()->numberBetween(1,3)
             ];
 
             $rooms[] = [
