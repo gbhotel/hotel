@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name')->nullable();
-            $table->string('phone');
-            $table->string('passport')->nullable();
+            $table->foreignId('id_user')
+                ->constrained('users')
+                ->cascadeOnDelete();
         });
     }
 
