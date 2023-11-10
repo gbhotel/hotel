@@ -32,7 +32,7 @@ class TasksSeeder extends Seeder
         for($i = 0; $i < 10; $i++){
             $tasks [] = [
                 'name'=> $this->tasks[fake()->numberBetween(0, 3)],
-                'id_staff'=> fake()->numberBetween(1, 10),
+                'id_staff'=> fake()->numberBetween(5, 7),
                 'created_date'=> fake()->date(),
                 'status'=> $this->statuses[fake()->numberBetween(0, 2)]
             ];
