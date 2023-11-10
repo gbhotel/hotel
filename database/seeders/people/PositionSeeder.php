@@ -2,24 +2,26 @@
 
 namespace Database\Seeders\people;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RolesSeeder extends Seeder
+class PositionSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run()
     {
-        DB::table('roles')->insert($this->getRoles());
+        DB::table('positions')->insert($this->getPositions());
     }
 
-    public function getRoles():array {
+    public function getPositions():array {
 
         return [
             1 =>[
                 'id' => 1,
                 'name' => 'директор'
-            ],
+                ],
             2 =>[
                 'id' => 2,
                 'name' => 'администратор'
@@ -30,7 +32,7 @@ class RolesSeeder extends Seeder
             ],
             4 =>[
                 'id' => 4,
-                'name' => 'гость'
+                'name' => 'разнорабочий'
             ],
         ];
     }
