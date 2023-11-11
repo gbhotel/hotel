@@ -8,7 +8,7 @@ export default function Employee() {
 
     const [loading, setLoading] = useState(false);
     const [employee, setEmployee] = useState({});
-    const [roles, setRoles] = useState({});
+    const [positions, setPositions] = useState({});
     const [disable, setDisable] = useState(true);
 
     const updateEmployee = (event, field) => {
@@ -37,7 +37,7 @@ export default function Employee() {
         setLoading(true);
 
         request(`/api/admin/employee/${id}`).then(response => {
-            setRoles(response.roles);
+            setPositions(response.positions);
             setEmployee(response.employee);
             setLoading(false);
         });
@@ -57,12 +57,12 @@ export default function Employee() {
                             <select
                                 disabled={disable}
                                 className="no-box-shadow form-control font-22"
-                                value={employee.role}
-                                onChange={(e) => updateEmployee(e, 'role')}
+                                value={employee.position}
+                                onChange={(e) => updateEmployee(e, 'position')}
                             >
                                 {
-                                    Object.keys(roles).map((key, index) => (
-                                        <option key={key + index} value={roles[key]}>{roles[key]}</option>
+                                    Object.keys(positions).map((key, index) => (
+                                        <option key={key + index} value={positions[key]}>{positions[key]}</option>
                                     ))
                                 }
                             </select>
