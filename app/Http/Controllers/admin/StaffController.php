@@ -12,40 +12,60 @@ class StaffController extends Controller
 {
     public function getStaff() {
 
+        $result = [];
+
        $staff =  Staff::query()
-           ->with('role')
+           ->with('position')
+           ->with('user')
            ->orderByDesc('id')
            ->get();
 
+       foreach ($staff as $employee) {
+           $result[] = [
+               'id' => $employee->id,
+               'first_name' => $employee->user->first_name,
+               'last_name' => $employee->user->last_name,
+               'phone' => $employee->user->phone,
+               'email' => $employee->user->email,
+               'passport' => $employee->user->passport,
+               'employment_date' => $employee->employment_date,
+               'position' => $employee->position->name,
+           ];
+       }
 
-       return response()->json($staff);
+
+
+
+       return response()->json($result);
     }
 
     public function getEmployee($id) {
 
         $result = [];
 
-        $employee = DB::table('staff')
-                     ->join('roles', 'staff.id_role', '=','roles.id')
-                     ->where('staff.id', "=", $id)
-                     ->first();
-
-        $roles = DB::table('roles')->get();
+        $employee = Staff::query()
+                    ->with('user')
+                    ->with('position')
+                    ->find($id);
 
 
-        foreach ($roles as $role) {
-            $result['roles'][$role->id] = $role->role;
+        $positions = DB::table('positions')->get();
+
+
+        foreach ($positions as $position) {
+            $result['positions'][$position->id] = $position->name;
         }
 
         $result['employee'] = [
             'id' => $employee->id,
-            'first_name' => $employee->first_name,
-            'last_name' => $employee->last_name,
-            'phone' => $employee->phone,
-            'email' => $employee->email,
-            'passport' => $employee->passport,
+            'id_user' => $employee->user->id,
+            'first_name' => $employee->user->first_name,
+            'last_name' => $employee->user->last_name,
+            'phone' => $employee->user->phone,
+            'email' => $employee->user->email,
+            'passport' => $employee->user->passport,
             'employment_date' => $employee->employment_date,
-            'role' => $employee->role,
+            'position' => $employee->position->name,
         ];
 
         return response()->json($result);
@@ -61,22 +81,28 @@ class StaffController extends Controller
 
         $data = $request->all();
 
-        $role = DB::table('roles')
-                  ->where('role' , '=', $data['role'])
+        $position = DB::table('positions')
+                  ->where('name' , '=', $data['position'])
                   ->first();
 
-        DB::table('staff')->where('id', $id)->update([
+        DB::table('users')->where('id', '=', $data['id_user'])->update([
                 'last_name' => $data['last_name'],
                 'first_name' => $data['first_name'],
                 'phone' => $data['phone'],
-                'email' => $data['email'],
+                'email' => $data['email']
+            ]
+        );
+
+        DB::table('staff')->where('id', $id)->update([
+                'id_position' => $position->id,
                 'employment_date' => $data['employment_date'],
-                'id_role' => $role->id
+
             ]
         );
 
         $updatedEmployee = DB::table('staff')
-                             ->join('roles', 'staff.id_role', '=','roles.id')
+                             ->join('positions', 'staff.id_position', '=','positions.id')
+                             ->join('users', 'staff.id_user', '=', 'users.id')
                              ->where('staff.id', "=", $id)
                              ->first();
 
@@ -88,7 +114,7 @@ class StaffController extends Controller
             'email' => $updatedEmployee->email,
             'passport' => $updatedEmployee->passport,
             'employment_date' => $updatedEmployee->employment_date,
-            'role' => $updatedEmployee->role,
+            'position' => $updatedEmployee->name,
         ]);
     }
 

@@ -66,7 +66,7 @@ export default function Staff() {
                                         <td>{item.last_name}</td>
                                         <td>{item.phone}</td>
                                         <td>{item.email}</td>
-                                        <td>{item.role.role}</td>
+                                        <td>{item.position.name}</td>
                                         <td >
                                             <Link to={`/employee/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
                                         </td>
