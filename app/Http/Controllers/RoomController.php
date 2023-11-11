@@ -8,20 +8,24 @@ use Illuminate\Support\Facades\DB;
 class RoomController extends Controller
 {
 
-    public function getRoom($id)
+    public function getRoom($numberRoom)
     {
         $date = now()->toDateTimeString();
 
-        $data = DB::table('check_in')
-            ->join('booking', 'check_in.id_booking', '=', 'booking.id')
-            ->join('rooms', 'booking.id_room', '=', 'rooms.id')
-            ->join('categories', 'rooms.id_category', '=', 'categories.id')
-            ->join('staff', 'check_in.id_admin', '=', 'staff.id')
-            ->join('roles', 'staff.id_role', '=', 'roles.id')
-            ->join('staff as staff2', 'booking.id_admin', '=', 'staff2.id')
-            ->join('roles as roles2', 'staff2.id_role', '=', 'roles2.id')
+        $data = DB::table('rooms')
+            ->rightJoin('booking', 'rooms.id', '=', 'booking.id_room')
+            ->leftJoin('check_in', 'booking.id', '=', 'check_in.id_booking')
+            ->leftJoin('categories', 'rooms.id_category', '=', 'categories.id')
+            ->leftJoin('staff', 'check_in.id_admin', '=', 'staff.id')
+            ->leftJoin('positions', 'staff.id_position', '=', 'positions.id')
+            ->leftJoin('users', 'staff.id_user', '=', 'users.id')
+            ->leftJoin('staff as staff2', 'booking.id_admin', '=', 'staff2.id')
+            ->LeftJoin('positions as positions2', 'staff2.id_position', '=', 'positions2.id')
+            ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
+            ->leftJoin('guests', 'booking.id_guest', '=', 'guests.id')
+            ->leftJoin('users as users3', 'guests.id_user', '=', 'users3.id')
 
-            ->where('booking.id_room', '=', $id)
+            ->where('rooms.number', '=', $numberRoom)
             ->whereDate( 'check_in.checkIn', '<',$date)
             ->whereDate('check_in.checkOut', '>', $date)
 
@@ -29,55 +33,66 @@ class RoomController extends Controller
                 // О комнате
                 'rooms.id as roomId', 'rooms.number as roomNumber',
                 'rooms.comfort as roomComfort', 'categories.category',
-                //о бронировании
+                // О госте
+                'guests.id as guestsId', 'users3.first_name as guestsFirstName', 'users3.last_name as guestsLastName',
+                'users3.phone as guestsPhone', 'users3.email as guestsEmail', 'users3.passport as guestsPassport',
+                // О бронировании
                 'booking.id as bookingId', 'booking.check_in as bookingCheckIn', 'booking.check_out as bookingCheckOut',
-                //сотрудник который забронировал
-                'staff2.id as staffIdB', 'staff2.first_name as staffFirstNameB', 'staff2.last_name as staffLastNameB',
-                'staff2.phone as staffPhoneB', 'staff2.email as staffEmailB', 'staff2.passport as staffPassportB',
-                'staff2.employment_date as staffEmploymentDateB','roles2.role as staffRoleB',
-                // о заселении
+                // Сотрудник который забронировал
+                'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
+                'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
+                'staff2.employment_date as staffEmploymentDateB', 'positions2.name as staffPositionB',
+                // О заселении
                 'check_in.id as checkId', 'check_in.checkIn as checkCheckIn', 'check_in.checkOut as checkCheckOut',
-                //сотрудник, который заселял
-                'staff.id as staffIdCh', 'staff.first_name as staffFirstNameCh', 'staff.last_name as staffLastNameCh',
-                'staff.phone as staffPhoneCh', 'staff.email as staffEmailCh', 'staff.passport as staffPassportCh',
-                'staff.employment_date as staffEmploymentDateCh', 'roles.role as staffRoleCh',
-
+                // Сотрудник, который заселял
+                'staff.id as staffIdCh', 'users.first_name as staffFirstNameCh', 'users.last_name as staffLastNameCh',
+                'users.phone as staffPhoneCh', 'users.email as staffEmailCh', 'users.passport as staffPassportCh',
+                'staff.employment_date as staffEmploymentDateCh', 'positions.name as staffPositionCh',
             )
             ->get();
+
+//        return response($data);
 
         if(!empty($data[0])){
             $data[0]->status = 'check_in';
         }else{
-            $data = DB::table('booking')
-                ->join('rooms', 'booking.id_room', '=', 'rooms.id')
-                ->join('categories', 'rooms.id_category', '=', 'categories.id')
-                ->join('staff as staff2', 'booking.id_admin', '=', 'staff2.id')
-                ->join('roles as roles2', 'staff2.id_role', '=', 'roles2.id')
+            $data = DB::table('rooms')
+                ->rightJoin('booking', 'rooms.id', '=', 'booking.id_room')
+                ->leftJoin('categories', 'rooms.id_category', '=', 'categories.id')
+                ->leftJoin('staff as staff2', 'booking.id_admin', '=', 'staff2.id')
+                ->LeftJoin('positions as positions2', 'staff2.id_position', '=', 'positions2.id')
+                ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
+                ->leftJoin('guests', 'booking.id_guest', '=', 'guests.id')
+                ->leftJoin('users as users3', 'guests.id_user', '=', 'users3.id')
 
-                ->where('id_room', '=', $id)
+                ->where('id_room', '=', $numberRoom)
                 ->whereDate( 'check_in', '<',$date)
                 ->whereDate('check_out', '>', $date)
 
                 ->select(
-                    //О комнате
+                // О комнате
                     'rooms.id as roomId', 'rooms.number as roomNumber',
                     'rooms.comfort as roomComfort', 'categories.category',
-                    //о бронировании
-                    'booking.id as bookingId', 'booking.check_in as bookingCheckIn',
-                    'booking.check_out as bookingCheckOut',
-                    //сотрудник который забронировал
-                    'staff2.id as staffIdB', 'staff2.first_name as staffFirstNameB', 'staff2.last_name as staffLastNameB',
-                    'staff2.phone as staffPhoneB', 'staff2.email as staffEmailB', 'staff2.passport as staffPassportB',
-                    'staff2.employment_date as staffEmploymentDateB','roles2.role as staffRoleB'
+                    // О госте
+                    'guests.id as guestsId', 'users3.first_name as guestsFirstName', 'users3.last_name as guestsLastName',
+                    'users3.phone as guestsPhone', 'users3.email as guestsEmail', 'users3.passport as guestsPassport',
+                    // О бронировании
+                    'booking.id as bookingId', 'booking.check_in as bookingCheckIn', 'booking.check_out as bookingCheckOut',
+                    // Сотрудник который забронировал
+                    'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
+                    'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
+                    'staff2.employment_date as staffEmploymentDateB', 'positions2.name as staffPositionB',
                 )
                 ->get();
+
+//                    return response($data);
 
             if(!empty($data[0])){
                 $data[0]->status = 'booking';
             }else{
                 $data = DB::table('rooms')
                     ->join('categories', 'rooms.id_category', '=', 'categories.id')
-                    ->where('rooms.id', '=', $id)
+                    ->where('rooms.id', '=', $numberRoom)
                     ->select(
                         'rooms.id as roomId', 'rooms.number as roomNumber',
                         'rooms.comfort as roomComfort', 'categories.category',

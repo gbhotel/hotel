@@ -36,10 +36,12 @@ export default function Rooms() {
                     <p>WiFi: {data.wifi}</p>
 
                     <h3>О госте</h3>
-                    <p>Имя: {data.staffFirstNameB}</p>
-                    <p>Фамилия: {data.staffLastNameB}</p>
-                    <p>Телефон: {data.staffPhoneB}</p>
-                    <p>№ паспорта: {data.staffPassportB}</p>
+                    <p>ID: {data.guestsId}</p>
+                    <p>Имя: {data.guestsFirstName}</p>
+                    <p>Фамилия: {data.guestsLastName}</p>
+                    <p>Телефон: {data.guestsPhone}</p>
+                    <p>Email: {data.guestsEmail}</p>
+                    <p>№ паспорта: {data.guestsPassport}</p>
                 </div>
 
                 <div className="text-center">
@@ -53,7 +55,7 @@ export default function Rooms() {
                     <p>Фамилия: {data.staffLastNameB}</p>
                     <p>Телефон: {data.staffPhoneB}</p>
                     <p>Email: {data.staffEmailB}</p>
-                    <p>Должность: {data.staffRoleB}</p>
+                    <p>Должность: {data.staffPositionB}</p>
                     <p>№ паспорта: {data.staffPassportB}</p>
                     <p>Трудоустроен с {data.staffEmploymentDateB}</p>
 
@@ -67,7 +69,7 @@ export default function Rooms() {
                     <p>Фамилия: {data.staffLastNameCh}</p>
                     <p>Телефон: {data.staffPhoneCh}</p>
                     <p>Email: {data.staffEmailCh}</p>
-                    <p>Должность: {data.staffRoleCh}</p>
+                    <p>Должность: {data.staffPositionCh}</p>
                     <p>№ паспорта: {data.staffPassportCh}</p>
                     <p>Трудоустроен с {data.staffEmploymentDateCh}</p>
                 </div>

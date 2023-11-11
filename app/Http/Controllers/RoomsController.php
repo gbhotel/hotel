@@ -80,7 +80,6 @@ class RoomsController extends Controller
                 'comfort' => $oneData->comfort
             ];
         }
-
         return response()->json($freeRooms);
     }
 }

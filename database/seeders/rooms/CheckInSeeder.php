@@ -17,6 +17,7 @@ class CheckInSeeder extends Seeder
             'checkOut' => '203-07-25',
             'id_booking' => 1,
         ],
+
         [
             'id_admin' => 3,
             'checkIn' => '2023-08-05',
@@ -35,6 +36,7 @@ class CheckInSeeder extends Seeder
             'checkOut' => '203-09-28',
             'id_booking' => 5,
         ],
+
         [
             'id_admin' => 2,
             'checkIn' => '2023-10-11',
@@ -60,6 +62,7 @@ class CheckInSeeder extends Seeder
             'checkOut' => '2024-01-14',
             'id_booking' => 10,
         ],
+
         [
             'id_admin' => 4,
             'checkIn' => '2023-10-08',
