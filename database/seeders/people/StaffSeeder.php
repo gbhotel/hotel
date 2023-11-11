@@ -13,55 +13,48 @@ class StaffSeeder extends Seeder
     public function run()
     {
         $director = [
-            'first_name' => fake()->firstName(),
-            'last_name' => fake()->lastName(),
-            'phone' => fake()->phoneNumber(),
-            'email' => fake()->email(),
-            'passport' => rand(100000, 999999),
             'id_position' => 1,
-            'employment_date' => fake()->date()
+            'id_user' => 1,
+            'employment_date' => '2022-05-10'
         ];
 
         $admins = [
-            ['first_name' => fake()->firstName(),
-                'last_name' => fake()->lastName(),
-                'phone' => fake()->phoneNumber(),
-                'email' => fake()->email(),
-                'passport' => rand(100000, 999999),
+            [
                 'id_position' => 2,
-                'employment_date' => fake()->date()
+                'id_user' => 2,
+                'employment_date' => '2022-06-11'
             ],
-            ['first_name' => fake()->firstName(),
-                'last_name' => fake()->lastName(),
-                'phone' => fake()->phoneNumber(),
-                'email' => fake()->email(),
-                'passport' => rand(100000, 999999),
+            [
                 'id_position' => 2,
-                'employment_date' => fake()->date()
+                'id_user' => 3,
+                'employment_date' => '2022-08-12'
+            ],
+            [
+                'id_position' => 2,
+                'id_user' => 4,
+                'employment_date' => '2022-11-13'
             ],
         ];
+        $maids = [
+            [
+                'id_position' => 3,
+                'id_user' => 5,
+                'employment_date' => '2022-07-11'
+            ],
+            [
+                'id_position' => 3,
+                'id_user' => 6,
+                'employment_date' => '2022-10-12'
+            ],
+            [
+                'id_position' => 3,
+                'id_user' => 7,
+                'employment_date' => '2023-02-13'
+            ],
+        ];
+
         DB::table('staff')->insert($director);
         DB::table('staff')->insert($admins);
-        DB::table('staff')->insert($this->getStaff());
-    }
-
-    public function getStaff(): array
-    {
-        $staff = [];
-        $quantity = 10;
-
-        for ($i = 1; $i <= $quantity; $i++) {
-            $staff[] = [
-                'first_name' => fake()->firstName(),
-                'last_name' => fake()->lastName(),
-                'phone' => fake()->phoneNumber(),
-                'email' => fake()->email(),
-                'passport' => rand(100000, 999999),
-                'id_position' => fake()->numberBetween(3, 4),
-                'employment_date' => fake()->date()
-            ];
-        }
-
-        return $staff;
+        DB::table('staff')->insert($maids);
     }
 }

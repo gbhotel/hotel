@@ -12,22 +12,18 @@ class GuestsSeeder extends Seeder
      */
     public function run()
     {
-
         DB::table('guests')->insert($this->getGuests());
 
     }
 
     public function getGuests():array {
         $guests = [];
-        $quantity = 12;
+        $quantity = 20;
 
         for($i = 1; $i <= $quantity; $i ++) {
 
             $guests[] = [
-                'first_name' => fake()->firstName(),
-                'last_name' => fake()->lastName(),
-                'phone' => fake()->phoneNumber(),
-                'passport' => rand(100000,999999),
+                'id_user' => $i,
             ];
         }
 

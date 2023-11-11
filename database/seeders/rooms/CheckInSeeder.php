@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\rooms;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,73 +12,70 @@ class CheckInSeeder extends Seeder
      */
     private array $checkIn = [
         [
-            'id_booking' => 1,
-            'id_admin' => 1,
-            'checkIn' => '2023-07-12',
-            'checkOut' => '2023-07-24',
-        ],
-        [
-            'id_booking' => 2,
             'id_admin' => 2,
-            'checkIn' => '2023-07-14',
-            'checkOut' => '2023-07-22',
+            'checkIn' => '2023-07-15',
+            'checkOut' => '203-07-25',
+            'id_booking' => 1,
         ],
         [
-            'id_booking' => 3,
             'id_admin' => 3,
             'checkIn' => '2023-08-05',
-            'checkOut' => '2023-08-17',
+            'checkOut' => '203-08-23',
+            'id_booking' => 3,
         ],
         [
+            'id_admin' => 4,
+            'checkIn' => '2023-08-06',
+            'checkOut' => '203-08-16',
             'id_booking' => 4,
-            'id_admin' => 5,
-            'checkIn' => '2023-08-12',
-            'checkOut' => '2023-08-21',
         ],
         [
-            'id_booking' => 5,
             'id_admin' => 2,
-            'checkIn' => '2023-09-03',
-            'checkOut' => '2023-12-28',
-        ],
-        [
-            'id_booking' => 6,
-            'id_admin' => 3,
             'checkIn' => '2023-09-12',
-            'checkOut' => '2023-12-26',
+            'checkOut' => '203-09-28',
+            'id_booking' => 5,
         ],
         [
-            'id_booking' => 7,
             'id_admin' => 2,
-            'checkIn' => '2023-10-03',
-            'checkOut' => '2024-01-02',
+            'checkIn' => '2023-10-11',
+            'checkOut' => '203-10-21',
+            'id_booking' => 7,
         ],
         [
+            'id_admin' => 4,
+            'checkIn' => '2023-10-15',
+            'checkOut' => '203-10-25',
             'id_booking' => 8,
-            'id_admin' => 1,
-            'checkIn' => '2023-10-03',
-            'checkOut' => '2024-01-11',
+        ],
+        //-----------------------------------------------
+        [
+            'id_admin' => 3,
+            'checkIn' => '2023-09-15',
+            'checkOut' => '2024-01-03',
+            'id_booking' => 9,
+        ],
+        [
+            'id_admin' => 2,
+            'checkIn' => '2023-09-26',
+            'checkOut' => '2024-01-14',
+            'id_booking' => 10,
+        ],
+        [
+            'id_admin' => 4,
+            'checkIn' => '2023-10-08',
+            'checkOut' => '2024-01-20',
+            'id_booking' => 12,
+        ],
+        [
+            'id_admin' => 4,
+            'checkIn' => '2023-10-12',
+            'checkOut' => '2024-01-18',
+            'id_booking' => 13,
         ],
     ];
+
     public function run(): void
     {
         DB::table('check_in')->insert($this->checkIn);
     }
-
-//    public function getCheckIn():array {
-//
-//        $checkIn = [];
-//        $quantity = 10;
-//
-//        for($i = 1; $i <= $quantity; $i ++) {
-//
-//            $checkIn[] = [
-//                'id_admin' => fake()->numberBetween(1, 2),
-//                'id_booking' => fake()->numberBetween(1, 10),
-//                'checkIn' => fake()->dateTimeBetween('2022-10-15', '2022-10-31'),
-//                'checkOut' => fake()->dateTimeBetween('2022-10-16', '2022-11-01'),
-//            ];
-//        }
-//        return $checkIn;
-//    }
 }
