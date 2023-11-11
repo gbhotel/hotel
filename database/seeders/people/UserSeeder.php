@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'user11@htl.ru',
             'role_id' => 1,
             'password' => Hash::make(123),
+            'passport' => '987001',
         ]);
 //---------------------------------------------------------
         \App\Models\User::query()->create([
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
             'email' => 'user21@htl.ru',
             'role_id' => 2,
             'password' => Hash::make(123),
+            'passport' => '987002',
         ]);
         \App\Models\User::query()->create([
             'first_name' => fake()->firstName(),
@@ -39,6 +41,7 @@ class UserSeeder extends Seeder
             'email' => 'user22@htl.ru',
             'role_id' => 2,
             'password' => Hash::make(123),
+            'passport' => '987003',
         ]);
         \App\Models\User::query()->create([
             'first_name' => fake()->firstName(),
@@ -48,6 +51,7 @@ class UserSeeder extends Seeder
             'email' => 'user23@htl.ru',
             'role_id' => 2,
             'password' => Hash::make(123),
+            'passport' => '987004',
         ]);
 //---------------------------------------------------------
         \App\Models\User::query()->create([
@@ -58,6 +62,7 @@ class UserSeeder extends Seeder
             'email' => 'user31@htl.ru',
             'role_id' => 3,
             'password' => Hash::make(123),
+            'passport' => '987005',
         ]);
         \App\Models\User::query()->create([
             'first_name' => fake()->firstName(),
@@ -67,6 +72,7 @@ class UserSeeder extends Seeder
             'email' => 'user32@htl.ru',
             'role_id' => 3,
             'password' => Hash::make(123),
+            'passport' => '987006',
         ]);
         \App\Models\User::query()->create([
             'first_name' => fake()->firstName(),
@@ -76,6 +82,7 @@ class UserSeeder extends Seeder
             'email' => 'user33@htl.ru',
             'role_id' => 3,
             'password' => Hash::make(123),
+            'passport' => '987007',
         ]);
 //---------------------------------------------------------
         \App\Models\User::query()->create([
@@ -86,6 +93,7 @@ class UserSeeder extends Seeder
             'email' => 'user41@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987008',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -95,6 +103,7 @@ class UserSeeder extends Seeder
             'email' => 'user42@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987009',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -104,6 +113,7 @@ class UserSeeder extends Seeder
             'email' => 'user43@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987010',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -113,6 +123,7 @@ class UserSeeder extends Seeder
             'email' => 'user44@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987011',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -122,6 +133,7 @@ class UserSeeder extends Seeder
             'email' => 'user45@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987012',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -131,6 +143,7 @@ class UserSeeder extends Seeder
             'email' => 'user46@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987013',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -140,6 +153,7 @@ class UserSeeder extends Seeder
             'email' => 'user47@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987014',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -149,6 +163,7 @@ class UserSeeder extends Seeder
             'email' => 'user48@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987015',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -158,6 +173,7 @@ class UserSeeder extends Seeder
             'email' => 'user49@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987016',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -167,6 +183,7 @@ class UserSeeder extends Seeder
             'email' => 'user50@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987017',
         ]);
 
         \App\Models\User::query()->create([
@@ -177,6 +194,7 @@ class UserSeeder extends Seeder
             'email' => 'user51@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987018',
         ]);
 
         \App\Models\User::query()->create([
@@ -187,6 +205,7 @@ class UserSeeder extends Seeder
             'email' => 'user52@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987019',
         ]);
 
         \App\Models\User::query()->create([
@@ -197,6 +216,7 @@ class UserSeeder extends Seeder
             'email' => 'user53@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987020',
         ]);
 
         \App\Models\User::query()->create([
@@ -207,6 +227,7 @@ class UserSeeder extends Seeder
             'email' => 'user54@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987021',
         ]);
 
         \App\Models\User::query()->create([
@@ -217,6 +238,7 @@ class UserSeeder extends Seeder
             'email' => 'user55@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987022',
         ]);
 
         \App\Models\User::query()->create([
@@ -227,6 +249,7 @@ class UserSeeder extends Seeder
             'email' => 'user56@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987023',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -236,6 +259,7 @@ class UserSeeder extends Seeder
             'email' => 'user57@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987024',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -245,6 +269,7 @@ class UserSeeder extends Seeder
             'email' => 'user58@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987025',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -254,6 +279,7 @@ class UserSeeder extends Seeder
             'email' => 'user59@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987026',
         ]);
         \App\Models\User::query()->create([
             'first_name' => 'Гость',
@@ -263,6 +289,7 @@ class UserSeeder extends Seeder
             'email' => 'user60@htl.ru',
             'role_id' => 4,
             'password' => Hash::make(123),
+            'passport' => '987027',
         ]);
     }
 }
