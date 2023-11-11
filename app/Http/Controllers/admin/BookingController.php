@@ -15,8 +15,8 @@ class BookingController extends Controller
 
         $allBookings = Booking::query()
             ->with('room')
-            ->with('guest')
-            ->with('employee')
+            ->with('guest.user')
+            ->with('employee.user')
             ->orderByDesc('id')
             ->get();
 
@@ -24,11 +24,11 @@ class BookingController extends Controller
             $result[] = [
                 'booking_number' => $booking->id,
                 'room_number' => $booking->room->number,
-                'guest_name' => $booking->guest->first_name . ' ' .$booking->guest->last_name,
-                'guest_phone' => $booking->guest->phone,
+                'guest_name' => $booking->guest->user->first_name . ' ' .$booking->guest->last_name,
+                'guest_phone' => $booking->guest->user->phone,
                 'check_in' => $booking->check_in,
                 'check_out' => $booking->check_out,
-                'admin_name' => $booking->employee->first_name . ' ' . $booking->employee->last_name
+                'admin_name' => $booking->employee->user->first_name . ' ' . $booking->employee->last_name
 
         ];
         }

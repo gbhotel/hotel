@@ -130,12 +130,23 @@ class RoomController extends Controller
             'checkoutDate',
         ]);
 
+        $role = DB::table('roles')
+            ->where('roles.name', 'гость')
+            ->first();
+
         if (!empty($data)) {
+
+            $newUserId  = DB::table('users')
+                             ->insertGetId ([
+                                 'first_name' => $data['first_name'],
+                                 'last_name' => $data['last_name'],
+                                 'phone' => $data['phone'],
+                                 'role_id' =>$role->id,
+                             ]);
+
             $newGuestId  = DB::table('guests')
               ->insertGetId ([
-                  'first_name' => $data['first_name'],
-                  'last_name' => $data['last_name'],
-                  'phone' => $data['phone'],
+                  'id_user' => $newUserId
               ]);
 
             $newBooking = DB::table('booking')
@@ -144,7 +155,7 @@ class RoomController extends Controller
                   'id_room' => $data['id_room'],
                   'check_in' => date($data['checkinDate']),
                   'check_out' => date($data['checkoutDate']),
-                  'id_admin' => 1
+                  'id_admin' => 3
               ]);
 
             $response['bookingId'] = $newBooking;
