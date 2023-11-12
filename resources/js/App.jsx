@@ -8,6 +8,7 @@ import Employee from "@/routes/Employee.jsx";
 import AddBooking from "./routes/AddBooking.jsx";
 import Room from "./routes/Room.jsx";
 import Booking from "./routes/Booking.jsx";
+import Tasks from "./routes/Tasks.jsx";
 
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
                     <Route path="/room/:id" element={<Room />} />
                     <Route path="/staff" element={<Staff />} />
                     <Route path="/employee/:id" element={<Employee />} />
+                    <Route path="/tasks" element={<Tasks />} />
                 </Routes>
             </BrowserRouter>
         </>

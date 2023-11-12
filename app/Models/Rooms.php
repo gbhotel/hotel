@@ -10,6 +10,14 @@ class Rooms extends Model
     use HasFactory;
     protected $table = 'rooms';
 
+    public function tasks() {
+
+        return $this->hasMany(Tasks::class, 'id_room');
+    }
+    public function room_cleaning() {
+
+        return $this->hasMany(Room_cleaning::class, 'room_number');
+    }
     public function category() {
 
         return $this->belongsTo(Categories::class, 'id_category');

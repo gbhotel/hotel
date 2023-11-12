@@ -10,6 +10,7 @@ use Database\Seeders\people\UserSeeder;
 use Database\Seeders\rooms\BookingSeeder;
 use Database\Seeders\rooms\CategoriesSeeder;
 use Database\Seeders\rooms\CheckInSeeder;
+use Database\Seeders\rooms\RoomCleaningSeeder;
 use Database\Seeders\rooms\RoomsSeeder;
 use Database\Seeders\tasks\TasksSeeder;
 use Illuminate\Database\Seeder;
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
             BookingSeeder::class,
             CheckInSeeder::class,
             TasksSeeder::class,
+            RoomCleaningSeeder::class
         ]);
     }
 }

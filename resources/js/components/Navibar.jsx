@@ -17,6 +17,7 @@ export default function Navibar() {
                             <Link to="/guests" className="nav-link">Гости</Link>
                             <Link to="/materials" className="nav-link">Материалы</Link>
                             <Link to="/staff" className="nav-link">Сотрудники</Link>
+                            <Link to="/tasks" className="nav-link">Задачи</Link>
                         </Nav>
                     </Navbar.Collapse>
                     <Nav>
