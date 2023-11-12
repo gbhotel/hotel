@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+
 export default function Navibar() {
     return (
         <>
@@ -20,6 +21,10 @@ export default function Navibar() {
                         </Nav>
                     </Navbar.Collapse>
                     <Nav>
+                        {/* <form action="/logout" method='post'>
+                            <input type="hiden" value={readCookie('XSRF-TOKEN')} />
+                            <input type="submit" value="Выход" />
+                        </form> */}
                         <Button variant="primary">LogOut</Button>
                     </Nav>
                 </div>
@@ -27,3 +32,4 @@ export default function Navibar() {
         </>
     )
 }
+
