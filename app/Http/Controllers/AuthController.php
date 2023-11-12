@@ -14,8 +14,27 @@ class AuthController extends Controller
         $user = Auth::user();
         if ($user) {
             $role = DB::table('roles')->where('id', $user->role_id)->get()->first();
-            $data['role'] = $role->role;
+            $data['role'] = $role->name;
         }
         return response()->json($data);
+    }
+
+    public function isAuth()
+    {
+        $data['auth'] = 'false';
+        $user = Auth::user();
+        if ($user) $data['auth'] = 'true';
+        return response()->json($data);
+    }
+
+    public static function getCurrentRoleName()
+    {
+        $role = 'none';
+        $user = Auth::user();
+        if ($user) {
+            $role = DB::table('roles')->where('id', $user->role_id)->get()->first();
+            $role = $role->name;
+        }
+        return $role;
     }
 }
