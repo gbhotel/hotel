@@ -57,4 +57,9 @@ class User extends Authenticatable
 
         return $this->hasMany(Guests::class, 'id_user');
     }
+
+    public function role() {
+
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 }
