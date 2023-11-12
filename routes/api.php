@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\admin\StaffController;
@@ -44,4 +45,4 @@ Route::get('director/create-employee/get-all-positions', [DirectorStaffControlle
 Route::get('director/create-employee/get-all-roles', [DirectorStaffController::class, 'getAllRoles']);
 Route::post('director/create-employee/create', [DirectorStaffController::class, 'createEmployee']);
 
-
+Route::get('isauth', [AuthController::class, 'isAuth']);
