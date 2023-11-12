@@ -4,7 +4,6 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\admin\StaffController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\director\StaffController as DirectorStaffController;
@@ -39,5 +38,11 @@ Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'edit
 
 Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('admin.booking');
 Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room');
+
+Route::get('director/staff', [DirectorStaffController::class, 'getStaff']);
+Route::get('director/employee/{id}', [DirectorStaffController::class, 'getEmployee']);
+Route::get('director/create-employee/get-all-positions', [DirectorStaffController::class, 'getAllPositions']);
+Route::get('director/create-employee/get-all-roles', [DirectorStaffController::class, 'getAllRoles']);
+Route::post('director/create-employee/create', [DirectorStaffController::class, 'createEmployee']);
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
