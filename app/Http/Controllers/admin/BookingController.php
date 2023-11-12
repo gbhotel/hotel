@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use Illuminate\Http\Request;
@@ -16,14 +17,8 @@ class BookingController extends Controller
     {
 
         $result = [];
-        $role = 'none';
-        $user = Auth::user();
-        if ($user) {
-            $role = DB::table('roles')->where('id', $user->role_id)->get()->first();
-            $role = $role->name;
-        }
 
-        if (in_array($role, $this->accessFor)) {
+        if (in_array(AuthController::getCurrentRoleName(), $this->accessFor)) {
             $allBookings = Booking::query()
                 ->with('room')
                 ->with('guest.user')
