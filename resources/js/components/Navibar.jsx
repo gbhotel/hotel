@@ -3,6 +3,7 @@ import { Navbar, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 
+
 export default function Navibar() {
     return (
         <>
@@ -21,11 +22,11 @@ export default function Navibar() {
                         </Nav>
                     </Navbar.Collapse>
                     <Nav>
-                        {/* <form action="/logout" method='post'>
-                            <input type="hiden" value={readCookie('XSRF-TOKEN')} />
-                            <input type="submit" value="Выход" />
-                        </form> */}
-                        <Button variant="primary">LogOut</Button>
+                        <form action="/logout" method='post'>
+                            <input type="hidden" name="_token" defaultValue={_token} />
+                            <input type="submit" value="Выход" class="btn btn-primary" />
+                        </form>
+                        {/* <Button variant="primary">LogOut</Button> */}
                     </Nav>
                 </div>
             </Navbar>
