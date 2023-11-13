@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {forEach} from "react-bootstrap/ElementChildren";
+import StatusBtn from "../components/Status.jsx";
 
 
 export default function Tasks() {
@@ -11,8 +11,10 @@ export default function Tasks() {
     const [tasks, setTasks] = useState([]);
     const [staff, setStaff] = useState([]);
     const [rooms, setRooms] = useState([]);
-    const [createdTask, setCreatedTask ] = useState({});
-
+    const [guestRequest, setGuestRequest] = useState([]);
+    const [createdTask, setCreatedTask ] = useState([]);
+    const [success, setSuccess] = useState(false);
+    const [response , setResponse ] = useState([]);
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -27,10 +29,8 @@ export default function Tasks() {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 setTasksName(data.tasks_name);
                 setTasks(data.tasks);
-                // console.log(tasks);
             })
             .catch(error => {
                 console.error(error);
@@ -56,7 +56,6 @@ export default function Tasks() {
             .then(data => {
                 console.log(data);
                 setRoomForCleaning(data);
-                // console.log(tasks);
             })
             .catch(error => {
                 console.error(error);
@@ -81,7 +80,6 @@ export default function Tasks() {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 setStaff(data);
             })
             .catch(error => {
@@ -99,13 +97,6 @@ export default function Tasks() {
             date
         };
 
-        // {
-        //     method: 'POST',
-        //         headers: {
-        //     'Content-Type': 'application/json',
-        // },
-        //     body: JSON.stringify(requestData),
-
                 fetch('/api/admin/rooms')
             .then(response => {
                 if (!response.ok) {
@@ -114,19 +105,30 @@ export default function Tasks() {
                 return response.json();
             })
             .then(data => {
-                // Обработка успешного ответа от сервера
-                console.log(data);
                 setRooms(data);
             })
             .catch(error => {
-                // Обработка ошибки
                 console.error('Произошла ошибка:', error);
             });
     }, []);
 
-    const addTask = (event, field) => {
-        setCreatedTask(prevState => ({...prevState, [field]: event.target.value}))
-    }
+    useEffect( () => {
+
+        fetch('/api/guest/requests')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка при выполнении fetch-запроса');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setGuestRequest(data);
+            })
+            .catch(error => {
+                console.error('Произошла ошибка:', error);
+            });
+    }, []);
+
     const generateTask = async () => {
         try {
             const response = await fetch('/api/admin/addTask', {
@@ -138,11 +140,10 @@ export default function Tasks() {
             });
 
             if (response.ok) {
-                // Обработка успешного ответа от сервера
                 const data = await response.json();
-                console.log(data);
+                setResponse(data);
+                setSuccess(true);
             } else {
-                // Обработка ошибки
                 console.error('Ошибка при выполнении fetch-запроса');
             }
         } catch (error) {
@@ -155,7 +156,7 @@ export default function Tasks() {
     useEffect(() => {
         const intervalId = setInterval(() => {
 
-            setCurrentDate(new Date()); // Обновление текущей даты каждую секунду (или по необходимости)
+            setCurrentDate(new Date());
         }, 3600000);
 
         // Очистка интервала при размонтировании компонента
@@ -164,70 +165,181 @@ export default function Tasks() {
 
 
     return (
-        <div className="d-flex flex-column container mt-5">
-            <div className="label-container mb-3 ">
-                    <label>Номер</label>
-                    <select
-                        className="form-control h-37"
-                        id="employeeSelector"
-                        onClick={(e)=> addTask(e, 'id_room')}
-                        >
-                        {
-                            rooms.map((item, index) => (
-                                <option key={index} value ={item.id}>
-                                    Номер комнаты: {item.number} {item.status}
+        <div className="d-flex flex-column gap-3 small-container mt-5">
+            <div className="d-flex justify-content-between gap-5  mt-5">
+                <div className="d-flex justify-content-between flex-column">
+                    <div className="">
+                        <label>Задача</label>
+                        <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
+                            {
+                                tasksName.map((item, index) => (
+                                    <li
+                                        className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
+                                        key={index}
+                                        value={index}
+                                        onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['task_name']:tasksName[e.target.value] }))}
+                                    >
+                                        {item}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                    <div className="">
+                        <label>Исполнитель</label>
+                        <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
 
-                                    {(item.checkOut === currentDate )? ' clean': ''}
-
-                                    {roomForCleaning.map((room,index) => ((item.id === room.id_room)? ' clean': ''))}
-
-                                </option>
-                            ))
-                        }
-                    </select>
+                            {
+                                staff.map((item, index) => (
+                                    <li
+                                        className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
+                                        key={index}
+                                        value ={item.id}
+                                        onClick={(e)=>  setCreatedTask(prevState => ({...prevState, ['id_staff']: e.target.value}))}
+                                    >
+                                        {item.first_name} {item.last_name} ({item.position})
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
                 </div>
-            <div className="label-container mb-3">
-                    <label>Задача</label>
-                    <select
-                        className="form-control"
-                        id="taskSelector"
-                        onClick={(e)=> addTask(e, 'task_name')}
-                    >
-                        {
+                <div className="">
+                <label>Номер</label>
+                <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
 
-                           tasksName.map((item, index)=>(
-                               <option key={index} value={item}>{item}</option>
-                            ))
-                        }
-                    </select>
-                </div>
-            <div className="label-container">
-                    <label>Исполнитель</label>
-                    <select
-                        className="form-control"
-                        id="employeeSelector"
-                        onClick={(e)=> addTask(e, 'id_staff')}
-                    >
-                        {
-                            staff.map((item, index) => (
-                                <option key={index} value = {item.id}>
-                                    {item.first_name} {item.last_name}
-                                      ({item.position})
-                                </option>
-                            ))
-                        }
-                    </select>
+                    {
+                        rooms.map((item, index) => (
+                            <li
+                                className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
+                                key={index}
+                                value ={item.number}
+                                onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_room']: e.target.parentNode.value}))}
+                            >
+                                <div className={`d-flex ${item.number === '10' ? 'gap-3' : 'gap-4'}`} > Комната номер - {item.number}
+                                    <StatusBtn status={item.status} />
+                                </div>
 
+                                <div> {(item.checkOut === currentDate)?
+                                    <StatusBtn status='clean'/>: ''}
+                                </div>
+
+                                <div>
+                                    {roomForCleaning.map((room,index) => ((item.id === room.id_room)?
+                                        <StatusBtn key = {index} status='clean'/>: ''))}
+                                </div>
+
+                            </li>
+                        ))
+                    }
+                </ul>
             </div>
+            </div>
+            <div>
+                <div>
+                    <label>Заявки</label>
+                    <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
+
+                        {
+                            guestRequest.map((item, index) => (
+
+                                item.created_date === '2023-11-12' ? (
+                                    <li
+                                        className="d-flex dropdown-item rounded-2 gap-4 "
+                                        key={index}
+                                        value={item.id}
+                                        onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_room']: item.id_room, ['task_name']: item.name}))}
+                                    >
+                                        <div> {item.name}</div>
+
+                                            <div>
+                                                <p className="m-0">Дата составления: {item.created_date}</p>
+                                                <p className="m-0">Номер комнаты: {item.id_room}</p>
+                                                <p className="m-0">Комментарий от гостя: {item.comment}</p>
+                                            </div>
 
 
-
-
+                                    </li>
+                                ) : null
+                            ))
+                        }
+                    </ul>
+                </div>
+            </div>
             <div className="row mt-4">
                 <div className="col-md-6">
                     <button className="btn btn-primary" onClick={generateTask}>Сформировать задачу</button>
                 </div>
             </div>
+
+            {success && (
+                <div  className="modal" style={{ display: "block" }}>
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content rounded-3 shadow">
+                            <div className="modal-body p-4 text-center">
+                                <h3 className="mb-0">{response.message}</h3>
+                                <p className="mb-0">{response.task}</p>
+
+                            </div>
+                            <div className="modal-footer flex-nowrap p-0">
+                                <button type="button"
+                                        className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
+                                        onClick={() => setSuccess(false)}
+                                >
+                                    <strong>Закрыть</strong></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
+
+// <label>Номер</label>
+// <select
+//     className="form-control h-37"
+//     id="employeeSelector"
+//     onClick={(e)=> addTask(e, 'id_room')}
+// >
+//     {
+//         rooms.map((item, index) => (
+//             <option key={index} value ={item.id}>
+//                 Номер комнаты: {item.number} {item.status}
+//
+//                 {(item.checkOut === currentDate )? ' clean': ''}
+//
+//                 {roomForCleaning.map((room,index) => ((item.id === room.id_room)? ' clean': ''))}
+//
+//             </option>
+//         ))
+//     }
+// </select>
+
+{/*<select*/}
+{/*    className="form-control"*/}
+{/*    id="taskSelector"*/}
+{/*    onClick={(e)=> addTask(e, 'task_name')}*/}
+{/*>*/}
+{/*    {*/}
+
+{/*        tasksName.map((item, index)=>(*/}
+{/*            <option key={index} value={item}>{item}</option>*/}
+{/*        ))*/}
+{/*    }*/}
+{/*</select>*/}
+
+{/*<select*/}
+{/*    className="form-control"*/}
+{/*    id="employeeSelector"*/}
+{/*    onClick={(e)=> addTask(e, 'id_staff')}*/}
+{/*>*/}
+{/*    {*/}
+{/*        staff.map((item, index) => (*/}
+{/*            <option key={index} value = {item.id}>*/}
+{/*                {item.first_name} {item.last_name}*/}
+{/*                  ({item.position})*/}
+{/*            </option>*/}
+{/*        ))*/}
+{/*    }*/}
+{/*</select>*/}

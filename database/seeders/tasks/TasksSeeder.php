@@ -64,7 +64,7 @@ class TasksSeeder extends Seeder
         ];
 
         $tasks [] = [
-            'name'=> 'уборка номера ',
+            'name'=> 'уборка номера',
             'id_room' => 3,
             'id_staff'=> fake()->numberBetween(5, 7),
             'created_date'=> date('2023-11-04'),
@@ -74,23 +74,43 @@ class TasksSeeder extends Seeder
         ];
 
         $tasks [] = [
+            'name'=> 'доставка еды в номер',
+            'id_room' => 3,
+            'id_staff'=> fake()->numberBetween(5, 7),
+            'created_date'=> date('2023-11-04'),
+            'execution_date'=> date('2023-11-04'),
+            'comment'=> '',
+            'status'=> 'сделано'
+        ];
+
+        $tasks [] = [
+            'name'=> 'смена белья',
+            'id_room' => 5,
+            'id_staff'=> fake()->numberBetween(5, 7),
+            'created_date'=> date('2023-09-04'),
+            'execution_date'=> date('2023-09-04'),
+            'comment'=> '',
+            'status'=> 'сделано'
+        ];
+
+        $tasks [] = [
             'name'=> 'услуги прачечной',
             'id_room' => 3,
-            'id_staff'=> null,
-            'created_date'=> date('2023-11-11'),
-            'execution_date'=> null,
-            'comment'=> '',
-            'status'=> ' не сделано'
+            'id_staff'=> fake()->numberBetween(5, 7),
+            'created_date'=> date('2023-07-04'),
+            'execution_date'=> date('2023-07-04'),
+            'comment'=> 'можете забрать из номера в 12:00',
+            'status'=> 'сделано'
         ];
 
         $tasks [] = [
             'name'=> 'ремонт',
-            'id_room' => 9,
-            'id_staff'=> null,
-            'created_date'=> date('2023-11-11'),
-            'execution_date'=> null,
-            'comment'=> 'сломался кран',
-            'status'=> ' не сделано'
+            'id_room' => 8,
+            'id_staff'=> fake()->numberBetween(5, 7),
+            'created_date'=> date('2023-06-04'),
+            'execution_date'=> date('2023-06-04'),
+            'comment'=> 'не работает душ',
+            'status'=> 'сделано'
         ];
 
         return $tasks;

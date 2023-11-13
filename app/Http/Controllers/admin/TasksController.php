@@ -61,7 +61,7 @@ class TasksController extends Controller
           ]);
 
 
-        return response()->json(['message' => 'Task added successfully'], 200);
+        return response()->json(['message' => 'Задача успешно добавлена', 'task' => $data['task_name'] . ' ' . '(комната №'.$data['id_room']. ')' ], 200);
 
     }
 

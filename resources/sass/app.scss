@@ -16,6 +16,11 @@
     margin: 0 auto;
 }
 
+.small-container {
+    width: 750px;
+    margin: 0 auto;
+}
+
 .red-button {
     background-color: #e1a2a2;
     color: #fffdfd;
@@ -27,6 +32,18 @@
     background-color: #c0e1a2;
     color: #fffdfd;
     border: #c0e1a2;
+}
+
+.blue-button {
+    background-color: #a2cbd7;
+    color: #fffdfd;
+    border: #a2cbd7;
+}
+
+.yellow-button {
+    background-color: #f5bb84;
+    color: #fffdfd;
+    border: #f5bb84;
 }
 
 .blue-color {
@@ -82,48 +99,23 @@ select:disabled {
     display: none;
 }
 
-// styles.scss
-.label-container {
-    position: relative;
-    display: inline-block;
-
-    label {
-        position: absolute;
-
-        transform: translateY(-50%);
-        left: 30px;
-        pointer-events: none;
-        color: #000;
-    }
-
-    select {
-        padding-left: 10px;
-    }
-
-    // Адаптивные стили для планшетов (например, ширина до 768px)
-    @media (max-width: 768px) {
-        display: block;
-
-        label {
-            position: relative;
-            transform: none;
-            left: 0;
-            margin-bottom: 5px;
-        }
-
-        select {
-            width: 100%;
-            box-sizing: border-box;
-        }
-    }
-
-    // Адаптивные стили для телефонов (например, ширина до 480px)
-    @media (max-width: 480px) {
-        label {
-            font-size: 14px;
-        }
-    }
+li {
+    /* Добавьте общие стили для ваших элементов li */
+    list-style: none; /* Убрать маркеры списка, если они есть */
+    padding: 10px; /* Пример общего отступа */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    /* Дополнительные общие стили... */
 }
+
+/* Стиль при hover */
+li:hover {
+    background-color: #6495ED; /* Грязно голубой цвет */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Тень */
+    /* Дополнительные стили при hover... */
+}
+
+
+
 
 
 

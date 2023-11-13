@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\admin\StaffController;
 use App\Http\Controllers\admin\TasksController;
+use App\Http\Controllers\guest\GuestController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomsController;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,6 @@ Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('
 
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks');
 Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask');
+
+
+Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
