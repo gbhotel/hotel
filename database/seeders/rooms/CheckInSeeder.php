@@ -14,39 +14,39 @@ class CheckInSeeder extends Seeder
         [
             'id_admin' => 2,
             'checkIn' => '2023-07-15',
-            'checkOut' => '203-07-25',
+            'checkOut' => '2023-07-25',
             'id_booking' => 1,
         ],
 
         [
             'id_admin' => 3,
             'checkIn' => '2023-08-05',
-            'checkOut' => '203-08-23',
+            'checkOut' => '2023-08-23',
             'id_booking' => 3,
         ],
         [
             'id_admin' => 4,
             'checkIn' => '2023-08-06',
-            'checkOut' => '203-08-16',
+            'checkOut' => '2023-08-16',
             'id_booking' => 4,
         ],
         [
             'id_admin' => 2,
             'checkIn' => '2023-09-12',
-            'checkOut' => '203-09-28',
+            'checkOut' => '2023-09-28',
             'id_booking' => 5,
         ],
 
         [
             'id_admin' => 2,
             'checkIn' => '2023-10-11',
-            'checkOut' => '203-10-21',
+            'checkOut' => '2023-10-21',
             'id_booking' => 7,
         ],
         [
             'id_admin' => 4,
             'checkIn' => '2023-10-15',
-            'checkOut' => '203-10-25',
+            'checkOut' => '2023-11-12',
             'id_booking' => 8,
         ],
         //-----------------------------------------------

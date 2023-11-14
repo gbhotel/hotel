@@ -8,6 +8,7 @@ import Employee from "./routes/Employee.jsx";
 import AddBooking from "./routes/AddBooking.jsx";
 import Room from "./routes/Room.jsx";
 import Booking from "./routes/Booking.jsx";
+import Tasks from "./routes/Tasks.jsx";
 
 import StaffDirector from "./routes/Director/Staff.jsx";
 import EmployeeDirector from "./routes/Director/Employee.jsx";
@@ -29,6 +30,8 @@ export default function App() {
                     <Route path="/room/:id" element={<Room />} />
                     <Route path="/staff" element={<Staff />} />
                     <Route path="/employee/:id" element={<Employee />} />
+                    <Route path="/tasks" element={<Tasks />} />
+
                     {/*Директор*/}
                     <Route path="/director/staff" element={<StaffDirector />} />
                     <Route path="/director/employee/:id" element={<EmployeeDirector />} />

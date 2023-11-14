@@ -14,13 +14,15 @@ class RoomsController extends Controller
     {
         $date = now()->toDateTimeString();
 
+//        $date = $request->only(['date']);
+
         $checkIn = DB::table('rooms')
             ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
             ->whereDate('booking.check_in', '<=', $date)
             ->whereDate('booking.check_out', '>=', $date)
             ->where( 'check_in.id_booking', '>', 0)
-            ->select('rooms.id', 'rooms.number')
+            ->select('rooms.id', 'rooms.number', 'checkIn', 'checkOut')
             ->get();
 
         foreach ($checkIn as $item) {
@@ -33,7 +35,7 @@ class RoomsController extends Controller
             ->whereDate('booking.check_in', '<=', $date)
             ->whereDate('booking.check_out', '>=', $date)
             ->whereNull( 'check_in.id_booking')
-            ->select('rooms.id', 'rooms.number')
+            ->select('rooms.id', 'rooms.number',  'check_in', 'check_out')
             ->get();
 
         foreach ($booking as $item) {
@@ -101,4 +103,24 @@ class RoomsController extends Controller
         }
         return response()->json($freeRooms);
     }
+
+    public function getRoomsForCleaning() {
+
+        $date = '2023-11-12';
+
+        $roomsForCleaning = DB::table('rooms')
+                              ->leftJoin('tasks', 'rooms.id', '=', 'tasks.id_room')
+                              ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
+                              ->leftJoin('check_in', 'booking.id','=','check_in.id_booking')
+                              ->where('tasks.name', '=', 'уборка номера')
+                              ->whereDate('check_in.checkOut', '>=', $date)
+                              ->groupBy('tasks.id_room')
+                              ->havingRaw('MAX(tasks.execution_date) <= ?', [now()->subDays(3)])
+                              ->selectRaw('tasks.id_room, MAX(tasks.execution_date) as max_execution_date')
+                              ->get();
+
+        return response()->json($roomsForCleaning);
+    }
+
+
 }

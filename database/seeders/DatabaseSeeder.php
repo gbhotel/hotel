@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\people\GuestRequestSeeder;
 use Database\Seeders\people\GuestsSeeder;
 use Database\Seeders\people\PositionSeeder;
 use Database\Seeders\people\RolesSeeder;
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
             BookingSeeder::class,
             CheckInSeeder::class,
             TasksSeeder::class,
+            GuestRequestSeeder::class
         ]);
     }
 }

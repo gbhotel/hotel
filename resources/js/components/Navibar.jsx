@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 export default function Navibar() {
     return (
         <>
+
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <div className="d-flex main-container">
                     <Navbar.Brand >My Hotel</Navbar.Brand>
@@ -19,6 +20,7 @@ export default function Navibar() {
                             <Link to="/guests" className="nav-link">Гости</Link>
                             <Link to="/materials" className="nav-link">Материалы</Link>
                             <Link to="/staff" className="nav-link">Сотрудники</Link>
+                            <Link to="/tasks" className="nav-link">Задачи</Link>
                         </Nav>
                     </Navbar.Collapse>
                     <Nav>
@@ -30,6 +32,7 @@ export default function Navibar() {
                     </Nav>
                 </div>
             </Navbar>
+
         </>
     )
 }

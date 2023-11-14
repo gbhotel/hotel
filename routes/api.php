@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\admin\StaffController;
+use App\Http\Controllers\admin\TasksController;
+use App\Http\Controllers\guest\GuestController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\director\StaffController as DirectorStaffController;
@@ -25,6 +27,8 @@ use App\Http\Controllers\director\StaffController as DirectorStaffController;
 //});
 
 Route::get('admin/rooms', [RoomsController::class, 'getRooms'])->name('admin.rooms');
+Route::get('admin/check_in_rooms', [RoomsController::class, 'getCheckInRooms'])->name('admin.checkInRooms');
+Route::get('admin/roomsForCleaning', [RoomsController::class, 'getRoomsForCleaning'])->name('admin.roomsForCleaning');
 Route::post('admin/free-rooms-period', [RoomsController::class, 'getFreeRoomsPeriod'])->name('admin.free-rooms-period');
 Route::get('admin/room/{id}/get-room', [RoomController::class, 'getRoom'])->name('admin.room.get-room');
 
@@ -38,6 +42,14 @@ Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'edit
 
 Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('admin.booking');
 Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room');
+
+
+Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks');
+Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask');
+
+
+Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
+
 
 Route::get('director/staff', [DirectorStaffController::class, 'getStaff']);
 Route::get('director/employee/{id}', [DirectorStaffController::class, 'getEmployee']);
