@@ -26,6 +26,15 @@ export default function App() {
                     <Route path="/staff" element={<Staff />} />
                     <Route path="/employee/:id" element={<Employee />} />
                     <Route path="/tasks" element={<Tasks />} />
+
+                    {/*Директор*/}
+                    <Route path="/director/staff" element={<StaffDirector />} />
+                    <Route path="/director/employee/:id" element={<EmployeeDirector />} />
+                    <Route path="/director/create-employee" element={<CreateEmployeeDirector />} />
+                    {/*Горничная (ни чего не сделано)*/}
+                    {/*<Route path="/maid/:id" element={<StaffDirector />} />*/}
+                    {/*гость  (ни чего не сделано)*/}
+                    {/*<Route path="/fuest/:id" element={<StaffDirector />} />*/}
                 </Routes>
             </BrowserRouter>
         </>
