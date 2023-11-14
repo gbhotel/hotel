@@ -24,7 +24,7 @@ export default function Navibar() {
                     <Nav>
                         <form action="/logout" method='post'>
                             <input type="hidden" name="_token" defaultValue={_token} />
-                            <input type="submit" value="Выход" class="btn btn-primary" />
+                            <input type="submit" value="Выход" className="btn btn-primary" />
                         </form>
                         {/* <Button variant="primary">LogOut</Button> */}
                     </Nav>

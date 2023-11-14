@@ -29,18 +29,19 @@ export default function Staff() {
         }
     }, []);
 
+    function addUser(event) {
+        event.preventDefault();
+        window.location.href = '/director/create-employee';
+    }
+
     return (
         <>
             <p style={{color: 'red'}}>добавить сообщение о сохранении пользователя</p>
             <div className="d-flex container justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 className="h2">Сотрудники</h1>
                 <div className="btn-toolbar mb-2 mb-md-0">
-                    {/*<div className="btn-group me-2">*/}
-                    {/*    <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>*/}
-                    {/*    <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>*/}
-                    {/*</div>*/}
-                    <button type="button" className="btn btn-sm btn-outline-secondary">
-                        Принять на работу
+                    <button type="button" onClick={addUser} className="btn btn-sm btn-outline-secondary">
+                        Оформить сотрудника
                     </button>
                 </div>
             </div>

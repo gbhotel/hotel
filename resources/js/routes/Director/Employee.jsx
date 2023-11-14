@@ -3,7 +3,8 @@ import {Link, useParams} from "react-router-dom";
 
 
 export default function Employee() {
-    const { id } = useParams();
+    const id = useParams().id;
+    console.log(id)
 
     const [data, setData] = useState([]);
 
@@ -23,13 +24,48 @@ export default function Employee() {
                 setData(data);
             })
             .catch(error => {
-                console.error(error);
+                console.error(error.message);
             });
 
         return () => {
             abortController.abort();
         }
     }, []);
+
+    function editUser() {
+        window.location.href = `director/edit-employee/${id}`;
+    }
+
+    async function dismissEmployee(){
+        const url = '/api/director/dismissEmployee';
+
+        const dismissData = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify( {id: id, _token})
+        }
+
+        let response = await fetch(url, dismissData);
+        let answer = await response.json();
+
+        console.log(answer);
+
+        answer.ok = response.ok;
+        answer.status = response.status;
+
+        if(answer.ok && answer.delete === 'good'){
+            console.log(answer);
+            window.location.href = '/director/staff';
+        }else{
+            //действия, если пользователь не сохранен
+            console.log(answer.status);
+        }
+    }
+
+    function goBack(event) {
+        event.preventDefault();
+        window.location.href = '/director/staff';
+    }
 
     return (
         <div className=" container my-5 col-md-6">
@@ -71,6 +107,15 @@ export default function Employee() {
                     <div className="d-flex  mr_auto align-items-center">
                         <p className="mb-0">Принат на работу: {data.employment_date}</p>
                     </div>
+                    <button type="button" onClick={editUser} className="btn btn-sm btn-outline-secondary">
+                        Редактировать данные
+                    </button>
+                    <button type="button" onClick={dismissEmployee} className="btn btn-sm btn-outline-secondary">
+                        Уволить сотрудника
+                    </button>
+                    <button type="submit" onClick={goBack} className="mx-2 btn btn-primary">
+                        Назад к сотрудникам
+                    </button>
                 </div>
             </div>
         </div>

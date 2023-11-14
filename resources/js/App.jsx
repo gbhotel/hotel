@@ -12,6 +12,7 @@ import Booking from "./routes/Booking.jsx";
 import StaffDirector from "./routes/Director/Staff.jsx";
 import EmployeeDirector from "./routes/Director/Employee.jsx";
 import CreateEmployeeDirector from "./routes/Director/CreateEmployee.jsx";
+import EditEmployeeDirector from "./routes/Director/EditEmployee.jsx";
 
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
                     <Route path="/director/staff" element={<StaffDirector />} />
                     <Route path="/director/employee/:id" element={<EmployeeDirector />} />
                     <Route path="/director/create-employee" element={<CreateEmployeeDirector />} />
+                    <Route path="/director/edit-employee/:id" element={<EditEmployeeDirector />} />
                     {/*Горничная (ни чего не сделано)*/}
                     {/*<Route path="/maid/:id" element={<StaffDirector />} />*/}
                     {/*гость  (ни чего не сделано)*/}

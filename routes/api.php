@@ -41,8 +41,11 @@ Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('
 
 Route::get('director/staff', [DirectorStaffController::class, 'getStaff']);
 Route::get('director/employee/{id}', [DirectorStaffController::class, 'getEmployee']);
-Route::get('director/create-employee/get-all-positions', [DirectorStaffController::class, 'getAllPositions']);
-Route::get('director/create-employee/get-all-roles', [DirectorStaffController::class, 'getAllRoles']);
-Route::post('director/create-employee/create', [DirectorStaffController::class, 'createEmployee']);
+Route::get('director/get-all-positions', [DirectorStaffController::class, 'getAllPositions']);
+Route::get('director/get-all-roles', [DirectorStaffController::class, 'getAllRoles']);
+Route::post('director/create-employee', [DirectorStaffController::class, 'createEmployee']);
+Route::post('director/edit-employee', [DirectorStaffController::class, 'editEmployee']);
+//Route::post('director/destroy-employee/{id}', [DirectorStaffController::class, 'dellUser']);
+Route::delete('director/dismissEmployee', [DirectorStaffController::class, 'dismissUser']);
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
