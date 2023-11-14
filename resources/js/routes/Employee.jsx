@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useParams} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from "react-router-dom";
 
-import {request} from "../services/http.js";
+import { request } from "../services/http.js";
 
 export default function Employee() {
     const { id } = useParams();
@@ -11,8 +11,10 @@ export default function Employee() {
     const [positions, setPositions] = useState({});
     const [disable, setDisable] = useState(true);
 
+    employee._token = _token
+
     const updateEmployee = (event, field) => {
-        setEmployee(prevState => ({...prevState, [field]: event.target.value}))
+        setEmployee(prevState => ({ ...prevState, [field]: event.target.value }))
     }
 
     const saveChanges = () => {
@@ -68,6 +70,8 @@ export default function Employee() {
                             </select>
                         </div>
                     </div>
+
+
                     <div className="d-flex align-items-center">
                         <h3 className="mb-0">Имя: </h3>
                         <input
@@ -110,7 +114,7 @@ export default function Employee() {
                     </div>
                     <div className="d-flex justify-content-end">
                         <div className="d-flex  mr_auto align-items-center">
-                            <h3 className="mb-0 mr_auto">Принят: </h3>
+                            <h3 className="mb-0 mr_auto">Принят: </h3><form action=""></form>
                             <input
                                 disabled={disable}
                                 type="text"
@@ -137,8 +141,8 @@ export default function Employee() {
                 </div>
                 <div className="col-auto d-none d-lg-block">
                     <svg className="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
-                         role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                         focusable="false">
+                        role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                        focusable="false">
                         <title>Placeholder</title>
                         <rect width="100%" height="100%" fill="#55595c"></rect>
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Фото</text>

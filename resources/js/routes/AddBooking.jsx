@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import FreeRooms from "../components/FreeRooms.jsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function AddBooking() {
 
@@ -14,6 +14,7 @@ export default function AddBooking() {
             const requestData = {
                 checkinDate,
                 checkoutDate,
+                _token,
             };
 
             const response = await fetch('/api/admin/free-rooms-period', {
@@ -83,7 +84,7 @@ export default function AddBooking() {
                     </div>
                 </div>
             </div>
-            <FreeRooms checkinDate = {checkinDate}  checkoutDate = {checkoutDate} freeRooms = {freeRooms}></FreeRooms>
+            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms}></FreeRooms>
         </div>
 
     );
