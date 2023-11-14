@@ -9,16 +9,8 @@
     </head>
     <body>
         <div id="root">
-
         </div>
-        <div id="auth">@yield('content')</div>
-
-
-        <form action="{{route('logout')}}" method="post">
-            @csrf
-            Костыль для выхода из учетной записи (logout):
-            <input type="submit" value="Выход">
-        </form>
+            <div id="auth">@yield('content')</div>
 
     </body>
 </html>
