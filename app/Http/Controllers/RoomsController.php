@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Check_in;
+use App\Models\Booking;
+use App\Models\Rooms;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
