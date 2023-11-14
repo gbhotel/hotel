@@ -42,14 +42,31 @@ class RoomsController extends Controller
             $item->status = 'booking';
         }
 
-        $free = DB::table('rooms')
-            ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
-            ->whereDate('booking.check_out', '<=', $date)
-            ->orWhereDate('booking.check_in', '>=', $date)
-            ->orderBy('rooms.number')
-            ->select('rooms.id', 'rooms.number')
-            ->distinct('rooms.number')
+        $notFree = DB::table('booking')
+            ->whereDate('check_out', '>', $date)
+            ->whereDate('check_in', '<', $date)
+            ->join('rooms', 'booking.id_room', '=', 'rooms.id')
+            ->select('rooms.id')
+            ->distinct('rooms.id')
             ->get();
+
+        $allRooms = DB::table('rooms')->select('id', 'number')->get();
+
+        $free =[];
+        foreach ($allRooms as $key => $room)
+        {
+            $b = false;
+            foreach ($notFree as $id)
+            {
+                if($id->id == $room->id){
+                    $b = true;
+                    break;
+                }
+            }
+            if(!$b){
+                $free[] = $room;
+            }
+        }
 
         foreach ($free as $item) {
             $item->status = 'free';
