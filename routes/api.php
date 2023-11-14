@@ -48,3 +48,11 @@ Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.a
 
 
 Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
+
+Route::get('director/staff', [DirectorStaffController::class, 'getStaff']);
+Route::get('director/employee/{id}', [DirectorStaffController::class, 'getEmployee']);
+Route::get('director/create-employee/get-all-positions', [DirectorStaffController::class, 'getAllPositions']);
+Route::get('director/create-employee/get-all-roles', [DirectorStaffController::class, 'getAllRoles']);
+Route::post('director/create-employee/create', [DirectorStaffController::class, 'createEmployee']);
+
+Route::get('isauth', [AuthController::class, 'isAuth']);
