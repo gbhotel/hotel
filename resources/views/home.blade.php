@@ -10,7 +10,6 @@
     <body>
         <div id="root">
         </div>
-            <div id="auth">@yield('content')</div>
 
     </body>
 </html>
