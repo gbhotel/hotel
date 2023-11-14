@@ -50,6 +50,7 @@ class StaffController extends Controller
 
         $user = $employee->user;
         $position = $employee->position->name;
+        $positionId = $employee->position->id;
 
         $employee->userId = $user->id;
         $employee->firstName = $user->first_name;
@@ -59,11 +60,13 @@ class StaffController extends Controller
         $employee->phone = $user->phone;
         $employee->passport = $user->passport;
         $employee->role = $role->name;
+        $employee->roleId = $role->id;
         $employee->emailVerifiedAt = $user->email_verified_at;
         $employee->createdAt = $user->created_at;
         $employee->updatedAt = $user->updated_at;
         unset($employee->position);
         $employee->position = $position;
+        $employee->positionId = $positionId;
         unset($employee->user);
         unset($employee->id_position);
 
@@ -86,10 +89,25 @@ class StaffController extends Controller
         $person = $request->all();
 
         $data = [];
-        $data['username'] = DB::table('users')->select('username')->where('username', '=', $person['username'])->exists();
-        $data['passport'] = DB::table('users')->select('passport')->where('passport', '=', $person['passport'])->exists();
-        $data['email'] = DB::table('users')->select('email')->where('email', '=', $person['email'])->exists();
-        $data['phone'] = DB::table('users')->select('phone')->where('phone', '=', $person['phone'])->exists();
+        $data['username'] = DB::table('users')
+            ->select('username')
+            ->where('username', '=', $person['username'])
+            ->exists();
+
+        $data['passport'] = DB::table('users')
+            ->select('passport')
+            ->where('passport', '=', $person['passport'])
+            ->exists();
+
+        $data['email'] = DB::table('users')
+            ->select('email')
+            ->where('email', '=', $person['email'])
+            ->exists();
+
+        $data['phone'] = DB::table('users')
+            ->select('phone')
+            ->where('phone', '=', $person['phone'])
+            ->exists();
 
         if($data['username'] || $data['passport'] || $data['email'] || $data['phone'] ){
             $data['validation'] = 'bad';
@@ -122,5 +140,94 @@ class StaffController extends Controller
         $data['saveUser'] = 'good';
 
         return response()->json($data);
+    }
+
+    public function editEmployee(Request $request)
+    {
+        $person = $request->all();
+
+        $data = [];
+        $data['username'] = DB::table('users')
+            ->select('username')
+            ->where('username', '=', $person['username'])
+            ->whereNot('id', '=', $person['userId'])
+            ->exists();
+        $data['passport'] = DB::table('users')
+            ->select('passport')
+            ->where('passport', '=', $person['passport'])
+            ->whereNot('id', '=', $person['userId'])
+            ->exists();
+        $data['email'] = DB::table('users')
+            ->select('email')
+            ->where('email', '=', $person['email'])
+            ->whereNot('id', '=', $person['userId'])
+            ->exists();
+        $data['phone'] = DB::table('users')
+            ->select('phone')
+            ->where('phone', '=', $person['phone'])
+            ->whereNot('id', '=', $person['userId'])
+            ->exists();
+
+        if($data['username'] || $data['passport'] || $data['email'] || $data['phone'] ){
+            $data['validation'] = 'bad';
+            return response()->json($data);
+        }
+
+        $employee = ['id_position' => $person['position'], /*'updated_at' => $person['updated_at']*/];
+
+        $staffId = $person['staffId'];
+        $userId = $person['userId'];
+
+        unset($person['position']);
+        unset($person['_token']);
+        unset($person['staffId']);
+        unset($person['userId']);
+
+        try{
+            $upUser = DB::table('users')->where('id', $userId)->update([...$person]);
+
+            $upStaff = DB::table('staff')->where('id', $staffId)->update([...$employee]);
+
+        }catch (\Exception $e){
+
+            $data['saveUser'] = 'bad';
+            $data['error'] = $e->getMessage();
+
+            return response()->json($data);
+        }
+
+        $data['validation'] = 'good';
+        $data['updataUser'] = 'good';
+        $data['updataUserStr'] = $upUser;
+        $data['updataStaffStr'] = $upStaff;
+
+        return response()->json($data);
+    }
+
+    public function dismissUser(Request $request)
+    {
+        $data = $request->all();
+
+        $staff = Staff::query()->with('user')->find($data['id']);
+
+        $answer = [];
+        $answer['stafId'] = $staff->id;
+        $answer['userId'] = $staff->user->id;
+
+        try{
+            DB::table('staff')->where('id', '=', $staff->id)->delete();
+            DB::table('users')->where('id', '=', $staff->user->id)->delete();
+        }catch (\Exception $e){
+
+            $answer['delete'] = 'bad';
+            $answer['error'] = $e->getMessage();
+
+            return response()->json($answer);
+        }
+
+        $answer['delete'] = 'good';
+        $answer['error'] = null;
+
+        return response()->json($answer);
     }
 }
