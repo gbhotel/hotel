@@ -6,6 +6,7 @@
         </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../sass/app.scss">
         @vite(['resources/sass/app.scss', 'resources/js/index.jsx'])
 
         <title>The Hotel</title>
@@ -13,6 +14,6 @@
     <body>
         <div id="root">
         </div>
-        <div id="auth">@yield('content')</div> 
+        <div class="auth" id="auth">@yield('content')</div>
     </body>
 </html>

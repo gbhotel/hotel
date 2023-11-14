@@ -7,6 +7,15 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 .main-container {
     width: 1500px;
     margin: 0 auto;
@@ -99,8 +108,7 @@ select:disabled {
 .no-box-shadow {
     box-shadow: none !important;
 }
-
-.invisible {
+ .invisible {
     display: none;
 }
 
@@ -142,6 +150,38 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
     background-color: #f8f8f8; /* Цвет фона */
 }
+
+
+.login {
+    position: relative;
+    background: url('../img/login_background.jpg') center center/cover  no-repeat fixed;
+    overflow: hidden;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    /* Другие стили для вашего контента */
+}
+
+.card {
+    position: absolute;
+    left: 850px;
+    top: 200px;
+}
+
+.selector {
+    text-transform: uppercase;
+}
+
+.btn-login {
+    background-image: linear-gradient(90deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
+    background-size: 200% auto;
+    background-position: 0 0;
+}
+
+.btn-login:hover {
+    background-position: 100% 0;
+}
+
 
 
 
