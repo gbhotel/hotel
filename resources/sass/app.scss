@@ -34,6 +34,11 @@
     border: #c0e1a2;
 }
 
+.purple-button {
+    background-color: #b4a2e1;
+    color: #fffdfd;
+    border: #b4a2e1;
+}
 .blue-button {
     background-color: #a2cbd7;
     color: #fffdfd;
@@ -113,6 +118,31 @@ li:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Тень */
     /* Дополнительные стили при hover... */
 }
+li {
+    outline: none;
+}
+
+li:active {
+    background-color: #b4a2e1!important;
+}
+
+button:hover {
+    background-color: #74689d !important;
+    color: white !important;
+}
+
+
+.name-block {
+    width: 90px; /* Задайте желаемую ширину */
+    height: 70px;
+    overflow: hidden; /* Обрежьте текст, если он выходит за границы блока */
+    border: 1px solid #ccc; /* Цвет рамки */
+    border-radius: 8px; /* Скругленные углы */
+    padding: 8px; /* Внутренний отступ */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
+    background-color: #f8f8f8; /* Цвет фона */
+}
+
 
 
 

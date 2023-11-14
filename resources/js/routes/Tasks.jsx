@@ -168,8 +168,8 @@ export default function Tasks() {
         <div className="d-flex flex-column gap-3 small-container mt-5">
             <div className="d-flex justify-content-between gap-5  mt-5">
                 <div className="d-flex justify-content-between flex-column">
-                    <div className="">
-                        <label>Задача</label>
+                    <div className="text-center">
+                        <label className="font-22">Задачи</label>
                         <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
                             {
                                 tasksName.map((item, index) => (
@@ -185,8 +185,8 @@ export default function Tasks() {
                             }
                         </ul>
                     </div>
-                    <div className="">
-                        <label>Исполнитель</label>
+                    <div className="text-center">
+                        <label className="font-22">Исполнители</label>
                         <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
 
                             {
@@ -204,8 +204,8 @@ export default function Tasks() {
                         </ul>
                     </div>
                 </div>
-                <div className="">
-                <label>Номер</label>
+            <div className="text-center">
+                <label className="font-22">Номера комнат</label>
                 <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
 
                     {
@@ -235,9 +235,9 @@ export default function Tasks() {
                 </ul>
             </div>
             </div>
-            <div>
-                <div>
-                    <label>Заявки</label>
+            <div className=" mt-3">
+                <div className="text-center">
+                    <label className="font-22">Заявки от гостей гостиницы</label>
                     <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
 
                         {
@@ -245,17 +245,21 @@ export default function Tasks() {
 
                                 item.created_date === '2023-11-12' ? (
                                     <li
-                                        className="d-flex dropdown-item rounded-2 gap-4 "
+                                        className="d-flex align-items-center dropdown-item rounded-2 gap-4 "
                                         key={index}
                                         value={item.id}
                                         onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_room']: item.id_room, ['task_name']: item.name}))}
                                     >
-                                        <div> {item.name}</div>
+                                        <div className="name-block d-flex flex-column justify-content-center align-items-center">
+                                            {item.name.split(' ').map((word, wordIndex) => (
+                                                <div key={wordIndex}>{word}</div>
+                                            ))}
+                                        </div>
 
                                             <div>
                                                 <p className="m-0">Дата составления: {item.created_date}</p>
                                                 <p className="m-0">Номер комнаты: {item.id_room}</p>
-                                                <p className="m-0">Комментарий от гостя: {item.comment}</p>
+                                                <p className="m-0">Комментарий гостя: "{item.comment?? "здесь пока ничего не оставили..."}"</p>
                                             </div>
 
 
@@ -266,11 +270,10 @@ export default function Tasks() {
                     </ul>
                 </div>
             </div>
-            <div className="row mt-4">
-                <div className="col-md-6">
-                    <button className="btn btn-primary" onClick={generateTask}>Сформировать задачу</button>
-                </div>
+            <div className="align-self-center mt-3">
+                <button className=" btn btn-primary purple-button py-3 px-4" onClick={generateTask}>Сформировать задачу</button>
             </div>
+
 
             {success && (
                 <div  className="modal" style={{ display: "block" }}>
@@ -283,7 +286,7 @@ export default function Tasks() {
                             </div>
                             <div className="modal-footer flex-nowrap p-0">
                                 <button type="button"
-                                        className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
+                                        className="text-black btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
                                         onClick={() => setSuccess(false)}
                                 >
                                     <strong>Закрыть</strong></button>
