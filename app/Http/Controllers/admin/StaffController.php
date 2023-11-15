@@ -19,6 +19,7 @@ class StaffController extends Controller
 
         if (in_array(AuthController::getCurrentRoleName(), $this->accessFor)) {
             $staff =  Staff::query()
+                ->where('dismissed', '=', 0)
                 ->with('position')
                 ->with('user')
                 ->orderByDesc('id')

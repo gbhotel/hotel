@@ -33,14 +33,14 @@ export default function Employee() {
     }, []);
 
     function editUser() {
-        window.location.href = `director/edit-employee/${id}`;
+        window.location.href = `/director/editEmployee/${id}`;
     }
 
     async function dismissEmployee(){
-        const url = '/api/director/dismissEmployee';
+        const url = '/api/director/dismiss-employee';
 
         const dismissData = {
-            method: 'DELETE',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify( {id: id, _token})
         }
@@ -53,7 +53,7 @@ export default function Employee() {
         answer.ok = response.ok;
         answer.status = response.status;
 
-        if(answer.ok && answer.delete === 'good'){
+        if(answer.ok && answer.dismissed === 'good'){
             console.log(answer);
             window.location.href = '/director/staff';
         }else{
@@ -113,7 +113,7 @@ export default function Employee() {
                     <button type="button" onClick={dismissEmployee} className="btn btn-sm btn-outline-secondary">
                         Уволить сотрудника
                     </button>
-                    <button type="submit" onClick={goBack} className="mx-2 btn btn-primary">
+                    <button type="submit" onClick={goBack} className="btn btn-sm btn-outline-secondary">
                         Назад к сотрудникам
                     </button>
                 </div>

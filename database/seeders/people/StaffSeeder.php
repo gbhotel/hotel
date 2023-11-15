@@ -15,41 +15,48 @@ class StaffSeeder extends Seeder
         $director = [
             'id_position' => 1,
             'id_user' => 1,
-            'employment_date' => '2022-05-10'
+            'employment_date' => '2022-05-10',
+            'dismissed' => false
         ];
 
         $admins = [
             [
                 'id_position' => 2,
                 'id_user' => 2,
-                'employment_date' => '2022-06-11'
+                'employment_date' => '2022-06-11',
+                'dismissed' => false
             ],
             [
                 'id_position' => 2,
                 'id_user' => 3,
-                'employment_date' => '2022-08-12'
+                'employment_date' => '2022-08-12',
+                'dismissed' => false
             ],
             [
                 'id_position' => 2,
                 'id_user' => 4,
-                'employment_date' => '2022-11-13'
+                'employment_date' => '2022-11-13',
+                'dismissed' => false
             ],
         ];
         $maids = [
             [
                 'id_position' => 3,
                 'id_user' => 5,
-                'employment_date' => '2022-07-11'
+                'employment_date' => '2022-07-11',
+                'dismissed' => false
             ],
             [
                 'id_position' => 3,
                 'id_user' => 6,
-                'employment_date' => '2022-10-12'
+                'employment_date' => '2022-10-12',
+                'dismissed' => false
             ],
             [
                 'id_position' => 3,
                 'id_user' => 7,
-                'employment_date' => '2023-02-13'
+                'employment_date' => '2023-02-13',
+                'dismissed' => false
             ],
         ];
 

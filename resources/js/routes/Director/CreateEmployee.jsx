@@ -5,7 +5,7 @@ import {request} from "../../services/http.js";
 
 export default function CreateEmployee() {
     //API:
-    const urlSaveUser = '/api/director/create-employee/create';
+    const urlSaveUser = '/api/director/create-employee';
     const urlPositions = '/api/director/get-all-positions';
     const urlRoles = '/api/director/get-all-roles';
 
@@ -129,7 +129,7 @@ export default function CreateEmployee() {
             window.location.href = '/director/staff';
         }else{
             //действия, если пользователь не сохранен
-            console.log(answer.status);
+            console.log(answer);
         }
     }
 
@@ -140,7 +140,7 @@ export default function CreateEmployee() {
             body: JSON.stringify( {position: dataForm['position'], first_name: dataForm['firstName'],
                 last_name: dataForm['lastName'], role_id: dataForm['roles'], username: dataForm['login'],
                 email: dataForm['email'], phone: dataForm['phone'], employmentDate: dataForm['employmentDate'],
-                password: dataForm['password'], passport: dataForm['passport']}),
+                password: dataForm['password'], passport: dataForm['passport'], _token}),
         };
 
         let response = await fetch(url, requestOptions);
