@@ -16,10 +16,12 @@ return new class extends Migration
             $table->foreignId('id_position')
                     ->constrained('positions')
                     ->cascadeOnDelete();
-            $table->date('employment_date');
             $table->foreignId('id_user')
                 ->constrained('users')
                 ->cascadeOnDelete();
+            $table->date('employment_date');
+            $table->date('dismissal_date')->nullable();
+            $table->boolean('dismissed')->nullable();
         });
     }
 

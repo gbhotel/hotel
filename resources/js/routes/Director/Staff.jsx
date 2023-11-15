@@ -31,7 +31,7 @@ export default function Staff() {
 
     function addUser(event) {
         event.preventDefault();
-        window.location.href = '/director/create-employee';
+        window.location.href = '/director/createEmployee';
     }
 
     return (
@@ -67,7 +67,7 @@ export default function Staff() {
                                     <td>{item.last_name}</td>
                                     <td>{item.phone}</td>
                                     <td>{item.email}</td>
-                                    <td>{item.position.name}</td>
+                                    <td>{item.position}</td>
                                     <td >
                                         <Link to={`/director/employee/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
                                     </td>

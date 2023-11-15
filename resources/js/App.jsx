@@ -36,8 +36,8 @@ export default function App() {
                     {/*Директор*/}
                     <Route path="/director/staff" element={<StaffDirector />} />
                     <Route path="/director/employee/:id" element={<EmployeeDirector />} />
-                    <Route path="/director/create-employee" element={<CreateEmployeeDirector />} />
-                    <Route path="/director/edit-employee/:id" element={<EditEmployeeDirector />} />
+                    <Route path="/director/createEmployee" element={<CreateEmployeeDirector />} />
+                    <Route path="/director/editEmployee/:id" element={<EditEmployeeDirector />} />
                     {/*Горничная (ни чего не сделано)*/}
                     {/*<Route path="/maid/:id" element={<StaffDirector />} />*/}
                     {/*гость  (ни чего не сделано)*/}

@@ -18,6 +18,7 @@ class StaffController extends Controller
         $result = [];
 
         $staff =  Staff::query()
+            ->where('dismissed', '=', 0)
             ->with('position')
             ->with('user')
             ->orderByDesc('id')
@@ -87,6 +88,7 @@ class StaffController extends Controller
     public function createEmployee(Request $request)
     {
         $person = $request->all();
+        unset($person['_token']);
 
         $data = [];
         $data['username'] = DB::table('users')
@@ -114,7 +116,7 @@ class StaffController extends Controller
             return response()->json($data);
         }
 
-        $employee = ['id_position' => $person['position'], 'employment_date' => $person['employmentDate']];
+        $employee = ['id_position' => $person['position'], 'employment_date' => $person['employmentDate'], 'dismissed' => false];
 
         unset($person['position']);
         unset($person['employmentDate']);
@@ -206,26 +208,24 @@ class StaffController extends Controller
 
     public function dismissUser(Request $request)
     {
+        $date = now()->toDateTimeString();
         $data = $request->all();
 
         $staff = Staff::query()->with('user')->find($data['id']);
 
         $answer = [];
-        $answer['stafId'] = $staff->id;
-        $answer['userId'] = $staff->user->id;
+        $answer['staffId'] = $staff->id;
 
         try{
-            DB::table('staff')->where('id', '=', $staff->id)->delete();
-            DB::table('users')->where('id', '=', $staff->user->id)->delete();
+            DB::table('staff')->where('id', '=', $staff->id)->update(['dismissal_date' => $date, 'dismissed' => 1]);
         }catch (\Exception $e){
-
-            $answer['delete'] = 'bad';
+            $answer['dismissed'] = 'bad';
             $answer['error'] = $e->getMessage();
 
             return response()->json($answer);
         }
 
-        $answer['delete'] = 'good';
+        $answer['dismissed'] = 'good';
         $answer['error'] = null;
 
         return response()->json($answer);
