@@ -21,7 +21,6 @@ import App from './App';
 
 const Index = ReactDOM.createRoot(document.getElementById("root"));
 
-console.log(document.cookie);
 
 let element =
     (
