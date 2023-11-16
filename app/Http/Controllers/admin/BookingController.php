@@ -18,27 +18,27 @@ class BookingController extends Controller
 
         $result = [];
 
-        if (in_array(AuthController::getCurrentRoleName(), $this->accessFor)) {
-            $allBookings = Booking::query()
-                ->with('room')
-                ->with('guest.user')
-                ->with('employee.user')
-                ->orderByDesc('id')
-                ->get();
 
-            foreach ($allBookings as $booking) {
-                $result[] = [
-                    'booking_number' => $booking->id,
-                    'room_number' => $booking->room->number,
-                    'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->last_name,
-                    'guest_phone' => $booking->guest->user->phone,
-                    'check_in' => $booking->check_in,
-                    'check_out' => $booking->check_out,
-                    'admin_name' => $booking->employee->user->first_name . ' ' . $booking->employee->last_name
+        $allBookings = Booking::query()
+            ->with('room')
+            ->with('guest.user')
+            ->with('employee.user')
+            ->orderByDesc('id')
+            ->get();
 
-                ];
-            }
+        foreach ($allBookings as $booking) {
+            $result[] = [
+                'booking_number' => $booking->id,
+                'room_number' => $booking->room->number,
+                'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->last_name,
+                'guest_phone' => $booking->guest->user->phone,
+                'check_in' => $booking->check_in,
+                'check_out' => $booking->check_out,
+                'admin_name' => $booking->employee->user->first_name . ' ' . $booking->employee->last_name
+
+            ];
         }
+
 
         return response()->json($result);
     }
