@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
-    public function getTasks() {
+    public function getTasks()
+    {
 
         $result = [
-            'tasks_name'=> [],
-            'tasks'=> []
-        ] ;
+            'tasks_name' => [],
+            'tasks' => []
+        ];
 
         $tasks = Tasks::query()
             ->with('room')
@@ -30,19 +31,20 @@ class TasksController extends Controller
             }
 
             $result['tasks'][] = [
-                'name'=> $task->name,
+                'name' => $task->name,
                 'id_room' => $task->room->number,
-                'id_staff'=> $task->id_staff,
-                'created_date'=> $task->created_date,
-                'execution_date'=> $task->execution_date,
-                'comment'=> $task->comment,
-                'status'=> $task->status
+                'id_staff' => $task->id_staff,
+                'created_date' => $task->created_date,
+                'execution_date' => $task->execution_date,
+                'comment' => $task->comment,
+                'status' => $task->status
             ];
         }
         return response()->json($result);
     }
 
-    public function addTask(Request $request) {
+    public function addTask(Request $request)
+    {
 
         $data = $request->only([
             'room_number',
@@ -52,18 +54,15 @@ class TasksController extends Controller
         ]);
 
         DB::table('tasks')
-          ->insert([
-              'name' => $data['task_name'],
-              'id_room' => $data['id_room'],
-              'id_staff' => $data['id_staff'],
-              'created_date' => '2023-11-12',
+            ->insert([
+                'name' => $data['task_name'],
+                'id_room' => $data['id_room'],
+                'id_staff' => $data['id_staff'],
+                'created_date' => '2023-11-12',
 
-          ]);
+            ]);
 
 
-        return response()->json(['message' => 'Задача успешно добавлена', 'task' => $data['task_name'] . ' ' . '(комната №'.$data['id_room']. ')' ], 200);
-
+        return response()->json(['message' => 'Задача успешно добавлена', 'task' => $data['task_name'] . ' ' . '(комната №' . $data['id_room'] . ')'], 200);
     }
-
-
 }
