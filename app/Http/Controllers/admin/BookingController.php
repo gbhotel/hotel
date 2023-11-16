@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
-    protected $accessFor = ['директор'];
+    protected $accessFor = ['директор', 'администратор'];
 
     public function getBooking()
     {

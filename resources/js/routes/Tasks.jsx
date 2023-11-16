@@ -131,10 +131,16 @@ export default function Tasks() {
 
     const generateTask = async () => {
         try {
+            // const requestData = {
+            //     createdTask,
+            //     _token,
+            // };
+
             const response = await fetch('/api/admin/addTask', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-Token': _token,
                 },
                 body: JSON.stringify(createdTask),
             });

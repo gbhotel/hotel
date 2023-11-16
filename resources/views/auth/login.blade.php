@@ -2,8 +2,30 @@
 @extends('home')
 
 @section('content')
-<div class="login">
-            <div class="card col-md-3">
+<div class="">
+    <div class="d-flex main-container p-2 flex-row justify-content-between align-content-center">
+        <div class="align-center mt-2 font-weight-bold">MY HOTEL</div>
+        <div class="d-flex gap-4 flex-row align-content-center text-center">
+            <div class="d-flex align-items-center justify-content-center"><a  class="text-decoration-none text-reset" href="#">Доступные номера</a></div>
+            <div class="d-flex align-items-center justify-content-center"><a href="#" class="text-decoration-none text-reset">Услуги</a></div>
+            <div class="d-flex align-items-center justify-content-center"><a href="#" class="text-decoration-none text-reset" >Вакансии</a></div>
+            <div class="d-flex align-items-center justify-content-center"><a href="#" class="text-decoration-none text-reset" >Новости</a></div>
+            <div class="d-flex align-items-center justify-content-center"><a href="#" class="text-decoration-none text-reset">Соглашения</a></div>
+        </div>
+        <div class="d-flex gap-2 ">
+            <div class="gradient-container">
+                <button type="submit"  class=" btn-gradient-border text-black selector btn">
+                    <a></a>
+                </button>
+            </div>
+
+            <button type="submit" class=" text-white btn-login selector btn">
+                {{ __('Registration') }}
+            </button>
+        </div>
+    </div>
+    <div class="login">
+            <div class=" login-card card col-md-3">
                 <div class=" selector border-0 bg-transparent card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
@@ -66,5 +88,6 @@
                     </form>
                 </div>
             </div>
+    </div>
 </div>
 @endsection

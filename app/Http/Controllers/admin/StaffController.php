@@ -11,7 +11,7 @@ use PhpParser\Error;
 
 class StaffController extends Controller
 {
-    protected $accessFor = ['директор'];
+    protected $accessFor = ['директор', 'администратор'];
     public function getStaff()
     {
 
