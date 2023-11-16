@@ -38,51 +38,51 @@ class AuthServiceProvider extends ServiceProvider
     {
 
         Gate::define('get-booking', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
         Gate::define('get-employee', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
         Gate::define('edit-employee', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
         Gate::define('get-staff', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
         Gate::define('get-tasks', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
         Gate::define('add-task', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
         Gate::define('director-get-staff', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
         Gate::define('director-get-employee', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
         Gate::define('director-get-all-positions', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
         Gate::define('director-get-all-roles', function (User $user) {
             return in_array($this->getRole($user), ['директор',]);
         });
         Gate::define('director-create-employee', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
         Gate::define('director-edit-employee', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
         Gate::define('director-dismiss-user', function (User $user) {
-            return in_array($this->getRole($user), ['директор',]);
+            return in_array($this->getRole($user), ['директор', 'администратор']);
         });
         Gate::define('get-rooms', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор',]);
