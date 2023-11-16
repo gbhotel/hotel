@@ -70,10 +70,10 @@ export default function Booking() {
                                     <td>{item.check_in}</td>
                                     <td>{item.check_out}</td>
                                     <td>{item.admin_name}</td>
-                                    <div className="btn-group me-2">
+                                    <td className="btn-group me-2">
                                         <button type="button" className="btn btn-sm btn-outline-secondary">Редактировать</button>
                                         <button type="button" className="btn btn-sm btn-outline-secondary">Удалить</button>
-                                    </div>
+                                    </td>
                                 </tr>
 
                             ))

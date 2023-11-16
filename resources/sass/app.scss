@@ -10,6 +10,9 @@
 body, html {
     margin: 0;
     padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 * {
@@ -135,8 +138,8 @@ li:active {
 }
 
 button:hover {
-    background-color: #74689d !important;
-    color: white !important;
+    background-color: #74689d;
+    color: white;
 }
 
 
@@ -162,7 +165,7 @@ button:hover {
     /* Другие стили для вашего контента */
 }
 
-.card {
+.login-card {
     position: absolute;
     left: 850px;
     top: 200px;
@@ -176,12 +179,62 @@ button:hover {
     background-image: linear-gradient(90deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
     background-size: 200% auto;
     background-position: 0 0;
+    transition: transform 0.3s, background-color 0.3s; ;
 }
 
 .btn-login:hover {
     background-position: 100% 0;
+    opacity: 50%;
+    transition: 200ms
 }
 
+.btn-empty {
+    background-color: white;
+}
+
+//стили кнопок на странице login
+
+.btn-gradient-border {
+    border: none;
+    outline: none;
+    position: relative;
+    z-index: 1;
+    border-radius: 5px;
+    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    cursor: pointer;
+}
+.btn-gradient-border::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: 2px;
+    bottom: 2px;
+    border-radius: 4px;
+    background-color: white;
+    z-index: -1;
+    transition: 200ms
+}
+.btn-gradient-border::after {
+    content: "LOGIN";
+    font-size: 16px;
+    font-weight: bold;
+    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: 200ms
+}
+
+.btn-gradient-border:hover::before {
+    opacity: 50%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.btn-gradient-border:hover::after{
+    color: white;
+}
 
 
 

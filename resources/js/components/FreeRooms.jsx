@@ -41,6 +41,7 @@ export default function FreeRooms(props) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-Token': _token,
                 },
                 body: JSON.stringify({
                     ...bookingData,
@@ -84,7 +85,7 @@ export default function FreeRooms(props) {
         return (
             <div className= 'my-4 container row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3' >
                 {freeRooms.map((freeRoom,index)=>(
-                    <div key={index} className="col">
+                    <div key={index} className="">
                         <div className="card shadow-sm">
                             <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
                                  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
