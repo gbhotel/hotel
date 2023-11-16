@@ -1,0 +1,245 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    //overflow: hidden;
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.main-container {
+    width: 1500px;
+    margin: 0 auto;
+}
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.small-container {
+    width: 750px;
+    margin: 0 auto;
+}
+
+.red-button {
+    background-color: #e1a2a2;
+    color: #fffdfd;
+    border: #e1a2a2;
+
+}
+
+.green-button {
+    background-color: #c0e1a2;
+    color: #fffdfd;
+    border: #c0e1a2;
+}
+
+.purple-button {
+    background-color: #b4a2e1;
+    color: #fffdfd;
+    border: #b4a2e1;
+}
+.blue-button {
+    background-color: #a2cbd7;
+    color: #fffdfd;
+    border: #a2cbd7;
+}
+
+.yellow-button {
+    background-color: #f5bb84;
+    color: #fffdfd;
+    border: #f5bb84;
+}
+
+.blue-color {
+    background-color: #a2cbd7;
+}
+
+
+.mr_auto {
+    margin-right: auto;
+}
+
+.no-outline-on-hover:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.h-37 {
+    height: 37.2px;
+}
+.font-22 {
+    font-size: 22px;
+}
+
+input::placeholder {
+    color: #888585;
+}
+
+input {
+    font-family: 'Times New Roman, serif', serif;
+    font-size: 22px;
+    background-color: #f8f9fa;
+}
+
+input:disabled {
+    background-color: #f8f9fa;
+}
+
+input:disabled::placeholder {
+    color: black;
+}
+
+select:disabled {
+    background-color: #f8f9fa !important;
+    color: black;
+    border: none;
+}
+
+.no-box-shadow {
+    box-shadow: none !important;
+}
+ .invisible {
+    display: none;
+}
+
+li {
+    /* Добавьте общие стили для ваших элементов li */
+    list-style: none; /* Убрать маркеры списка, если они есть */
+    padding: 10px; /* Пример общего отступа */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    /* Дополнительные общие стили... */
+}
+
+/* Стиль при hover */
+li:hover {
+    background-color: #6495ED; /* Грязно голубой цвет */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Тень */
+    /* Дополнительные стили при hover... */
+}
+li {
+    outline: none;
+}
+
+li:active {
+    background-color: #b4a2e1!important;
+}
+
+button:hover {
+    background-color: #74689d;
+    color: white;
+}
+
+
+.name-block {
+    width: 90px; /* Задайте желаемую ширину */
+    height: 70px;
+    overflow: hidden; /* Обрежьте текст, если он выходит за границы блока */
+    border: 1px solid #ccc; /* Цвет рамки */
+    border-radius: 8px; /* Скругленные углы */
+    padding: 8px; /* Внутренний отступ */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
+    background-color: #f8f8f8; /* Цвет фона */
+}
+
+
+.login {
+    position: relative;
+    background: url('../img/login_background.jpg') center center/cover  no-repeat fixed;
+    overflow: hidden;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    /* Другие стили для вашего контента */
+}
+
+.login-card {
+    position: absolute;
+    left: 850px;
+    top: 200px;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.btn-login {
+    background-image: linear-gradient(90deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
+    background-size: 200% auto;
+    background-position: 0 0;
+    transition: transform 0.3s, background-color 0.3s; ;
+}
+
+.btn-login:hover {
+    background-position: 100% 0;
+    opacity: 50%;
+    transition: 200ms
+}
+
+.btn-empty {
+    background-color: white;
+}
+
+//стили кнопок на странице login
+
+.btn-gradient-border {
+    border: none;
+    outline: none;
+    position: relative;
+    z-index: 1;
+    border-radius: 5px;
+    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    cursor: pointer;
+}
+.btn-gradient-border::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: 2px;
+    bottom: 2px;
+    border-radius: 4px;
+    background-color: white;
+    z-index: -1;
+    transition: 200ms
+}
+.btn-gradient-border::after {
+    content: "LOGIN";
+    font-size: 16px;
+    font-weight: bold;
+    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: 200ms
+}
+
+.btn-gradient-border:hover::before {
+    opacity: 50%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.btn-gradient-border:hover::after{
+    color: white;
+}
+
+
+
+
+
+
+
+
