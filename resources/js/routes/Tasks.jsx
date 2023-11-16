@@ -175,7 +175,7 @@ export default function Tasks() {
             <div className="d-flex justify-content-between gap-5  mt-5">
                 <div className="d-flex justify-content-between flex-column">
                     <div className="text-center">
-                        <label className="font-22">Задачи</label>
+                        <label className="uppercase mb-1">Задачи</label>
                         <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
                             {
                                 tasksName.map((item, index) => (
@@ -191,28 +191,27 @@ export default function Tasks() {
                             }
                         </ul>
                     </div>
-                    <div className="text-center">
-                        <label className="font-22">Исполнители</label>
-                        <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-
-                            {
-                                staff.map((item, index) => (
-                                    <li
-                                        className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
-                                        key={index}
-                                        value ={item.id}
-                                        onClick={(e)=>  setCreatedTask(prevState => ({...prevState, ['id_staff']: e.target.value}))}
-                                    >
-                                        {item.first_name} {item.last_name} ({item.position})
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                    <div className="text-center mt-4">
+                        <label className="uppercase">Исполнители</label>
+                            <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow">
+                                {
+                                    staff.map((item, index) => (
+                                        <li
+                                            className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
+                                            key={index}
+                                            value ={item.id}
+                                            onClick={(e)=>  setCreatedTask(prevState => ({...prevState, ['id_staff']: e.target.value}))}
+                                        >
+                                            {item.first_name} {item.last_name} ({item.position})
+                                        </li>
+                                    ))
+                                }
+                            </ul>
                     </div>
                 </div>
-            <div className="text-center">
-                <label className="font-22">Номера комнат</label>
-                <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
+            <div className=" d-flex flex-column text-center">
+                <label className="uppercase">Номера комнат</label>
+                <ul className=" flex-grow-1 dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
 
                     {
                         rooms.map((item, index) => (
@@ -243,7 +242,7 @@ export default function Tasks() {
             </div>
             <div className=" mt-3">
                 <div className="text-center">
-                    <label className="font-22">Заявки от гостей гостиницы</label>
+                    <label className="uppercase">Заявки от гостей гостиницы</label>
                     <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
 
                         {
@@ -277,7 +276,7 @@ export default function Tasks() {
                 </div>
             </div>
             <div className="align-self-center mt-3">
-                <button className=" btn btn-primary purple-button py-3 px-4" onClick={generateTask}>Сформировать задачу</button>
+                <button className=" btn btn-primary purple-button py-3 px-4 mb-4" onClick={generateTask}>Сформировать задачу</button>
             </div>
 
 

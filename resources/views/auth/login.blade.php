@@ -14,19 +14,19 @@
         </div>
         <div class="d-flex gap-2 ">
             <div class="gradient-container">
-                <button type="submit"  class=" btn-gradient-border text-black selector btn">
+                <button type="submit"  class=" btn-gradient-border text-black uppercase btn">
                     <a></a>
                 </button>
             </div>
 
-            <button type="submit" class=" text-white btn-login selector btn">
+            <button type="submit" class=" text-white btn-login uppercase btn">
                 {{ __('Registration') }}
             </button>
         </div>
     </div>
     <div class="login">
             <div class=" login-card card col-md-3">
-                <div class=" selector border-0 bg-transparent card-header">{{ __('Login') }}</div>
+                <div class=" uppercase border-0 bg-transparent card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -74,7 +74,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-12 mt-auto">
-                                <button type="submit" class=" text-white btn-login selector w-100 btn">
+                                <button type="submit" class=" text-white btn-login uppercase w-100 btn">
                                     {{ __('Login') }}
                                 </button>
 

@@ -81,7 +81,7 @@ export default function FreeRooms(props) {
         setModalOpen(false);
     };
 
-    <div className= 'my-4 container row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3' >
+    return ( <div className= 'my-4 container row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3' >
                 {freeRooms.map((freeRoom,index)=>(
                     <div key={index} className="">
                         <div className="card shadow-sm">
@@ -238,7 +238,6 @@ export default function FreeRooms(props) {
                     </div>
                 </div>
             )}
-
         </div>)
 }
 

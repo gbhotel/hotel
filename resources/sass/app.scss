@@ -11,7 +11,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden;
+    //overflow: hidden;
     box-sizing: border-box;
 }
 
@@ -171,7 +171,7 @@ button:hover {
     top: 200px;
 }
 
-.selector {
+.uppercase {
     text-transform: uppercase;
 }
 
