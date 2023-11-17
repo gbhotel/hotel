@@ -16,7 +16,7 @@ import CreateEmployeeDirector from "./routes/Director/CreateEmployee.jsx";
 import EditEmployeeDirector from "./routes/Director/EditEmployee.jsx";
 import Admin from "./components/Admin.jsx";
 import Director from "./components/Director.jsx";
-import EmployeeAccount from "./components/EmployeeAccount.jsx";
+
 
 
 export default function App() {
@@ -24,8 +24,8 @@ export default function App() {
         <>
             <BrowserRouter>
                 <Admin/>
-                <Director/>
-                <EmployeeAccount/>
+                {/*<Director/>*/}
+                {/*<EmployeeAccount/>*/}
             {/*    <Routes>*/}
             {/*    /!*Администратор*!/*/}
             {/*    <Route path="/" element={<Root />} />*/}

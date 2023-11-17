@@ -31,23 +31,19 @@ export default function Staff() {
 
     return (
         <>
-            <div
-                className="d-flex container justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 className="h2">Сотрудники</h1>
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    {/*<div className="btn-group me-2">*/}
-                    {/*    <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>*/}
-                    {/*    <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>*/}
-                    {/*</div>*/}
-                    <button type="button" className="btn btn-sm btn-outline-secondary">
-                        Принять на работу
-                    </button>
+            <div className="d-flex flex-column container">
+                <div className="d-flex mt-5 justify-content-between">
+                    <h1 className="h2">Сотрудники</h1>
+                    <div className="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" className="btn btn-sm btn-outline-secondary">
+                            Принять на работу
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className="my-5 container justify-content-center">
-                <div className="  table-responsive">
-                    <table className=" no-border table table-striped table-sm">
-                        <thead className="no-border">
+                <div className="my-5 container justify-content-center">
+                    <div className="  table-responsive">
+                        <table className=" no-border table table-striped table-sm">
+                            <thead className="no-border">
                             <tr className="no-border">
                                 <th scope="col">Имя</th>
                                 <th scope="col">Фамилия</th>
@@ -56,8 +52,8 @@ export default function Staff() {
                                 <th scope="col">Должность</th>
                                 <th></th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             {
                                 data.map((item, index) => (
 
@@ -74,10 +70,12 @@ export default function Staff() {
 
                                 ))
                             }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
 
         </>
     )
