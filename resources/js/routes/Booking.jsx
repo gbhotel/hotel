@@ -33,16 +33,16 @@ export default function Booking() {
     }, []);
     return (
         <>
-            <div
-                className="d-flex main-container justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 className="h2">Брони</h1>
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <button type="button" className="btn btn-sm btn-outline-secondary">
-                        <Link to="/addBooking" className=" mr-5 text-decoration-none text-dark "> Добавить бронь </Link>
-                    </button>
+            <div className="d-flex flex-column container">
+                <div className="d-flex mt-5 justify-content-between">
+                    <h1 className="h2">Брони</h1>
+                    <div className="btn-toolbar mr-5 mb-2 mb-md-0">
+                        <button type="button" className="btn  btn-sm btn-outline-secondary">
+                            <Link to="/addBooking" className="  text-decoration-none text-dark "> Добавить бронь </Link>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className="my-5 container justify-content-center">
+                <div className="my-5 container justify-content-center">
                 <div className="  table-responsive">
                     <table className=" no-border table table-striped table-sm">
                         <thead className="no-border">
@@ -81,6 +81,7 @@ export default function Booking() {
                         </tbody>
                     </table>
                 </div>
+            </div>
             </div>
 
         </>
