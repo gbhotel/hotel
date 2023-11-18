@@ -37,4 +37,14 @@ class AuthController extends Controller
         }
         return $role;
     }
+
+    public function getIdCurrentUser() {
+
+        $user = Auth::user();
+//        if ($user) {
+//            $id = DB::table('users')
+//                    ->find($id);
+//        }
+        return response()->json($user->id);
+    }
 }

@@ -16,19 +16,24 @@ export default function Admin (){
             <nav style={{ padding: '20px' }} className="col-md-2 d-none d-md-block bg-light sidebar">
                 <div className="sidebar-sticky">
                     <ul className="nav flex-column">
-                        <div className="d-flex align-content-center">
-                            <Link to="/" className="nav-link text-black">Главная</Link>
+                        <div className=" btn-navbar d-flex align-content-center">
+                            <Link to="/" className=" uppercase nav-link text-black">Главная</Link>
                         </div>
-                        <div className="d-flex align-content-center">
+                        <div className=" btn-navbar d-flex align-content-center">
                             <Link to="/booking" className="nav-link text-black">Бронирование</Link>
                         </div>
-                        <Link to="/rooms" className="nav-link text-black">Комнаты</Link>
+                        <div className=" btn-navbar d-flex align-content-center ">
+                            <Link to="/rooms" className=" nav-link text-black">Комнаты</Link>
+                        </div>
                         {/*<Link to="/guests" className="nav-link">Гости</Link>*/}
                         {/*<Link to="/materials" className="nav-link">Материалы</Link>*/}
-                        <div className="d-flex align-content-center ">
-                            <Link to="/staff" className="nav-link text-black ">Сотрудники</Link>
+                        <div className=" btn-navbar d-flex align-content-center ">
+                            <Link to="/staff" className=" nav-link text-black ">Сотрудники</Link>
                         </div>
-                        <Link to="/tasks" className="nav-link text-black">Задачи</Link>
+                        <div className=" btn-navbar d-flex align-content-center ">
+                            <Link to="/tasks" className=" nav-link text-black">Задачи</Link>
+                        </div>
+
                     </ul>
                 </div>
                     <form action="/logout" method='post'>

@@ -26,7 +26,7 @@
                 @if (Auth::check())
                     <div class="d-flex gap-3">
                         <div class="rounded-circle overflow-hidden bg-gray-25" style="border-radius: 50%; width: 40px; height: 40px;">
-                            <img src="{{ asset('img/admin1.png') }}" alt="User Photo" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="{{ asset(Auth::user()->photo) }}" alt="User Photo" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div>
                             <p class="ml-2 mb-0">Добро пожаловать!</p>

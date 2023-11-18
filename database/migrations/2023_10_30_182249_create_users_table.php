@@ -24,6 +24,7 @@ return new class extends Migration
                 ->constrained('roles')
                 ->cascadeOnDelete();
             $table->string('password')->nullable();
+            $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
