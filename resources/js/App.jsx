@@ -24,7 +24,7 @@ export default function App() {
         <>
             <BrowserRouter>
                 <Admin/>
-                {/*<Director/>*/}
+                <Director/>
                 {/*<EmployeeAccount/>*/}
             {/*    <Routes>*/}
             {/*    /!*Администратор*!/*/}
