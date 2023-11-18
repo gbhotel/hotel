@@ -131,11 +131,6 @@ export default function Tasks() {
 
     const generateTask = async () => {
         try {
-            // const requestData = {
-            //     createdTask,
-            //     _token,
-            // };
-
             const response = await fetch('/api/admin/addTask', {
                 method: 'POST',
                 headers: {
