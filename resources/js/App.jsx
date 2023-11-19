@@ -16,38 +16,44 @@ import CreateEmployeeDirector from "./routes/Director/CreateEmployee.jsx";
 import EditEmployeeDirector from "./routes/Director/EditEmployee.jsx";
 import Admin from "./components/Admin.jsx";
 import Director from "./components/Director.jsx";
+import EmployeeAccount from "./components/Staff/EmployeeAccount";
+import {useEffect, useState} from "react";
 
 
 
 export default function App() {
+
+    const [role, setRole] = useState('');
+
+
+    useEffect(() => {
+
+        const abortController = new AbortController();
+
+        fetch(`/api/userRole`, {
+            signal: abortController.signal,
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                setRole(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        return () => {
+            abortController.abort();
+        }
+    }, []);
     return (
         <>
             <BrowserRouter>
-                <Admin/>
-                <Director/>
-                {/*<EmployeeAccount/>*/}
-            {/*    <Routes>*/}
-            {/*    /!*Администратор*!/*/}
-            {/*    <Route path="/" element={<Root />} />*/}
-            {/*    <Route path="/booking" element={<Booking />} />*/}
-            {/*    <Route path="/addBooking" element={<AddBooking />} />*/}
-            {/*    <Route path="/rooms" element={<Rooms />} />*/}
-            {/*    <Route path="/room/:id" element={<Room />} />*/}
-            {/*    <Route path="/staff" element={<Staff />} />*/}
-            {/*    <Route path="/employee/:id" element={<Employee />} />*/}
-            {/*    <Route path="/tasks" element={<Tasks />} />*/}
-
-            {/*    /!*Директор*!/*/}
-            {/*    <Route path="/director/staff" element={<StaffDirector />} />*/}
-            {/*    <Route path="/director/employee/:id" element={<EmployeeDirector />} />*/}
-            {/*    <Route path="/director/createEmployee" element={<CreateEmployeeDirector />} />*/}
-            {/*    <Route path="/director/editEmployee/:id" element={<EditEmployeeDirector />} />*/}
-
-            {/*    Горничная (ни чего не сделано)*/}
-            {/*    /!*<Route path="/maid/:id" element={<StaffDirector />} />*!/*/}
-            {/*    /!*гость  (ни чего не сделано)*!/*/}
-            {/*    /!*<Route path="/fuest/:id" element={<StaffDirector />} />*!/*/}
-            {/*</Routes>*/}
+                {/*<Admin />*/}
+                {role.role === 'администратор'&& <Admin />}
+                {role.role === 'директор' && <Director />}
+                {role.role === 'горничная'&& <EmployeeAccount />}
             </BrowserRouter>
         </>
     )

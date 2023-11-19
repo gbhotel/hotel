@@ -2,10 +2,10 @@ import React from "react";
 import Navibar from "../components/Navibar.jsx";
 import {Route, Routes} from "react-router-dom";
 
-import StaffDirector from "@/routes/Director/Staff.jsx";
-import EmployeeDirector from "@/routes/Director/Employee.jsx";
-import CreateEmployeeDirector from "@/routes/Director/CreateEmployee.jsx";
-import EditEmployeeDirector from "@/routes/Director/EditEmployee.jsx";
+import StaffDirector from "../routes/Director/Staff.jsx";
+import EmployeeDirector from "../routes/Director/Employee.jsx";
+import CreateEmployeeDirector from "../routes/Director/CreateEmployee.jsx";
+import EditEmployeeDirector from "../routes/Director/EditEmployee.jsx";
 
 import AnalysisDirector from "@/routes/Director/Analysis/Analysis.jsx"
 
