@@ -22,6 +22,6 @@ class RoomsClosedSeeder extends Seeder
             'created_at' => '2023-11-04 8:00:00',
         ];
 
-        DB::table('roles')->insert($arr);
+        DB::table('rooms_closed')->insert($arr);
     }
 }
