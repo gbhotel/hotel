@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import {useEffect, useState} from "react";
 
 
-export default function Staff(props) {
+export default function Staff() {
 
     const [countStaff, setCountStaff] = useState([]);
     const countAllStaff = new Object (countStaff[0]);
@@ -52,7 +52,6 @@ export default function Staff(props) {
             })
             .then(data => {
                 setCountStaffDismiss(data);
-                // console.log(data)
             })
             .catch(error => {
                 console.error(error.message);
