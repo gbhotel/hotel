@@ -1,5 +1,5 @@
 import React from "react";
-import Navibar from "../components/Navibar.jsx";
+import Navbar from "../components/Director/Navbar.jsx";
 import {Route, Routes} from "react-router-dom";
 
 import StaffDirector from "@/routes/Director/Staff.jsx";
@@ -12,7 +12,7 @@ import AnalysisDirector from "@/routes/Director/Analysis/Analysis.jsx"
 export default function Director (){
 
     return( <>
-        <Navibar />
+        <Navbar />
         <Routes>
             <Route path="/director/staff" element={<StaffDirector />} />
             <Route path="/director/employee/:id" element={<EmployeeDirector />} />

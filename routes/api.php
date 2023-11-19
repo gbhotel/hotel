@@ -64,3 +64,4 @@ Route::get('director/analysis', [AnalysisController::class, 'getCountStaff']);
 Route::get('director/analysis-dismiss', [AnalysisController::class, 'getCountStaffDismiss']);
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
+Route::get('getrole', [AuthController::class, 'getRole']);
