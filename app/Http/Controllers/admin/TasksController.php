@@ -43,6 +43,33 @@ class TasksController extends Controller
         return response()->json($result);
     }
 
+    public function getTasksForEmployee($id) {
+
+
+        $result = [];
+
+        $tasks = Tasks::query()
+                      ->with('employee.user')
+                      ->with('room.category')
+                      ->where('status', '=', 'не сделано')
+                      ->where('id_staff', '=', $id )
+                      ->get();
+
+        foreach ($tasks as $task) {
+            $result[] = [
+                'id_staff' => $task->employee->id,
+                'name' => $task->name,
+                'room_number' => $task->room->number,
+                'comment' => $task->comment,
+                'status' => $task->status,
+                'room_sets' => $task->room->sets,
+                'room_category' => $task->room->category->category,
+                ];
+        }
+
+            return response()->json($result);
+    }
+
     public function addTask(Request $request)
     {
 

@@ -106,11 +106,31 @@ class TasksSeeder extends Seeder
         $tasks [] = [
             'name'=> 'ремонт',
             'id_room' => 8,
-            'id_staff'=> fake()->numberBetween(5, 7),
+            'id_staff'=> 6,
             'created_date'=> date('2023-06-04'),
             'execution_date'=> date('2023-06-04'),
             'comment'=> 'не работает душ',
             'status'=> 'сделано'
+        ];
+
+        $tasks [] = [
+            'name'=> 'уборка номера',
+            'id_room' => 5,
+            'id_staff'=> 6,
+            'created_date'=> date('2023-11-18'),
+            'execution_date'=> null,
+            'comment'=> 'подойдите после 15:00',
+            'status'=> 'не сделано'
+        ];
+
+        $tasks [] = [
+            'name'=> 'смена белья',
+            'id_room' => 5,
+            'id_staff'=> 6,
+            'created_date'=> date('2023-11-18'),
+            'execution_date'=> null,
+            'comment'=> 'подойдите после 11:00',
+            'status'=> 'не сделано'
         ];
 
         return $tasks;
