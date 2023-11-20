@@ -12,6 +12,7 @@
         <title>The Hotel</title>
     </head>
     <body>
+    @if(Auth::check() & Auth::user()->role_id !== 1)
     <div class="shadow-lg">
         <div class="d-flex  main-container p-2 flex-row justify-content-between align-content-center">
             <div class="align-center mt-2 font-weight-bold">MY HOTEL</div>
@@ -46,6 +47,7 @@
             </div>
         </div>
     </div>
+    @endif
     <div id="root"></div>
     <div class="auth" id="auth">@yield('content')</div>
     </body>

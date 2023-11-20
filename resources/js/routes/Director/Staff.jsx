@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function Staff() {
     const [data, setData] = useState([]);
@@ -36,47 +39,63 @@ export default function Staff() {
 
     return (
         <>
-            <p style={{color: 'red'}}>добавить сообщение о сохранении пользователя</p>
-            <div className="d-flex container justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 className="h2">Сотрудники</h1>
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <button type="button" onClick={addUser} className="btn btn-sm btn-outline-secondary">
-                        Оформить сотрудника
-                    </button>
-                </div>
-            </div>
-            <div className="my-5 container justify-content-center">
-                <div className="  table-responsive">
-                    <table className=" no-border table table-striped table-sm">
-                        <thead className="no-border">
-                        <tr className="no-border">
-                            <th scope="col">Имя</th>
-                            <th scope="col">Фамилия</th>
-                            <th scope="col">Телефон</th>
-                            <th scope="col">Почта</th>
-                            <th scope="col">Должность</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            data.map((item, index) => (
-
-                                <tr key={index}>
-                                    <td>{item.first_name}</td>
-                                    <td>{item.last_name}</td>
-                                    <td>{item.phone}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.position}</td>
-                                    <td >
-                                        <Link to={`/director/employee/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
-                                    </td>
-                                </tr>
-
+            <div className=" container my-2 col-md-6">
+                <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <Container>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={8}>
+                                <h3>Штат сотрудников</h3>
+                            </Col>
+                            <Col xs={4}>
+                                <button type="button" onClick={addUser} className="btn btn-sm btn-outline-secondary">
+                                    Оформить сотрудника
+                                </button>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center border-top">
+                            <Col className="my-3" xs={1}>
+                                <b>ID</b>
+                            </Col>
+                            <Col className="my-3" xs={3}>
+                                <b>Имя Фамилия</b>
+                            </Col>
+                            <Col className="my-3" xs={2}>
+                                <b>Должность</b>
+                            </Col>
+                            <Col className="my-3" xs={2}>
+                                <b>Телефон</b>
+                            </Col>
+                            <Col className="my-3" xs={2}>
+                                <b>Email</b>
+                            </Col>
+                            <Col className="my-3" xs={2}>
+                                <b>действия</b>
+                            </Col>
+                        </Row>
+                        {data.map((item, index) => (
+                            <Row key={index} className="align-items-center border-top">
+                                <Col className="my-3" xs={1}>
+                                    {item.id}
+                                </Col>
+                                <Col className="my-3" xs={3}>
+                                    {item.first_name} {item.last_name}
+                                </Col>
+                                <Col className="my-3" xs={2}>
+                                    {item.position}
+                                </Col>
+                                <Col className="my-3" xs={2}>
+                                    {item.phone}
+                                </Col>
+                                <Col className="my-3" xs={2}>
+                                    {item.email}
+                                </Col>
+                                <Col className="my-3" xs={2}>
+                                    <Link to={`/director/employee/${item.id}`} className=" mr-5 text-decoration-none text-dark "> Подробнее... </Link>
+                                </Col>
+                            </Row>
                             ))
                         }
-                        </tbody>
-                    </table>
+                    </Container>
                 </div>
             </div>
 
