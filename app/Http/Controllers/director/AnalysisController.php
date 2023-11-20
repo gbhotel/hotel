@@ -5,6 +5,7 @@ namespace App\Http\Controllers\director;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class AnalysisController extends Controller
 {
@@ -79,6 +80,38 @@ class AnalysisController extends Controller
         $quantityRooms = [$allRooms, $freeRooms, $checkInRooms, $bookingRooms, $closedRooms];
 
         return response()->json($quantityRooms);
+    }
+
+    public function getCountGuests(Request $request)
+    {
+        $date = $request->date;
+        $today = $date;
+
+        $quantityGuests = DB::table('check_in')
+            ->leftJoin('booking', 'check_in.id_booking', '=', 'booking.id')
+            ->leftJoin('rooms', 'booking.id_room', '=', 'rooms.id')
+            ->whereDate('check_in.checkIn', '<=', $today)
+            ->whereDate('check_in.checkOut', '>=', $today)
+            ->select('rooms.number', 'check_in.quantity_adults', 'check_in.quantity_children')
+            ->get();
+
+        $sumAdults = 0;
+        $sumChildren = 0;
+
+        foreach ($quantityGuests as $room)
+        {
+            $sumAdults = $sumAdults + $room->quantity_adults;
+            $sumChildren = $sumChildren + $room->quantity_children;
+
+        }
+
+        $sumGuests = $sumAdults + $sumChildren;
+
+        $arrSumGuests = ['allGuests'=>$sumGuests, 'allAdults'=>$sumAdults, 'allChildren'=>$sumChildren];
+
+
+
+        return response()->json([[$arrSumGuests], $quantityGuests]);
     }
 
 

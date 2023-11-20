@@ -100,7 +100,12 @@ export default function Staff() {
                                     {item.count}
                                 </Col>
                                 <Col xs={7}>
-                                    <ProgressBar className="my-3" variant="success" now={Math.round( item.count / countAllStaffDismiss.count *100)} label={`${Math.round( item.count / countAllStaffDismiss.count *100)}%`}/>
+                                    <ProgressBar
+                                        className="my-3"
+                                        variant="success"
+                                        now={Math.round( item.count / countAllStaffDismiss.count *100)}
+                                        label={`${Math.round( item.count / countAllStaffDismiss.count *100)}%`}
+                                    />
                                 </Col>
                             </Row>
                         ))}

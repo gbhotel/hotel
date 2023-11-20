@@ -8,10 +8,10 @@ import React, {useEffect, useState} from "react";
 
 export default function Guests() {
 
-    const today = new Date();
-    const year = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`
+    const newDate = new Date();
+    const today = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
 
-    const [date, setDate] = useState(year)
+    const [date, setDate] = useState(today)
     const [countRooms, setCountRooms] = useState([]);
     const countAllRooms = new Object (countRooms[0])
 
@@ -33,7 +33,6 @@ export default function Guests() {
             })
             .then(data => {
                 setCountRooms(data);
-                console.log(data)
             })
             .catch(error => {
                 console.error(error);
@@ -88,6 +87,5 @@ export default function Guests() {
                 </div>
             </div>
         </>
-
     )
 }
