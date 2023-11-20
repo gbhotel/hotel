@@ -1,5 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Stack from 'react-bootstrap/Stack';
+import Card from 'react-bootstrap/Card';
 
 
 export default function Employee() {
@@ -68,55 +73,127 @@ export default function Employee() {
     }
 
     return (
-        <div className=" container my-5 col-md-6">
+        <div className=" container my-2 col-md-6">
             <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div className="col p-4 d-flex flex-column position-static">
-                    <div className=" d-flex  align-items-center form-group">
-                        <p className="mb-0">Должность: {data.position}</p>
-                    </div>
-                    <div className="d-flex align-items-center">
-                        <p className="mb-0">Имя: {data.firstName} {data.lastName}</p>
-                    </div>
-                    <div className="d-flex align-items-center">
-                        <p className="mb-0">login: {data.username}</p>
-                    </div>
-                    <div className="d-flex align-items-center">
-                        <p className="mb-0">Email: {data.email}</p>
-                    </div>
-                    <div className="d-flex  mr_auto align-items-center">
-                        <p className="mb-0">Верификация email: {data.emailVerifiedAt}</p>
-                    </div>
-                    <div className="d-flex align-items-center">
-                        <p className="mb-0">Телефон: {data.phone}</p>
-                    </div>
-                    <div className="d-flex  mr_auto align-items-center">
-                        <p className="mb-0">Паспорт: {data.passport}</p>
-                    </div>
-                    <div className="d-flex  mr_auto align-items-center">
-                        <p className="mb-0">Должность: {data.position}</p>
-                    </div>
-                    <div className="d-flex  mr_auto align-items-center">
-                        <p className="mb-0">Доступ: {data.role}</p>
-                    </div>
-                    <div className="d-flex  mr_auto align-items-center">
-                        <p className="mb-0">Зарегистрирован: {data.createdAt}</p>
-                    </div>
-                    <div className="d-flex  mr_auto align-items-center">
-                        <p className="mb-0">Последнее обновление: {data.updatedAtt}</p>
-                    </div>
-                    <div className="d-flex  mr_auto align-items-center">
-                        <p className="mb-0">Принат на работу: {data.employment_date}</p>
-                    </div>
-                    <button type="button" onClick={editUser} className="btn btn-sm btn-outline-secondary">
-                        Редактировать данные
-                    </button>
-                    <button type="button" onClick={dismissEmployee} className="btn btn-sm btn-outline-secondary">
-                        Уволить сотрудника
-                    </button>
-                    <button type="submit" onClick={goBack} className="btn btn-sm btn-outline-secondary">
-                        Назад к сотрудникам
-                    </button>
-                </div>
+                <Container className="w-100 m-0">
+                    <Row className="align-items-center m-3 text-center" >
+                        <Col xs={12}>
+                            <h3>Карточка сотрудника</h3>
+                        </Col>
+                    </Row>
+                    <Row className="align-items-top m-3 text-center" >
+                        <Col xs={6}>
+                            <Container className="w-100">
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-center" xs={12}>
+                                        <b>Данные сотрудника</b>
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="position" >Должность</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.position}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="firstName" >Имя</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.firstName} {data.lastName}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="login" >Login</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.username}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="login" >Email</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.email}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="login" >Телефон</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.phone}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="login" >Паспорт</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.passport}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="login" >Права доступа</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.role}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="login" >Зарегистрирован</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.createdAt}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center m-2" >
+                                    <Col className="text-end" xs={6}>
+                                        <label htmlFor="login" >Трудоустроен</label>
+                                    </Col>
+                                    <Col className="text-start" xs={6}>
+                                        {data.employment_date}
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </Col>
+                        <Col xs={6}>
+                            <Container className="w-100">
+                                <Row className="align-items-center m-3 text-center" >
+                                    <Col className="align-items-center" xs={12}>
+                                        <b className="m-2">Фото сотрудника</b>
+                                        <div className="mx-auto m-2" style={{height: '300px', overflow: 'hidden', display: 'flex', justifyContent: 'center'}}>
+                                            <img className="h-100" src={`http://127.0.0.1:8000/${data.photo}`} alt="У сотрудника нет фотографии"/>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </Col>
+                    </Row>
+                    <Stack className="m-2" direction="horizontal" gap={1}>
+                        <div className="p-2 mr_auto">
+                            <button type="button" onClick={editUser} className="btn btn-sm btn-outline-secondary">
+                                Редактировать
+                            </button>
+                        </div>
+                        <div className="p-2 mr_auto">
+                            <button type="submit" onClick={goBack} className="btn btn-sm btn-outline-secondary">
+                                Назад
+                            </button>
+                        </div>
+                        <div className="p-2 ">
+                            <button type="button" onClick={dismissEmployee} className="btn btn-sm btn-outline-secondary">
+                                Уволить
+                            </button>
+                        </div>
+                    </Stack>
+                </Container>
             </div>
         </div>
     );

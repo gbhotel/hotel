@@ -66,6 +66,8 @@ Route::post('director/edit-employee', [DirectorStaffController::class, 'editEmpl
 Route::put('director/dismiss-employee', [DirectorStaffController::class, 'dismissUser'])->middleware('can:director-dismiss-user');
 Route::get('director/analysis', [AnalysisController::class, 'getCountStaff']);
 Route::get('director/analysis-dismiss', [AnalysisController::class, 'getCountStaffDismiss']);
+Route::post('director/analysis-quantity-rooms', [AnalysisController::class, 'getCountRooms']);
+Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'getCountGuests']);
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);
