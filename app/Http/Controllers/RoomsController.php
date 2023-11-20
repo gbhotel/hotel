@@ -14,8 +14,6 @@ class RoomsController extends Controller
     {
         $date = now()->toDateTimeString();
 
-//        $date = $request->only(['date']);
-
         $checkIn = DB::table('rooms')
             ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')

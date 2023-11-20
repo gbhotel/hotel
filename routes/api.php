@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\director\AnalysisController;
 use App\Http\Controllers\staff\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\BookingController;
@@ -63,6 +64,8 @@ Route::get('director/get-all-roles', [DirectorStaffController::class, 'getAllRol
 Route::post('director/create-employee', [DirectorStaffController::class, 'createEmployee'])->middleware('can:director-create-employee');
 Route::post('director/edit-employee', [DirectorStaffController::class, 'editEmployee'])->middleware('can:director-edit-employee');
 Route::put('director/dismiss-employee', [DirectorStaffController::class, 'dismissUser'])->middleware('can:director-dismiss-user');
+Route::get('director/analysis', [AnalysisController::class, 'getCountStaff']);
+Route::get('director/analysis-dismiss', [AnalysisController::class, 'getCountStaffDismiss']);
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);
