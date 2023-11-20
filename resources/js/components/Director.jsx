@@ -18,7 +18,6 @@ export default function Director (){
             <Route path="/director/employee/:id" element={<EmployeeDirector />} />
             <Route path="/director/createEmployee" element={<CreateEmployeeDirector />} />
             <Route path="/director/editEmployee/:id" element={<EditEmployeeDirector />} />
-
             <Route path="/director/analysis" element={<AnalysisDirector />} />
         </Routes>
     </>)

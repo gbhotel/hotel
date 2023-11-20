@@ -47,7 +47,7 @@ body, html {
 }
 
 .purple-button {
-    background-color: #b4a2e1;
+    background-color:#9155FD;
     color: #fffdfd;
     border: #b4a2e1;
 }
@@ -257,6 +257,127 @@ button:hover {
     position: relative;
     overflow: hidden;
 }
+
+//.room-info-container {
+//    display: flex;
+//    justify-content: space-around;
+//    margin: 20px;
+//}
+
+.room-info  {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tasks-section {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+//.room-info h3 {
+//    color:  rgb(128, 75, 223);
+//}
+
+.room-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.room-info li {
+    margin-bottom: 8px;
+}
+
+.done-icon {
+    width: 50px;
+    height: 50px;
+}
+.li-task {
+    border: 1px solid #ccc;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.li-task:hover {
+    background-color: transparent;
+
+}
+.btn-task {
+    background-color: rgb(160, 119, 234);
+    color: white;
+}
+.btn-task:hover {
+    text-decoration: none;
+    background-color: rgb(128, 75, 223);
+    box-shadow: rgba(58, 53, 65, 0.56) 0 6px 18px -8px;
+    color: white;
+}
+
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border: 1px solid #ccc;
+    outline: 0;
+    //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    //box-shadow: 0 0 0 0.25rem rgb(223, 214, 255);
+}
+
+.form-control:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trophy-block {
+    position: relative;
+    border: 1px solid #ccc;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-bold{
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.text-bold-purple {
+    color: rgb(128, 75, 223);
+    font-weight: bold;
+}
+.text-purple {
+    color: rgb(128, 75, 223);
+}
+.text-gray {
+    color: #949494;
+}
+.trophy {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    width: 35px;
+}
+
 
 
 
