@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('execution_date')->nullable();
             $table->string('comment')->nullable();
             $table->string('status')->default('не сделано');
+            $table->dateTime('updated_at')->nullable();
         });
     }
 

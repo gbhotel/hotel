@@ -55,6 +55,8 @@ Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('gue
 //роуты для сотрудников
 
 Route::post('employee/{id}/tasks', [TasksController::class, 'getTasksForEmployee'])->name('employee.tasks')->middleware('can:get-tasks');
+Route::put('employee/changeTaskStatus', [TasksController::class, 'changeTaskStatus'])->name('employee.changeTaskStatus');
+
 
 
 Route::get('director/staff', [DirectorStaffController::class, 'getStaff'])->middleware('can:director-get-staff');

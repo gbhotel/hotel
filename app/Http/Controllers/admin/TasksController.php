@@ -51,12 +51,16 @@ class TasksController extends Controller
         $tasks = Tasks::query()
                       ->with('employee.user')
                       ->with('room.category')
-                      ->where('status', '=', 'не сделано')
+                      ->where('created_date', "=", '2023-11-18')
                       ->where('id_staff', '=', $id )
+                      ->orderBy('id')
                       ->get();
+
 
         foreach ($tasks as $task) {
             $result[] = [
+                'id' => $task->id,
+                'employee_name' =>  $task->employee->user->first_name . ' ' . $task->employee->user->last_name,
                 'id_staff' => $task->employee->id,
                 'name' => $task->name,
                 'room_number' => $task->room->number,
@@ -68,6 +72,28 @@ class TasksController extends Controller
         }
 
             return response()->json($result);
+    }
+
+    public function changeTaskStatus(Request $request) {
+
+        $data = $request->only([
+            'taskId',
+            'status'
+        ]);
+
+        if(!Tasks::query()->find($data['taskId'])){
+            return response()->json(['message' => 'Задание не найдено'], 404);
+        }
+
+        if(Tasks::query()
+            ->where('id', '=', $data['taskId'])
+            ->update([
+                'status' => $data['status'],
+//                'execution_date' => now()->format('y-m-d'),
+                ])) {
+            return response()->json(['status' => $data['status']]);
+        }
+        return response()->json(['message' => 'Статус не обновился'], 404);
     }
 
     public function addTask(Request $request)

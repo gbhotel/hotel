@@ -41,7 +41,8 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-11-08'),
             'execution_date'=> date('2023-11-08'),
             'comment'=> '',
-            'status'=> 'сделано'
+            'status'=> 'сделано',
+            'updated_at' => date('2023-11-08'),
         ];
         $tasks [] = [
             'name'=> 'уборка номера',
@@ -50,7 +51,8 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-11-05'),
             'execution_date'=> date('2023-11-05'),
             'comment'=> '',
-            'status'=> 'сделано'
+            'status'=> 'сделано',
+            'updated_at' => date('2023-11-05'),
         ];
 
         $tasks [] = [
@@ -60,7 +62,8 @@ class TasksSeeder extends Seeder
             'created_date'=>  date('2023-11-11'),
             'execution_date'=> date('2023-11-11'),
             'comment'=> '',
-            'status'=> 'сделано'
+            'status'=> 'сделано',
+            'updated_at' => date('2023-11-11'),
         ];
 
         $tasks [] = [
@@ -70,7 +73,8 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-11-04'),
             'execution_date'=> date('2023-11-04'),
             'comment'=> '',
-            'status'=> 'сделано'
+            'status'=> 'сделано',
+            'updated_at' => date('2023-11-04'),
         ];
 
         $tasks [] = [
@@ -80,7 +84,8 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-11-04'),
             'execution_date'=> date('2023-11-04'),
             'comment'=> '',
-            'status'=> 'сделано'
+            'status'=> 'сделано',
+            'updated_at' => date('2023-11-04'),
         ];
 
         $tasks [] = [
@@ -90,7 +95,8 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-09-04'),
             'execution_date'=> date('2023-09-04'),
             'comment'=> '',
-            'status'=> 'сделано'
+            'status'=> 'сделано',
+            'updated_at' => date('2023-09-04'),
         ];
 
         $tasks [] = [
@@ -100,7 +106,8 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-07-04'),
             'execution_date'=> date('2023-07-04'),
             'comment'=> 'можете забрать из номера в 12:00',
-            'status'=> 'сделано'
+            'status'=> 'сделано',
+            'updated_at' => date('2023-07-04'),
         ];
 
         $tasks [] = [
@@ -110,7 +117,8 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-06-04'),
             'execution_date'=> date('2023-06-04'),
             'comment'=> 'не работает душ',
-            'status'=> 'сделано'
+            'status'=> 'сделано',
+            'updated_at' => date('2023-06-04'),
         ];
 
         $tasks [] = [
@@ -120,17 +128,19 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-11-18'),
             'execution_date'=> null,
             'comment'=> 'подойдите после 15:00',
-            'status'=> 'не сделано'
+            'status'=> 'не сделано',
+            'updated_at' => null,
         ];
 
         $tasks [] = [
             'name'=> 'смена белья',
-            'id_room' => 5,
+            'id_room' => 3,
             'id_staff'=> 6,
             'created_date'=> date('2023-11-18'),
             'execution_date'=> null,
             'comment'=> 'подойдите после 11:00',
-            'status'=> 'не сделано'
+            'status'=> 'не сделано',
+            'updated_at' => null,
         ];
 
         return $tasks;
