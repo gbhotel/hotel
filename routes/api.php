@@ -31,8 +31,8 @@ use App\Http\Controllers\director\StaffController as DirectorStaffController;
 Route::get('admin/rooms', [RoomsController::class, 'getRooms'])->name('admin.rooms')->middleware('can:get-rooms');
 Route::get('admin/check_in_rooms', [RoomsController::class, 'getCheckInRooms'])->name('admin.checkInRooms')->middleware('can:get-check-in-rooms');
 Route::get('admin/roomsForCleaning', [RoomsController::class, 'getRoomsForCleaning'])->name('admin.roomsForCleaning')->middleware('can:get-rooms-for-cleaning');
-Route::post('admin/free-rooms-period', [RoomsController::class, 'getFreeRoomsPeriod'])->name('admin.free-rooms-period');
-Route::get('admin/room/{id}/get-room', [RoomController::class, 'getRoom'])->name('admin.room.get-room');
+Route::post('admin/free-rooms-period', [RoomsController::class, 'getFreeRoomsPeriod'])->name('admin.free-rooms-period')->middleware('can:get-free-rooms-period');
+Route::get('admin/room/{id}/get-room', [RoomController::class, 'getRoom'])->name('admin.room.get-room')->middleware('can:get-room');
 
 Route::put('admin/room/cancel-book-room', [RoomController::class, 'cancelBookRoom'])->name('admin.room.cancel-book-room');
 Route::post('admin/room/check-in-room', [RoomController::class, 'checkInRoom'])->name('admin.room.check-in-room');
