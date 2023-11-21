@@ -53,6 +53,9 @@ class StaffController extends Controller
         $position = $employee->position->name;
         $positionId = $employee->position->id;
 
+        $createdAtDate = date("Y-m-d", strtotime($user->created_at));
+        $updatedAtDate = date("Y-m-d", strtotime($user->updatedAt));
+
         $employee->userId = $user->id;
         $employee->firstName = $user->first_name;
         $employee->lastName = $user->last_name;
@@ -63,8 +66,9 @@ class StaffController extends Controller
         $employee->role = $role->name;
         $employee->roleId = $role->id;
         $employee->emailVerifiedAt = $user->email_verified_at;
-        $employee->createdAt = $user->created_at;
-        $employee->updatedAt = $user->updated_at;
+        $employee->createdAt = $createdAtDate;
+        $employee->updatedAt = $updatedAtDate;
+        $employee->photo = $user->photo;
         unset($employee->position);
         $employee->position = $position;
         $employee->positionId = $positionId;

@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('number')->unique();
+            $table->integer('price');
+            $table->integer('additional_guest');
+            $table->integer('max_guests');
             $table->foreignId('id_category')
                 ->constrained('categories')->cascadeOnDelete();
             $table ->json('comfort');
+            $table->json('sets');
         });
     }
 

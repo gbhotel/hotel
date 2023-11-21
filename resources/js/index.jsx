@@ -27,7 +27,7 @@ let element =
         async () => {
             const response = await fetch('/api/isauth');
             const answer = await response.json();
-            if (answer['auth'] == 'true')
+            if (answer['auth'] === 'true')
 
                 Index.render(
                     <React.StrictMode>

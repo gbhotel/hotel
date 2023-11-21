@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\director\AnalysisController;
+use App\Http\Controllers\staff\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\admin\StaffController;
@@ -45,10 +47,16 @@ Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('
 
 
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks')->middleware('can:get-tasks');
-Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask')->middleware('can:add-tasks');
+Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask');
 
 
 Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
+
+//роуты для сотрудников
+
+Route::post('employee/{id}/tasks', [TasksController::class, 'getTasksForEmployee'])->name('employee.tasks')->middleware('can:get-tasks');
+Route::put('employee/changeTaskStatus', [TasksController::class, 'changeTaskStatus'])->name('employee.changeTaskStatus');
+
 
 
 Route::get('director/staff', [DirectorStaffController::class, 'getStaff'])->middleware('can:director-get-staff');
@@ -58,5 +66,11 @@ Route::get('director/get-all-roles', [DirectorStaffController::class, 'getAllRol
 Route::post('director/create-employee', [DirectorStaffController::class, 'createEmployee'])->middleware('can:director-create-employee');
 Route::post('director/edit-employee', [DirectorStaffController::class, 'editEmployee'])->middleware('can:director-edit-employee');
 Route::put('director/dismiss-employee', [DirectorStaffController::class, 'dismissUser'])->middleware('can:director-dismiss-user');
+Route::get('director/analysis', [AnalysisController::class, 'getCountStaff']);
+Route::get('director/analysis-dismiss', [AnalysisController::class, 'getCountStaffDismiss']);
+Route::post('director/analysis-quantity-rooms', [AnalysisController::class, 'getCountRooms']);
+Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'getCountGuests']);
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
+Route::get('userRole', [AuthController::class, 'getRole']);
+Route::get('user', [AuthController::class, 'getIdCurrentUser']);

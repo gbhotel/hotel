@@ -12,4 +12,8 @@ class Tasks extends Model
     public function room() {
         return $this->belongsTo(Rooms::class, 'id_room');
     }
+
+    public function employee() {
+        return $this->belongsTo(Staff::class, 'id_staff');
+    }
 }

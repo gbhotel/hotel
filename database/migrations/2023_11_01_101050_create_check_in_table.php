@@ -21,6 +21,8 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->timestamp('checkIn');
             $table->dateTime('checkOut');
+            $table->integer('quantity_adults');
+            $table->integer('quantity_children');
         });
     }
 

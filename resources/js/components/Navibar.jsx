@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 export default function Navibar() {
     return (
         <>
-
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <div className="d-flex main-container">
                     <Navbar.Brand >My Hotel</Navbar.Brand>
