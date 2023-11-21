@@ -25,7 +25,7 @@ export default function Analysis() {
 
 
     return (
-        <>
+        <><div className="d-flex flex-column mt-5">
             <div className=" container my-2 col-md-6">
                 <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <Stack direction="horizontal" gap={2}>
@@ -47,8 +47,9 @@ export default function Analysis() {
                     </Stack>
                 </div>
             </div>
-
             {AnalysisRender(component)}
+        </div>
+
 
 
         </>
