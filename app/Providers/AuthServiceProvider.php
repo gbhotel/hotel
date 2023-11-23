@@ -61,6 +61,10 @@ class AuthServiceProvider extends ServiceProvider
             return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
+        Gate::define('change-task-status', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор', 'горничная']);
+        });
+
         Gate::define('director-get-staff', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор']);
         });
@@ -87,11 +91,41 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('get-rooms', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор',]);
         });
+        Gate::define('get-room', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор',]);
+        });
         Gate::define('get-check-in-rooms', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор',]);
         });
         Gate::define('get-rooms-for-cleaning', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор', 'горничная']);
+        });
+        Gate::define('get-free-rooms-period', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор']);
+        });
+        Gate::define('book-room', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор']);
+        });
+        Gate::define('cancel-book-room', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор']);
+        });
+        Gate::define('chek-in-room', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор']);
+        });
+        Gate::define('aviction-from-room', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор']);
+        });
+        Gate::define('get-count-staff', function (User $user) {
+            return in_array($this->getRole($user), ['директор',]);
+        });
+        Gate::define('get-count-staff-dismiss', function (User $user) {
+            return in_array($this->getRole($user), ['директор',]);
+        });
+        Gate::define('get-count-rooms', function (User $user) {
+            return in_array($this->getRole($user), ['директор',]);
+        });
+        Gate::define('get-count-guests', function (User $user) {
+            return in_array($this->getRole($user), ['директор',]);
         });
     }
 }
