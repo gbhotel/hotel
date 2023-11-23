@@ -30,24 +30,28 @@ class RoomController extends Controller
             ->whereDate('check_in.checkOut', '>', $date)
 
             ->select(
-                // О комнате
-                'rooms.id as roomId', 'rooms.number as roomNumber',
-                'rooms.comfort as roomComfort', 'categories.category',
+            // О комнате
+                'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
+                'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
+                'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
                 // О госте
                 'guests.id as guestsId', 'users3.first_name as guestsFirstName', 'users3.last_name as guestsLastName',
                 'users3.phone as guestsPhone', 'users3.email as guestsEmail', 'users3.passport as guestsPassport',
+                'users3.username as guestsUsername', 'users3.photo as guestsPhoto',
                 // О бронировании
                 'booking.id as bookingId', 'booking.check_in as bookingCheckIn', 'booking.check_out as bookingCheckOut',
                 // Сотрудник который забронировал
                 'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
                 'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
                 'staff2.employment_date as staffEmploymentDateB', 'positions2.name as staffPositionB',
+                'users2.username as staffUsernameB', 'users2.photo as staffPhotoB',
                 // О заселении
                 'check_in.id as checkId', 'check_in.checkIn as checkCheckIn', 'check_in.checkOut as checkCheckOut',
                 // Сотрудник, который заселял
                 'staff.id as staffIdCh', 'users.first_name as staffFirstNameCh', 'users.last_name as staffLastNameCh',
                 'users.phone as staffPhoneCh', 'users.email as staffEmailCh', 'users.passport as staffPassportCh',
                 'staff.employment_date as staffEmploymentDateCh', 'positions.name as staffPositionCh',
+                'users.username as staffUsernameCh', 'users.photo as staffPhotoCh',
             )
             ->get();
 
@@ -71,17 +75,20 @@ class RoomController extends Controller
 
                 ->select(
                 // О комнате
-                    'rooms.id as roomId', 'rooms.number as roomNumber',
-                    'rooms.comfort as roomComfort', 'categories.category',
+                    'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
+                    'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
+                    'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
                     // О госте
                     'guests.id as guestsId', 'users3.first_name as guestsFirstName', 'users3.last_name as guestsLastName',
                     'users3.phone as guestsPhone', 'users3.email as guestsEmail', 'users3.passport as guestsPassport',
+                    'users3.username as guestsUsername', 'users3.photo as guestsPhoto',
                     // О бронировании
                     'booking.id as bookingId', 'booking.check_in as bookingCheckIn', 'booking.check_out as bookingCheckOut',
                     // Сотрудник который забронировал
                     'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
                     'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
                     'staff2.employment_date as staffEmploymentDateB', 'positions2.name as staffPositionB',
+                    'users2.username as staffUsernameB', 'users2.photo as staffPhotoB',
                 )
                 ->get();
 
@@ -94,8 +101,9 @@ class RoomController extends Controller
                     ->join('categories', 'rooms.id_category', '=', 'categories.id')
                     ->where('rooms.id', '=', $numberRoom)
                     ->select(
-                        'rooms.id as roomId', 'rooms.number as roomNumber',
-                        'rooms.comfort as roomComfort', 'categories.category',
+                        'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
+                        'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
+                        'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
                     )
                     ->get();
 
@@ -104,6 +112,7 @@ class RoomController extends Controller
         }
 
         $comfort = json_decode($data[0]->roomComfort);
+        $roomSets = json_decode($data[0]->roomSets);
 
         $data[0]->wifi = $comfort->wifi;
         $data[0]->bed = $comfort->bed;
@@ -112,7 +121,13 @@ class RoomController extends Controller
         $data[0]->roomsNumber = $comfort->roomsNumber;
         $data[0]->conditioner = $comfort->conditioner;
 
+        $data[0]->towel = $roomSets->{'полотенце'};
+        $data[0]->slippers = $roomSets->{'тапочки'};
+        $data[0]->shampoo = $roomSets->{'шампунь'};
+        $data[0]->showerGel = $roomSets->{'гель для душа'};
+
         unset($data[0]->roomComfort);
+        unset($data[0]->roomSets);
 
         return response()->json($data);
     }
