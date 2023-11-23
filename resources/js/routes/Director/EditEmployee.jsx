@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {Link, useParams} from "react-router-dom";
-import {request} from "../../services/http.js";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 
 export default function CreateEmployee() {
@@ -182,67 +184,113 @@ export default function CreateEmployee() {
     }
 
     return (
-        <div className=" container my-5 col-md-6">
-            <p style={{color: 'red'}}>добавить сообщение о изменении пользователя</p>
+        <div className=" width-1200 mt-5 col-md-6">
             <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div className="col p-4 d-flex flex-column position-static">
-                    <h3>Форма изменения данных сотрудника в систему</h3>
-                    <form onSubmit={editStaff}>
-                        <div className="mb-3">
-                            <label htmlFor="position" className="form-label">Должность</label>
-                            <select value={selectedPositions} onChange={e => setSelectedPositions(e.target.value)}
-                                    className="form-select" aria-label="position" id="position" ref={positionRef}>
-                                {
-                                    allPositions.map((item, index) => (
-                                        <option key={index} value={item.id}>{item.name}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="firstName" className="form-label">Имя</label>
-                            <input type="text" defaultValue={employee.firstName} required className="form-control" id="firstName" aria-describedby="emailHelp" ref={firstNameRef}/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="lastName" className="form-label">Фамилия</label>
-                            <input type="text" defaultValue={employee.lastName} required className="form-control" id="lastName" ref={lastNameRef}/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="passport" className="form-label">Номер паспорта</label>
-                            <input type="text" defaultValue={employee.passport} required className="form-control" id="passport" ref={passportRef}/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="login" className="form-label">login</label>
-                            <input type="text" defaultValue={employee.username} required className="form-control" id="login" ref={loginRef}/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label">email</label>
-                            <input type="email" defaultValue={employee.email} required className="form-control" id="email" ref={emailRef}/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="phone" className="form-label">Телефон</label>
-                            <input type="text" defaultValue={employee.phone} required className="form-control" id="phone" ref={phoneRef}/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="roles" className="form-label">Права доступа</label>
-                            <select value={selectedRoles} onChange={e => setSelectedRoles(e.target.value)}
-                                    className="form-select" aria-label="roles" id="roles" ref={rolesRef}>
-                                {
-                                    allRoles.map((item, index) => (
-                                        <option key={index} value={item.id}>{item.name}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
+                <form onSubmit={editStaff}>
+                    <Container>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={12}>
+                                <h3>Форма добавления сотрудника в систему</h3>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
+                                <label htmlFor="position" className="form-label">Должность</label>
+                            </Col>
+                            <Col xs={9}>
+                                <select value={selectedPositions} onChange={e => setSelectedPositions(e.target.value)}
+                                        className="form-select" aria-label="position" id="position" ref={positionRef}>
+                                    {
+                                        allPositions.map((item, index) => (
+                                            <option key={index} value={item.id}>{item.name}</option>
+                                        ))
+                                    }
+                                </select>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
+                                <label htmlFor="firstName" className="form-label">Имя</label>
+                            </Col>
+                            <Col xs={9}>
+                                <input type="text" defaultValue={employee.firstName} required className="form-control" id="firstName" aria-describedby="emailHelp" ref={firstNameRef}/>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
+                                <label htmlFor="lastName" className="form-label">Фамилия</label>
+                            </Col>
+                            <Col xs={9}>
+                                <input type="text" defaultValue={employee.lastName} required className="form-control" id="lastName" ref={lastNameRef}/>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
+                                <label htmlFor="passport" className="form-label">Номер паспорта</label>
+                            </Col>
+                            <Col xs={9}>
+                                <input type="text" defaultValue={employee.passport} required className="form-control" id="passport" ref={passportRef}/>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
+                                <label htmlFor="login" className="form-label">login</label>
+                            </Col>
+                            <Col xs={9}>
+                                <input type="text" defaultValue={employee.username} required className="form-control" id="login" ref={loginRef}/>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
+                                <label htmlFor="email" className="form-label">email</label>
+                            </Col>
+                            <Col xs={9}>
+                                <input type="email" defaultValue={employee.email} required className="form-control" id="email" ref={emailRef}/>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
+                                <label htmlFor="phone" className="form-label">Телефон</label>
+                            </Col>
+                            <Col xs={9}>
+                                <input type="text" defaultValue={employee.phone} required className="form-control" id="phone" ref={phoneRef}/>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
+                                <label htmlFor="roles" className="form-label">Права доступа</label>
+                            </Col>
+                            <Col xs={9}>
+                                <select value={selectedRoles} onChange={e => setSelectedRoles(e.target.value)}
+                                        className="form-select" aria-label="roles" id="roles" ref={rolesRef}>
+                                    {
+                                        allRoles.map((item, index) => (
+                                            <option key={index} value={item.id}>{item.name}</option>
+                                        ))
+                                    }
+                                </select>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-center m-3 text-center" >
+                            <Col xs={3}>
 
-                        <button type="submit" className="mx-2 btn btn-primary">
-                            Изменить данные
-                        </button>
-                        <button type="submit" onClick={goBack} className="mx-2 btn btn-primary">
-                            Назад к сотрудникам
-                        </button>
-                    </form>
-                </div>
+                            </Col>
+                            <Col xs={3}>
+
+                            </Col>
+                            <Col xs={3}>
+                                <button type="submit" className="mx-2 btn btn-primary">
+                                    Изменить данные
+                                </button>
+                            </Col>
+                            <Col xs={3}>
+                                <button type="submit" onClick={goBack} className="mx-2 btn btn-primary">
+                                    Назад к сотрудникам
+                                </button>
+                            </Col>
+                        </Row>
+                    </Container>
+                </form>
             </div>
         </div>
     );

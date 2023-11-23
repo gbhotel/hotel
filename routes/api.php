@@ -55,6 +55,8 @@ Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('gue
 //роуты для сотрудников
 
 Route::post('employee/{id}/tasks', [TasksController::class, 'getTasksForEmployee'])->name('employee.tasks')->middleware('can:get-tasks');
+Route::put('employee/changeTaskStatus', [TasksController::class, 'changeTaskStatus'])->name('employee.changeTaskStatus');
+
 
 
 Route::get('director/staff', [DirectorStaffController::class, 'getStaff'])->middleware('can:director-get-staff');
@@ -66,6 +68,8 @@ Route::post('director/edit-employee', [DirectorStaffController::class, 'editEmpl
 Route::put('director/dismiss-employee', [DirectorStaffController::class, 'dismissUser'])->middleware('can:director-dismiss-user');
 Route::get('director/analysis', [AnalysisController::class, 'getCountStaff']);
 Route::get('director/analysis-dismiss', [AnalysisController::class, 'getCountStaffDismiss']);
+Route::post('director/analysis-quantity-rooms', [AnalysisController::class, 'getCountRooms']);
+Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'getCountGuests']);
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);

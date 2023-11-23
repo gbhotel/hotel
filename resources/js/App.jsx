@@ -25,6 +25,7 @@ export default function App() {
 
     const [role, setRole] = useState('');
 
+    console.log(_token);
 
     useEffect(() => {
 

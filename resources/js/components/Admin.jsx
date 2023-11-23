@@ -36,10 +36,10 @@ export default function Admin (){
 
                     </ul>
                 </div>
-                    <form action="/logout" method='post'>
-                        <input type="hidden" name="_token" defaultValue={_token} />
-                        <input type="submit" value="Выход" className=" text-black btn" />
-                    </form>
+                <form action="/logout" method='post' className=" btn-navbar px-3 py-2">
+                    <input type="hidden" name="_token" defaultValue={_token} />
+                    <input type="submit" value="Выход"  className="nav-link text-black btn" />
+                </form>
             </nav>
             <Routes>
                 <Route path="/booking" element={<Booking />} />

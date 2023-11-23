@@ -12,14 +12,16 @@ import AnalysisDirector from "@/routes/Director/Analysis/Analysis.jsx"
 export default function Director (){
 
     return( <>
-        <Navbar />
-        <Routes>
-            <Route path="/director/staff" element={<StaffDirector />} />
-            <Route path="/director/employee/:id" element={<EmployeeDirector />} />
-            <Route path="/director/createEmployee" element={<CreateEmployeeDirector />} />
-            <Route path="/director/editEmployee/:id" element={<EditEmployeeDirector />} />
+        <div className="d-flex gap-5">
+            <Navbar />
+            <Routes>
+                <Route path="/director/staff" element={<StaffDirector />} />
+                <Route path="/director/employee/:id" element={<EmployeeDirector />} />
+                <Route path="/director/createEmployee" element={<CreateEmployeeDirector />} />
+                <Route path="/director/editEmployee/:id" element={<EditEmployeeDirector />} />
+                <Route path="/director/analysis" element={<AnalysisDirector />} />
+            </Routes>
+        </div>
 
-            <Route path="/director/analysis" element={<AnalysisDirector />} />
-        </Routes>
     </>)
 }
