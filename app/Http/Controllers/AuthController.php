@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,13 +39,45 @@ class AuthController extends Controller
         return $role;
     }
 
-    public function getIdCurrentUser() {
+    public function getCurrentUser() {
 
         $user = Auth::user();
 //        if ($user) {
 //            $id = DB::table('users')
 //                    ->find($id);
 //        }
-        return response()->json($user->id);
+        return response()->json($user);
+    }
+
+    public function update(Request $request) {
+
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => 'required|regex:/^\+?\d{10,14}$/',
+            'email' => 'required|email|max:255',
+            // Добавьте другие правила валидации для других полей, если необходимо
+        ]);
+
+        $data = $request->all();
+
+        $user = auth()->user(); // Получаем текущего авторизованного пользователя
+
+        $success = $user->update([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'phone' => $data['phone'],
+            'email' => $data['email'],
+            'photo' => $data['photo'],
+            'gender' => $data['gender'],
+            'birthday' => date($data['birthday']),
+        ]);
+
+        if ($success) {
+            return response()->json(['message' => 'Профиль успешно обновлен!']);
+        } else {
+            return response()->json(['message' => 'Не удалось обновить профиль!'], 500);
+        }
+
     }
 }

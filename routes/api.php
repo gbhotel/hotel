@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\director\AnalysisController;
+use App\Http\Controllers\files\FileController;
 use App\Http\Controllers\staff\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\BookingController;
@@ -39,7 +40,7 @@ Route::post('admin/room/check-in-room', [RoomController::class, 'checkInRoom'])-
 Route::put('admin/room/eviction-from-room', [RoomController::class, 'evictionFromRoom'])->name('admin.eviction-from-room')->middleware('can:aviction-from-room');
 
 Route::get('admin/staff', [StaffController::class, 'getStaff'])->name('admin.staff')->middleware('can:get-staff');
-Route::get('admin/employee/{id}', [StaffController::class, 'getEmployee'])->name('admin.employee')->middleware('can:get-employee');
+Route::match(['get', 'post'],'admin/employee/{id}', [StaffController::class, 'getEmployee'])->name('admin.employee')->middleware('can:get-employee');
 Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'editEmployee'])->name('admin.edit.employee')->middleware('can:edit-employee');;
 
 Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('admin.booking')->middleware('can:get-booking');
@@ -73,4 +74,7 @@ Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'ge
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);
-Route::get('user', [AuthController::class, 'getIdCurrentUser']);
+Route::get('user', [AuthController::class, 'getCurrentUser']);
+Route::put('user/update', [AuthController::class, 'update']);
+
+Route::post('/upload', [FileController::class, 'upload']);

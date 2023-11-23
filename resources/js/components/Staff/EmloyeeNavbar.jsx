@@ -16,7 +16,7 @@ export default function EmployeeNavbar () {
                 return response.json();
             })
             .then(data => {
-                setId(data);
+                setId(data.id);
             })
             .catch(error => {
                 console.error(error);
@@ -32,7 +32,7 @@ export default function EmployeeNavbar () {
                 <div className="sidebar-sticky">
                     <ul className="nav flex-column">
                         <div className=" btn-navbar d-flex align-content-center w-100">
-                            <Link to="/employee/myAccount" className="nav-link text-black w-100">Мой профиль</Link>
+                            <Link to={`/employee/myAccount`} className="nav-link text-black w-100">Мой профиль</Link>
                         </div>
                         <div className=" btn-navbar d-flex align-content-center w-100">
                             <Link to={`/employee/${id}/tasks`} className="nav-link text-black w-100">Мои задачи</Link>
