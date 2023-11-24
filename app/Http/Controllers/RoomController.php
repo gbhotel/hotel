@@ -24,10 +24,12 @@ class RoomController extends Controller
             ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
             ->leftJoin('guests', 'booking.id_guest', '=', 'guests.id')
             ->leftJoin('users as users3', 'guests.id_user', '=', 'users3.id')
+            ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
 
             ->where('rooms.number', '=', $numberRoom)
             ->whereDate( 'check_in.checkIn', '<',$date)
             ->whereDate('check_in.checkOut', '>', $date)
+            ->whereNull('rooms_closed.id')
 
             ->select(
             // О комнате
@@ -68,10 +70,12 @@ class RoomController extends Controller
                 ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
                 ->leftJoin('guests', 'booking.id_guest', '=', 'guests.id')
                 ->leftJoin('users as users3', 'guests.id_user', '=', 'users3.id')
+                ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
 
                 ->where('id_room', '=', $numberRoom)
                 ->whereDate( 'check_in', '<',$date)
                 ->whereDate('check_out', '>', $date)
+                ->whereNull('rooms_closed.id')
 
                 ->select(
                 // О комнате
@@ -99,7 +103,11 @@ class RoomController extends Controller
             }else{
                 $data = DB::table('rooms')
                     ->join('categories', 'rooms.id_category', '=', 'categories.id')
+                    ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
+
                     ->where('rooms.id', '=', $numberRoom)
+                    ->whereNull('rooms_closed.id')
+
                     ->select(
                         'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
                         'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
@@ -107,7 +115,37 @@ class RoomController extends Controller
                     )
                     ->get();
 
-                $data[0]->status = 'free';
+                if(!empty($data[0])){
+                    $data[0]->status = 'free';
+                }else{
+                    $data = DB::table('rooms')
+                        ->join('categories', 'rooms.id_category', '=', 'categories.id')
+                        ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
+                        ->leftJoin('staff as staff2', 'rooms_closed.employee', '=', 'staff2.id')
+                        ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
+                        ->LeftJoin('positions as positions2', 'staff2.id_position', '=', 'positions2.id')
+
+                        ->where('rooms.id', '=', $numberRoom)
+                        ->where('rooms_closed.id', '>', 0)
+
+                        ->select(
+                            'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
+                            'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
+                            'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
+                            // О бронировании
+                            'rooms_closed.id as bookingId', 'rooms_closed.closure_at as bookingCheckIn',
+                            'rooms_closed.opening_at as bookingCheckOut',
+//                            // Сотрудник который забронировал
+                            'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
+                            'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
+                            'staff2.employment_date as staffEmploymentDateB',
+                            'positions2.name as staffPositionB',
+                            'users2.username as staffUsernameB', 'users2.photo as staffPhotoB',
+                        )
+                        ->get();
+
+                    $data[0]->status = 'closed';
+                }
             }
         }
 

@@ -6,8 +6,11 @@ export default function StatusBtn (props) {
         return  <button type="button" className=" green-button btn btn-sm btn-outline-secondary">{props.status}</button>
     }else if (props.status === 'booking'){
         return  <button type="button" className=" blue-button btn btn-sm btn-outline-secondary">{props.status}</button>
+    }else if (props.status === 'closed'){
+        return  <button type="button" className=" purple-button btn btn-sm btn-outline-secondary">{props.status}</button>
     }
     else if (props.status === 'clean'){
         return  <button type="button" className=" yellow-button btn btn-sm btn-outline-secondary">{props.status}</button>
     }
+
 }
