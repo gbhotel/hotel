@@ -25,12 +25,13 @@ class RoomsController extends Controller
             $item->status = 'closed';
         }
 
-        $checkIn = DB::table('rooms')
-            ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
-            ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
-            ->whereDate('booking.check_in', '<=', $date)
-            ->whereDate('booking.check_out', '>=', $date)
-            ->where( 'check_in.id_booking', '>', 0)
+        $checkIn = DB::table('check_in')
+            ->leftJoin('booking', 'booking.id', '=', 'check_in.id_booking')
+            ->leftJoin('rooms', 'rooms.id', '=', 'booking.id_room')
+
+            ->whereDate('check_in.checkIn', '<=', $date)
+            ->whereDate('check_in.checkOut', '>=', $date)
+
             ->select('rooms.id', 'rooms.number', 'checkIn', 'checkOut')
             ->get();
 
@@ -38,8 +39,8 @@ class RoomsController extends Controller
             $item->status = 'checkIn';
         }
 
-        $booking = DB::table('rooms')
-            ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
+        $booking = DB::table('booking')
+            ->leftJoin('rooms', 'rooms.id', '=', 'booking.id_room')
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
             ->whereDate('booking.check_in', '<=', $date)
             ->whereDate('booking.check_out', '>=', $date)
@@ -51,20 +52,12 @@ class RoomsController extends Controller
             $item->status = 'booking';
         }
 
-//        $notFree = DB::table('booking')
-//            ->whereDate('check_out', '>', $date)
-//            ->whereDate('check_in', '<', $date)
-//            ->join('rooms', 'booking.id_room', '=', 'rooms.id')
-//            ->select('rooms.id', 'rooms.number')
-//            ->distinct('rooms.id')
-//            ->get();
-
         $notFree = [...$closed, ...$checkIn, ...$booking];
 
         $allRooms = DB::table('rooms')->select('id', 'number')->get();
 
         $free =[];
-        foreach ($allRooms as $key => $room)
+        foreach ($allRooms as $room)
         {
             $b = false;
             foreach ($notFree as $id)
