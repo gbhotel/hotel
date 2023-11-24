@@ -14,6 +14,17 @@ class RoomsController extends Controller
     {
         $date = now()->toDateTimeString();
 
+        $closed = DB::table('rooms_closed')
+            ->leftJoin('rooms', 'rooms_closed.id_rooms', '=', 'rooms.id')
+            ->whereDate('rooms_closed.closure_at', '<=', $date)
+            ->whereDate('rooms_closed.opening_at', '>=', $date)
+            ->select('rooms.id', 'rooms.number')
+            ->get();
+
+        foreach ($closed as $item) {
+            $item->status = 'closed';
+        }
+
         $checkIn = DB::table('rooms')
             ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
@@ -40,13 +51,15 @@ class RoomsController extends Controller
             $item->status = 'booking';
         }
 
-        $notFree = DB::table('booking')
-            ->whereDate('check_out', '>', $date)
-            ->whereDate('check_in', '<', $date)
-            ->join('rooms', 'booking.id_room', '=', 'rooms.id')
-            ->select('rooms.id')
-            ->distinct('rooms.id')
-            ->get();
+//        $notFree = DB::table('booking')
+//            ->whereDate('check_out', '>', $date)
+//            ->whereDate('check_in', '<', $date)
+//            ->join('rooms', 'booking.id_room', '=', 'rooms.id')
+//            ->select('rooms.id', 'rooms.number')
+//            ->distinct('rooms.id')
+//            ->get();
+
+        $notFree = [...$closed, ...$checkIn, ...$booking];
 
         $allRooms = DB::table('rooms')->select('id', 'number')->get();
 
@@ -70,7 +83,7 @@ class RoomsController extends Controller
             $item->status = 'free';
         }
 
-        $data = [...$free, ...$checkIn, ...$booking, ];
+        $data = [...$free, ...$checkIn, ...$booking, ...$closed ];
 
         return response()->json($data);
     }

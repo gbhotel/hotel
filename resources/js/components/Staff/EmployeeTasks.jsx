@@ -54,14 +54,16 @@ export default function EmployeeTasks () {
         }, [status]);
 
     const handlePrepareForShow = (id) => {
-        setShowRoom(true);
+        setShowRoom((prevState)=>(!prevState));
         // setSelectedTask(id);
         const selectedTask = tasks.find(task => task.id === id);
         setSelectedTask(selectedTask);
         setSets(JSON.parse(selectedTask["room_sets"]));
     }
 
-    const changeStatus = async (task) => {
+    const changeStatus = async (task, event) => {
+
+        event.stopPropagation();
         const abortController = new AbortController();
 
         let request;
@@ -72,7 +74,9 @@ export default function EmployeeTasks () {
                 status: 'в процессе',
             };
         } else if (task.status === 'в процессе') {
-            setCount((prevState)=>(prevState + 1));
+            setTimeout(()=> {
+                setCount((prevState)=>(prevState + 1));
+            },2000)
             request = {
                 taskId: task.id,
                 status: 'сделано',
@@ -129,11 +133,11 @@ export default function EmployeeTasks () {
                                         ) : (
                                             <button
                                                 className="btn uppercase btn-task blue-button start-task"
-                                                onClick={() => changeStatus(task)}
+                                                onClick={(event) => changeStatus(task, event)}
                                             >
                                                 {task.status === 'не сделано' ? 'Начать' : ''}
-                                                {task.status === 'в процессе' ? 'Завешить' : ''}
-                                                {task.status === 'сделано' ? 'Завешено' : ''}
+                                                {task.status === 'в процессе' ? 'Завершить' : ''}
+                                                {task.status === 'сделано' ? 'Завершено' : ''}
                                             </button>
                                         )}
                                     </div>

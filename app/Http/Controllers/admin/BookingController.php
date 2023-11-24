@@ -30,7 +30,7 @@ class BookingController extends Controller
             $result[] = [
                 'booking_number' => $booking->id,
                 'room_number' => $booking->room->number,
-                'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->last_name,
+                'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->user->last_name,
                 'guest_phone' => $booking->guest->user->phone,
                 'check_in' => $booking->check_in,
                 'check_out' => $booking->check_out,

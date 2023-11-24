@@ -1,5 +1,8 @@
-import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function Rooms() {
 
@@ -22,56 +25,356 @@ export default function Rooms() {
 
     return (
         <>
-            <h1 className="text-center my-4">Комната №{data.roomNumber}</h1>
-            <div className=" my-0 container row row-cols-1 row-cols-sm-2 row-cols-md-2 ">
-                <div className="text-center">
-                    <h3>О Комнате</h3>
-                    <p>Статус комнаты: {data.status}</p>
-                    <p>Категория комнаты: {data.category}</p>
-                    <p>Кровать: {data.bed}</p>
-                    <p>Кондиционер: {data.conditioner}</p>
-                    <p>Количество комнат: {data.roomsNumber}</p>
-                    <p>Душь: {data.shower}</p>
-                    <p>Туалет: {data.toilet}</p>
-                    <p>WiFi: {data.wifi}</p>
+            <div className=" width-1200 mt-4 mx-auto col-md-6">
+                <div className="row g-0 border rounded overflow-hidden flex-md-row mb-5 shadow-sm h-md-250 position-relative">
+                    <Container>
+                        {/*Шапка таблицы*/}
+                        <Row className="align-items-start my-3 text-center" >
+                            <Col xs={8}>
+                                <h3>Комната №{data.roomNumber}</h3>
+                            </Col>
+                            <Col xs={4}>
+                                <button type="button" className="btn btn-sm btn-outline-secondary mx-1">
+                                    Забронировать
+                                </button>
+                                <button type="button" className="btn btn-sm btn-outline-secondary mx-1">
+                                    Заселить
+                                </button>
+                            </Col>
+                        </Row>
+                        {/*Блок о комнате*/}
+                        <Row className="align-items-start text-start" >
+                            <Col className="border-start" xs={12}>
+                                <b>О комнате</b>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-start border-bottom border-top mb-2 text-start" >
+                            <Col className="border-start" xs={4}>
+                                {/*Первая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Статус комнаты:</Col>
+                                    <Col xs={6}>{data.status}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Категория комнаты:</Col>
+                                    <Col xs={6}>{data.category}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Вместимость:</Col>
+                                    <Col xs={6}>{data.roomMaxGuests}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Цена за сутки</Col>
+                                    <Col xs={6}>{data.roomPrice}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дополнительный гость:</Col>
+                                    <Col xs={6}>{data.roomAdditionalGuest}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start" xs={4}>
+                                {/*Вторая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Кондиционер:</Col>
+                                    <Col xs={6}>{data.conditioner}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Количество комнат:</Col>
+                                    <Col xs={6}>{data.roomsNumber}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Душь:</Col>
+                                    <Col xs={6}>{data.shower}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Туалет:</Col>
+                                    <Col xs={6}>{data.toilet}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>WiFi:</Col>
+                                    <Col xs={6}>{data.wifi}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start border-end" xs={4}>
+                                {/*третья треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Тапочки:</Col>
+                                    <Col xs={6}>{data.towel}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Шампунь:</Col>
+                                    <Col xs={6}>{data.shampoo}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Гель для душа:</Col>
+                                    <Col xs={6}>{data.showerGel}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Полотенце:</Col>
+                                    <Col xs={6}>{data.slippers}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Кровать:</Col>
+                                    <Col xs={6}>{data.bed}</Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        {/*О госте*/}
+                        <Row className="align-items-start text-start" >
+                            <Col className="border-start" xs={12}>
+                                <b>О госте</b>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-start border-bottom border-top mb-2 text-start" >
+                            <Col className="border-start" xs={4}>
+                                {/*Первая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>ID гостя:</Col>
+                                    <Col xs={6}>{data.guestsId}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Паспорт</Col>
+                                    <Col xs={6}>{data.guestsPassport}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start" xs={4}>
+                                {/*Вторая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Имя:</Col>
+                                    <Col xs={6}>{data.guestsFirstName}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Фамилия:</Col>
+                                    <Col xs={6}>{data.guestsLastName}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start border-end" xs={4}>
+                                {/*третья треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Телефон:</Col>
+                                    <Col xs={6}>{data.guestsPhone}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Email:</Col>
+                                    <Col xs={6}>{data.guestsEmail}</Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        {/*О брони*/}
+                        <Row className="align-items-start text-start" >
+                            <Col className="border-start" xs={12}>
+                                <b>О брони</b>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-start border-bottom border-top mb-2 text-start" >
+                            <Col className="border-start" xs={4}>
+                                {/*Первая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>ID брони:</Col>
+                                    <Col xs={6}>{data.bookingId}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start" xs={4}>
+                                {/*Вторая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дата начала брони:</Col>
+                                    <Col xs={6}>{data.bookingCheckIn}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start border-end" xs={4}>
+                                {/*третья треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дата окончания брони:</Col>
+                                    <Col xs={6}>{data.bookingCheckOut}</Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        {/*Забронировал*/}
+                        <Row className="align-items-start text-start" >
+                            <Col className="border-start" xs={12}>
+                                <b>Забронировал</b>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-start border-bottom border-top mb-2 text-start" >
+                            <Col className="border-start" xs={4}>
+                                {/*Первая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>ID сотрудника:</Col>
+                                    <Col xs={6}>{data.staffIdB}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Имя:</Col>
+                                    <Col xs={6}>{data.staffFirstNameB}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Фамилия:</Col>
+                                    <Col xs={6}>{data.staffLastNameB}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start" xs={4}>
+                                {/*Вторая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Телефон:</Col>
+                                    <Col xs={6}>{data.staffPhoneB}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Email:</Col>
+                                    <Col xs={6}>{data.staffEmailB}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Должность:</Col>
+                                    <Col xs={6}>{data.staffPositionB}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start border-end" xs={4}>
+                                {/*третья треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>№ паспорта:</Col>
+                                    <Col xs={6}>{data.staffPassportB}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Трудоустроен с </Col>
+                                    <Col xs={6}>{data.staffEmploymentDateB}</Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        {/*О заселении*/}
+                        <Row className="align-items-start text-start" >
+                            <Col className="border-start" xs={12}>
+                                <b>О заселении</b>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-start border-bottom border-top mb-2 text-start" >
+                            <Col className="border-start" xs={4}>
+                                {/*Первая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>ID брони:</Col>
+                                    <Col xs={6}>{data.checkId}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start" xs={4}>
+                                {/*Вторая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дата начала брони:</Col>
+                                    <Col xs={6}>{data.checkCheckIn}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start border-end" xs={4}>
+                                {/*третья треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дата окончания брони:</Col>
+                                    <Col xs={6}>{data.checkCheckOut}</Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        {/*Заселил*/}
+                        <Row className="align-items-start text-start" >
+                            <Col className="border-start" xs={12}>
+                                <b>Заселил</b>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-start border-bottom border-top mb-2 text-start" >
+                            <Col className="border-start" xs={4}>
+                                {/*Первая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>ID сотрудника:</Col>
+                                    <Col xs={6}>{data.staffIdCh}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Имя:</Col>
+                                    <Col xs={6}>{data.staffFirstNameCh}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Фамилия:</Col>
+                                    <Col xs={6}>{data.staffLastNameCh}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start" xs={4}>
+                                {/*Вторая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Телефон:</Col>
+                                    <Col xs={6}>{data.staffPhoneCh}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Email:</Col>
+                                    <Col xs={6}>{data.staffEmailCh}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Должность:</Col>
+                                    <Col xs={6}>{data.staffPositionCh}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start border-end" xs={4}>
+                                {/*третья треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>№ паспорта:</Col>
+                                    <Col xs={6}>{data.staffPassportCh}</Col>
+                                </Row>
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Трудоустроен с </Col>
+                                    <Col xs={6}>{data.staffEmploymentDateCh}</Col>
+                                </Row>
+                            </Col>
+                        </Row>
 
-                    <h3>О госте</h3>
-                    <p>ID: {data.guestsId}</p>
-                    <p>Имя: {data.guestsFirstName}</p>
-                    <p>Фамилия: {data.guestsLastName}</p>
-                    <p>Телефон: {data.guestsPhone}</p>
-                    <p>Email: {data.guestsEmail}</p>
-                    <p>№ паспорта: {data.guestsPassport}</p>
-                </div>
+                        <Row className="align-items-start text-start" >
+                            <Col className="border-start" xs={12}>
+                                <b>О закрытии</b>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-start border-bottom border-top mb-2 text-start" >
+                            <Col className="border-start" xs={4}>
+                                {/*Первая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>ID брони:</Col>
+                                    <Col xs={6}>{data.bookingId}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start" xs={4}>
+                                {/*Вторая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дата начала брони:</Col>
+                                    <Col xs={6}>{data.bookingCheckIn}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start border-end" xs={4}>
+                                {/*третья треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дата окончания брони:</Col>
+                                    <Col xs={6}>{data.bookingCheckOut}</Col>
+                                </Row>
+                            </Col>
+                        </Row>
 
-                <div className="text-center">
-                    <h3>О брони</h3>
-                    <p>ID брони: {data.bookingId}</p>
-                    <p>Дата начала брони: {data.bookingCheckIn}</p>
-                    <p>Дата окончания брони: {data.bookingCheckOut}</p>
-                    <h5>Сотрудник создавшийи бронь</h5>
-                    <p>ID сотрудника: {data.staffIdB}</p>
-                    <p>Имя: {data.staffFirstNameB}</p>
-                    <p>Фамилия: {data.staffLastNameB}</p>
-                    <p>Телефон: {data.staffPhoneB}</p>
-                    <p>Email: {data.staffEmailB}</p>
-                    <p>Должность: {data.staffPositionB}</p>
-                    <p>№ паспорта: {data.staffPassportB}</p>
-                    <p>Трудоустроен с {data.staffEmploymentDateB}</p>
-
-                    <h3>О заселении</h3>
-                    <p>ID заселения: {data.checkId}</p>
-                    <p>Дата заселения: {data.checkCheckIn}</p>
-                    <p>Дата выселения: {data.checkCheckOut}</p>
-                    <h5>Сотрудник создавшийи заселение</h5>
-                    <p>ID сотрудника: {data.staffIdCh}</p>
-                    <p>Имя: {data.staffFirstNameCh}</p>
-                    <p>Фамилия: {data.staffLastNameCh}</p>
-                    <p>Телефон: {data.staffPhoneCh}</p>
-                    <p>Email: {data.staffEmailCh}</p>
-                    <p>Должность: {data.staffPositionCh}</p>
-                    <p>№ паспорта: {data.staffPassportCh}</p>
-                    <p>Трудоустроен с {data.staffEmploymentDateCh}</p>
+                        <Row className="align-items-start text-start" >
+                            <Col className="border-start" xs={12}>
+                                <b>Закрыл комнату</b>
+                            </Col>
+                        </Row>
+                        <Row className="align-items-start border-bottom border-top mb-2 text-start" >
+                            <Col className="border-start" xs={4}>
+                                {/*Первая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>ID брони:</Col>
+                                    <Col xs={6}>{data.bookingId}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start" xs={4}>
+                                {/*Вторая треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дата начала брони:</Col>
+                                    <Col xs={6}>{data.bookingCheckIn}</Col>
+                                </Row>
+                            </Col>
+                            <Col className="border-start border-end" xs={4}>
+                                {/*третья треть параметров о комнате*/}
+                                <Row className="align-items-center my-1 text-start" >
+                                    <Col xs={6}>Дата окончания брони:</Col>
+                                    <Col xs={6}>{data.bookingCheckOut}</Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </Container>
                 </div>
             </div>
         </>

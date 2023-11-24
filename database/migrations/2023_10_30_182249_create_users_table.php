@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
             $table->string('passport')->unique()->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('gender')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('role_id')
                 ->constrained('roles')

@@ -7,12 +7,15 @@ import Room from "../routes/Room.jsx";
 import Staff from "../routes/Staff.jsx";
 import Employee from "../routes/Employee.jsx";
 import Tasks from "../routes/Tasks.jsx";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 
 export default function Admin (){
 
     return( <>
-        <div className="  d-flex">
+        <div className="d-flex gap-5">
             <nav style={{ padding: '20px' }} className="col-md-2 d-none d-md-block bg-light sidebar">
                 <div className="sidebar-sticky">
                     <ul className="nav flex-column">

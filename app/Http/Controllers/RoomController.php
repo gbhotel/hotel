@@ -24,30 +24,36 @@ class RoomController extends Controller
             ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
             ->leftJoin('guests', 'booking.id_guest', '=', 'guests.id')
             ->leftJoin('users as users3', 'guests.id_user', '=', 'users3.id')
+            ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
 
             ->where('rooms.number', '=', $numberRoom)
             ->whereDate( 'check_in.checkIn', '<',$date)
             ->whereDate('check_in.checkOut', '>', $date)
+            ->whereNull('rooms_closed.id')
 
             ->select(
-                // О комнате
-                'rooms.id as roomId', 'rooms.number as roomNumber',
-                'rooms.comfort as roomComfort', 'categories.category',
+            // О комнате
+                'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
+                'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
+                'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
                 // О госте
                 'guests.id as guestsId', 'users3.first_name as guestsFirstName', 'users3.last_name as guestsLastName',
                 'users3.phone as guestsPhone', 'users3.email as guestsEmail', 'users3.passport as guestsPassport',
+                'users3.username as guestsUsername', 'users3.photo as guestsPhoto',
                 // О бронировании
                 'booking.id as bookingId', 'booking.check_in as bookingCheckIn', 'booking.check_out as bookingCheckOut',
                 // Сотрудник который забронировал
                 'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
                 'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
                 'staff2.employment_date as staffEmploymentDateB', 'positions2.name as staffPositionB',
+                'users2.username as staffUsernameB', 'users2.photo as staffPhotoB',
                 // О заселении
                 'check_in.id as checkId', 'check_in.checkIn as checkCheckIn', 'check_in.checkOut as checkCheckOut',
                 // Сотрудник, который заселял
                 'staff.id as staffIdCh', 'users.first_name as staffFirstNameCh', 'users.last_name as staffLastNameCh',
                 'users.phone as staffPhoneCh', 'users.email as staffEmailCh', 'users.passport as staffPassportCh',
                 'staff.employment_date as staffEmploymentDateCh', 'positions.name as staffPositionCh',
+                'users.username as staffUsernameCh', 'users.photo as staffPhotoCh',
             )
             ->get();
 
@@ -64,24 +70,29 @@ class RoomController extends Controller
                 ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
                 ->leftJoin('guests', 'booking.id_guest', '=', 'guests.id')
                 ->leftJoin('users as users3', 'guests.id_user', '=', 'users3.id')
+                ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
 
                 ->where('id_room', '=', $numberRoom)
                 ->whereDate( 'check_in', '<',$date)
                 ->whereDate('check_out', '>', $date)
+                ->whereNull('rooms_closed.id')
 
                 ->select(
                 // О комнате
-                    'rooms.id as roomId', 'rooms.number as roomNumber',
-                    'rooms.comfort as roomComfort', 'categories.category',
+                    'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
+                    'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
+                    'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
                     // О госте
                     'guests.id as guestsId', 'users3.first_name as guestsFirstName', 'users3.last_name as guestsLastName',
                     'users3.phone as guestsPhone', 'users3.email as guestsEmail', 'users3.passport as guestsPassport',
+                    'users3.username as guestsUsername', 'users3.photo as guestsPhoto',
                     // О бронировании
                     'booking.id as bookingId', 'booking.check_in as bookingCheckIn', 'booking.check_out as bookingCheckOut',
                     // Сотрудник который забронировал
                     'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
                     'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
                     'staff2.employment_date as staffEmploymentDateB', 'positions2.name as staffPositionB',
+                    'users2.username as staffUsernameB', 'users2.photo as staffPhotoB',
                 )
                 ->get();
 
@@ -92,18 +103,54 @@ class RoomController extends Controller
             }else{
                 $data = DB::table('rooms')
                     ->join('categories', 'rooms.id_category', '=', 'categories.id')
+                    ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
+
                     ->where('rooms.id', '=', $numberRoom)
+                    ->whereNull('rooms_closed.id')
+
                     ->select(
-                        'rooms.id as roomId', 'rooms.number as roomNumber',
-                        'rooms.comfort as roomComfort', 'categories.category',
+                        'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
+                        'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
+                        'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
                     )
                     ->get();
 
-                $data[0]->status = 'free';
+                if(!empty($data[0])){
+                    $data[0]->status = 'free';
+                }else{
+                    $data = DB::table('rooms')
+                        ->join('categories', 'rooms.id_category', '=', 'categories.id')
+                        ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
+                        ->leftJoin('staff as staff2', 'rooms_closed.employee', '=', 'staff2.id')
+                        ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
+                        ->LeftJoin('positions as positions2', 'staff2.id_position', '=', 'positions2.id')
+
+                        ->where('rooms.id', '=', $numberRoom)
+                        ->where('rooms_closed.id', '>', 0)
+
+                        ->select(
+                            'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
+                            'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
+                            'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
+                            // О бронировании
+                            'rooms_closed.id as bookingId', 'rooms_closed.closure_at as bookingCheckIn',
+                            'rooms_closed.opening_at as bookingCheckOut',
+//                            // Сотрудник который забронировал
+                            'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
+                            'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
+                            'staff2.employment_date as staffEmploymentDateB',
+                            'positions2.name as staffPositionB',
+                            'users2.username as staffUsernameB', 'users2.photo as staffPhotoB',
+                        )
+                        ->get();
+
+                    $data[0]->status = 'closed';
+                }
             }
         }
 
         $comfort = json_decode($data[0]->roomComfort);
+        $roomSets = json_decode($data[0]->roomSets);
 
         $data[0]->wifi = $comfort->wifi;
         $data[0]->bed = $comfort->bed;
@@ -112,7 +159,13 @@ class RoomController extends Controller
         $data[0]->roomsNumber = $comfort->roomsNumber;
         $data[0]->conditioner = $comfort->conditioner;
 
+        $data[0]->towel = $roomSets->{'полотенце'};
+        $data[0]->slippers = $roomSets->{'тапочки'};
+        $data[0]->shampoo = $roomSets->{'шампунь'};
+        $data[0]->showerGel = $roomSets->{'гель для душа'};
+
         unset($data[0]->roomComfort);
+        unset($data[0]->roomSets);
 
         return response()->json($data);
     }
