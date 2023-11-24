@@ -11,7 +11,7 @@ class TasksSeeder extends Seeder
     private array $tasks = [
         'уборка номера',
         'доставка еды в номер',
-        'услуги прачечной',
+        'прачечная',
         'смена белья',
         'ремонт',
         'другое'
@@ -139,6 +139,27 @@ class TasksSeeder extends Seeder
             'created_date'=> date('2023-11-18'),
             'execution_date'=> null,
             'comment'=> 'подойдите после 11:00',
+            'status'=> 'не сделано',
+            'updated_at' => null,
+        ];
+        $tasks [] = [
+            'name'=> 'смена белья',
+            'id_room' => 2,
+            'id_staff'=> 6,
+            'created_date'=> date('2023-11-18'),
+            'execution_date'=> null,
+            'comment'=> 'можно дополнительную наволочку',
+            'status'=> 'не сделано',
+            'updated_at' => null,
+        ];
+
+        $tasks [] = [
+            'name'=> 'прачечная',
+            'id_room' => 9,
+            'id_staff'=> 6,
+            'created_date'=> date('2023-11-18'),
+            'execution_date'=> null,
+            'comment'=> null,
             'status'=> 'не сделано',
             'updated_at' => null,
         ];

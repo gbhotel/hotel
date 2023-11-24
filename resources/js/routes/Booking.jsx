@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import ReactPaginate from "react-paginate";
 
 export default function Booking() {
 
     const [booking, setBooking] = useState([]);
+    const [filteredBooking, setFilteredBooking] = useState([]);
+    const [checkInDate, setCheckInDate] = useState(new Date());
+    const [checkInDateString, setCheckInDateString] = useState('');
 
     document.getElementById('auth').innerHTML = '';
-
     useEffect(() => {
         const abortController = new AbortController();
 
@@ -22,6 +29,7 @@ export default function Booking() {
             .then(data => {
                 console.log(data);
                 setBooking(data);
+                setCheckInDate(null);
             })
             .catch(error => {
                 console.error(error);
@@ -31,59 +39,155 @@ export default function Booking() {
             abortController.abort();
         }
     }, []);
-    return (
-        <>
-            <div className="d-flex flex-column container">
-                <div className="d-flex mt-5 justify-content-between">
-                    <h1 className="h2">Брони</h1>
-                    <div className="btn-toolbar mr-5 mb-2 mb-md-0">
-                        <button type="button" className="btn  btn-sm btn-outline-secondary">
-                            <Link to="/addBooking" className="  text-decoration-none text-dark "> Добавить бронь </Link>
+
+        const filterByBookingNumber = (e) => {
+            console.log(e.target.value);
+            let filteredBooking = booking.filter((item) => item.booking_number === parseInt(e.target.value));
+            console.log(filteredBooking);
+            setFilteredBooking(filteredBooking);
+        }
+
+        const filterByBookingDate = (date) => {
+            setCheckInDate(date);
+
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // +1, так как месяцы в JavaScript начинаются с 0
+            const day = date.getDate().toString().padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}`;
+            console.log(formattedDate);
+
+            setCheckInDateString(formattedDate);
+
+            let filteredBooking = booking.filter((item) => item.check_in === formattedDate);
+
+            setFilteredBooking(filteredBooking);
+
+            console.log(filteredBooking);
+
+        };
+
+        return (
+            <>
+                <div className=" ml-40px flex-grow-0_1 mt-5 col-7 col-md-7">
+                    <div className=" d-flex justify-content-between align-items-center m-3 text-center">
+                        <h3>Брони</h3>
+                        <button type="button" className="btn p-2 btn-add btn-sm uppercase text-black btn-sm">
+                            <Link to="/addBooking" className="  link text-decoration-none text-black"> Добавить
+                                бронь </Link>
                         </button>
                     </div>
-                </div>
-                <div className="my-5 container justify-content-center">
-                <div className="  table-responsive">
-                    <table className=" no-border table table-striped table-sm">
-                        <thead className="no-border">
-                        <tr className="no-border">
-                            <th scope="col">Номер брони</th>
-                            <th scope="col">Номер комнаты</th>
-                            <th scope="col">На кого бронь</th>
-                            <th scope="col">Телефон</th>
-                            <th scope="col">дата заезда</th>
-                            <th scope="col">дата выезда</th>
-                            <th scope="col">Кто забронировал</th>
-                            {/*<th scope="col"></th>*/}
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div className="d-flex mb-3">
+                        <input
+                            className="gray-input"
+                            placeholder="Номер брони"
+                            onChange={(e) => filterByBookingNumber(e)}
+                        />
+                        <DatePicker
+                            name="birthday"
+                            selected={checkInDate}
+                            onChange={filterByBookingDate}
+                            placeholderText="Дата заезда"
+                            className="col-9 gray-input"
+                            calendarClassName="purple-datepicker"
+                        />
+                    </div>
+                    <div
+                        className="row g-0 p-4 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <Row className=" uppercase align-items-center">
+                            <Col className="my-3" lg={1} xs={1}>
+                                <b>бронь</b>
+                            </Col>
+                            <Col className="my-3" lg={1} xs={1}>
+                                <b>номер</b>
+                            </Col>
+                            <Col className="my-3" lg={2} xs={1}>
+                                <b>Гость</b>
+                            </Col>
+                            <Col className="my-3" lg={2} xs={1}>
+                                <b>Телефон</b>
+                            </Col>
+                            <Col className="my-3" lg={2} xs={1}>
+                                <b>дата заезда</b>
+                            </Col>
+                            <Col className="my-3" lg={2} xs={1}>
+                                <b>дата выезда</b>
+                            </Col>
+
+                            <Col className="my-3 flex-grow-1" lg={2} xs={1}>
+                                <b></b>
+                            </Col>
+                        </Row>
                         {
-                            booking.map((item, index) => (
-
-                                <tr key={index}>
-                                    <td>{item.booking_number}</td>
-                                    <td>{item.room_number}</td>
-                                    <td>{item.guest_name}</td>
-                                    <td>{item.guest_phone}</td>
-                                    <td>{item.check_in}</td>
-                                    <td>{item.check_out}</td>
-                                    <td>{item.admin_name}</td>
-                                    <td className="btn-group me-2">
-                                        <button type="button" className="btn btn-sm btn-outline-secondary">Редактировать</button>
-                                        <button type="button" className="btn btn-sm btn-outline-secondary">Удалить</button>
-                                    </td>
-                                </tr>
-
-                            ))
+                            filteredBooking.length === 0 ?
+                                (booking.map((item, index) => (
+                                        <Row key={index} className="align-items-center border-top">
+                                            <Col className="my-3" lg={1} xs={1}>
+                                                {item.booking_number}
+                                            </Col>
+                                            <Col className="my-3" lg={1} xs={1}>
+                                                {item.room_number}
+                                            </Col>
+                                            <Col className="my-3" lg={2} xs={2}>
+                                                {item.guest_name}
+                                            </Col>
+                                            <Col className="my-3" lg={2} xs={2}>
+                                                {item.guest_phone}
+                                            </Col>
+                                            <Col className="my-3" lg={2} xs={1}>
+                                                {item.check_in}
+                                            </Col>
+                                            <Col className="my-3" lg={2} xs={1}>
+                                                {item.check_out}
+                                            </Col>
+                                            <Col className="my-3 flex-grow-1 d-flex justify-content-center" lg={2}
+                                                 xs={2}>
+                                                <button type="button"
+                                                        className="btn  btn-sm uppercase bright-green-button">Редактировать
+                                                </button>
+                                                <button type="button"
+                                                        className="btn btn-sm uppercase bright-red-button">Удалить
+                                                </button>
+                                            </Col>
+                                        </Row>
+                                    ))
+                                ) :
+                                (filteredBooking.map((item, index) => (
+                                        <Row key={index} className="align-items-center border-top">
+                                            <Col className="my-3" lg={1} xs={1}>
+                                                {item.booking_number}
+                                            </Col>
+                                            <Col className="my-3" lg={1} xs={1}>
+                                                {item.room_number}
+                                            </Col>
+                                            <Col className="my-3" lg={2} xs={2}>
+                                                {item.guest_name}
+                                            </Col>
+                                            <Col className="my-3" lg={2} xs={2}>
+                                                {item.guest_phone}
+                                            </Col>
+                                            <Col className="my-3" lg={2} xs={1}>
+                                                {item.check_in}
+                                            </Col>
+                                            <Col className="my-3" lg={2} xs={1}>
+                                                {item.check_out}
+                                            </Col>
+                                            <Col className="my-3 flex-grow-1 d-flex justify-content-center" lg={2}
+                                                 xs={2}>
+                                                <button type="button"
+                                                        className="btn  btn-sm uppercase bright-green-button">Редактировать
+                                                </button>
+                                                <button type="button"
+                                                        className="btn btn-sm uppercase bright-red-button">Удалить
+                                                </button>
+                                            </Col>
+                                        </Row>
+                                    ))
+                                )
                         }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </div>
 
-        </>
-    )
-}
+                    </div>
+                </div>
+            </>
+        )
+    }
+
