@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 class RoomController extends Controller
 {
 
+    /**
+     * @param $numberRoom
+     * @return \Illuminate\Http\JsonResponse
+     * Метод возвращает все данные связаные с комнатой (инф. о комнате, статус, о госте, о брони, о заселении итд)
+     */
     public function getRoom($numberRoom)
     {
         $date = now()->toDateTimeString();
@@ -24,15 +29,13 @@ class RoomController extends Controller
             ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
             ->leftJoin('guests', 'booking.id_guest', '=', 'guests.id')
             ->leftJoin('users as users3', 'guests.id_user', '=', 'users3.id')
-            ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
 
             ->where('rooms.number', '=', $numberRoom)
             ->whereDate( 'check_in.checkIn', '<',$date)
             ->whereDate('check_in.checkOut', '>', $date)
-            ->whereNull('rooms_closed.id')
 
             ->select(
-            // О комнате
+                // О комнате
                 'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
                 'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
                 'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
@@ -57,8 +60,6 @@ class RoomController extends Controller
             )
             ->get();
 
-//        return response($data);
-
         if(!empty($data[0])){
             $data[0]->status = 'check_in';
         }else{
@@ -70,15 +71,13 @@ class RoomController extends Controller
                 ->LeftJoin('users as users2', 'staff2.id_user', '=', 'users2.id')
                 ->leftJoin('guests', 'booking.id_guest', '=', 'guests.id')
                 ->leftJoin('users as users3', 'guests.id_user', '=', 'users3.id')
-                ->leftJoin('rooms_closed', 'rooms_closed.id_rooms', '=', 'rooms.id')
 
                 ->where('id_room', '=', $numberRoom)
                 ->whereDate( 'check_in', '<',$date)
                 ->whereDate('check_out', '>', $date)
-                ->whereNull('rooms_closed.id')
 
                 ->select(
-                // О комнате
+                    // О комнате
                     'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
                     'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
                     'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
@@ -95,8 +94,6 @@ class RoomController extends Controller
                     'users2.username as staffUsernameB', 'users2.photo as staffPhotoB',
                 )
                 ->get();
-
-//                    return response($data);
 
             if(!empty($data[0])){
                 $data[0]->status = 'booking';
@@ -132,15 +129,14 @@ class RoomController extends Controller
                             'rooms.id as roomId', 'rooms.number as roomNumber', 'rooms.price as roomPrice',
                             'additional_guest as roomAdditionalGuest', 'rooms.max_guests as roomMaxGuests',
                             'rooms.comfort as roomComfort', 'categories.category', 'rooms.sets as roomSets',
-                            // О бронировании
-                            'rooms_closed.id as bookingId', 'rooms_closed.closure_at as bookingCheckIn',
-                            'rooms_closed.opening_at as bookingCheckOut',
+                            // О закрытии
+                            'rooms_closed.id as closedId', 'rooms_closed.closure_at as closedClosure',
+                            'rooms_closed.opening_at as closedOpening',
 //                            // Сотрудник который забронировал
-                            'staff2.id as staffIdB', 'users2.first_name as staffFirstNameB', 'users2.last_name as staffLastNameB',
-                            'users2.phone as staffPhoneB', 'users2.email as staffEmailB', 'users2.passport as staffPassportB',
-                            'staff2.employment_date as staffEmploymentDateB',
-                            'positions2.name as staffPositionB',
-                            'users2.username as staffUsernameB', 'users2.photo as staffPhotoB',
+                            'staff2.id as staffIdCl', 'users2.first_name as staffFirstNameCl', 'users2.last_name as staffLastNameCl',
+                            'users2.phone as staffPhoneCl', 'users2.email as staffEmailCl', 'users2.passport as staffPassportCl',
+                            'staff2.employment_date as staffEmploymentDateCl', 'positions2.name as staffPositionCl',
+                            'users2.username as staffUsernameCl', 'users2.photo as staffPhotoCl',
                         )
                         ->get();
 

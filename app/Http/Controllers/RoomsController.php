@@ -88,14 +88,65 @@ class RoomsController extends Controller
 
         $freeRooms = [];
 
-        $data = DB::table('rooms')
-            ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
-            ->join( 'categories', 'rooms.id_category', '=', 'categories.id')
-            ->whereDate('booking.check_out', '<', $dateIn)
-            ->orWhereDate('booking.check_in', '>', $dateOut)
+        //Получаем id комнат на ремонте
+        $closedId = DB::table('rooms_closed')
+            ->where(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('closure_at', '>=', $dateIn)
+                    ->whereDate('closure_at', '<=', $dateOut);
+            })
+            ->orWhere(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('opening_at', '>=', $dateIn)
+                    ->whereDate('opening_at', '<=', $dateOut);
+            })
+            ->orWhere(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('closure_at', '<=', $dateIn)
+                    ->whereDate('opening_at', '>=', $dateOut);
+            })
+            ->select('rooms_closed.id_rooms as id')
+            ->get();
+
+        //Получаем id комнат на брони
+        $bookingId = DB::table('booking')
+            ->where(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('check_in', '>=', $dateIn)
+                    ->whereDate('check_in', '<=', $dateOut);
+            })
+            ->orWhere(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('check_out', '>=', $dateIn)
+                    ->whereDate('check_out', '<=', $dateOut);
+            })
+            ->orWhere(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('check_in', '<=', $dateIn)
+                    ->whereDate('check_out', '>=', $dateOut);
+            })
+            ->select('booking.id_room as id')
+            ->get();
+
+        //Собираем полученые id в один неименованый массив
+        $arrId = [...$closedId, ...$bookingId];
+        $arrSortId = [];
+        foreach ($arrId as $item)
+        {
+            $arrSortId[] = $item->id;
+        }
+
+        //Получаем данные на комнаты, id которых нет в массиве $arrSortId
+        $data = DB::table('booking')
+            ->leftJoin( 'rooms', 'rooms.id', '=', 'booking.id_room')
+            ->leftJoin( 'categories', 'rooms.id_category', '=', 'categories.id')
+            ->whereNotIn('rooms.id', $arrSortId)
             ->orderBy('rooms.number')
             ->distinct('rooms.number')
             ->get();
+
+//        $data = DB::table('rooms')
+//            ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
+//            ->join( 'categories', 'rooms.id_category', '=', 'categories.id')
+//            ->whereDate('booking.check_out', '<', $dateIn)
+//            ->orWhereDate('booking.check_in', '>', $dateOut)
+//            ->orderBy('rooms.number')
+//            ->distinct('rooms.number')
+//            ->get();
 
         foreach ($data as $oneData) {
             $freeRooms[] = [
