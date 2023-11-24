@@ -25,12 +25,13 @@ class RoomsController extends Controller
             $item->status = 'closed';
         }
 
-        $checkIn = DB::table('rooms')
-            ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
-            ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
-            ->whereDate('booking.check_in', '<=', $date)
-            ->whereDate('booking.check_out', '>=', $date)
-            ->where( 'check_in.id_booking', '>', 0)
+        $checkIn = DB::table('check_in')
+            ->leftJoin('booking', 'booking.id', '=', 'check_in.id_booking')
+            ->leftJoin('rooms', 'rooms.id', '=', 'booking.id_room')
+
+            ->whereDate('check_in.checkIn', '<=', $date)
+            ->whereDate('check_in.checkOut', '>=', $date)
+
             ->select('rooms.id', 'rooms.number', 'checkIn', 'checkOut')
             ->get();
 
@@ -38,8 +39,8 @@ class RoomsController extends Controller
             $item->status = 'checkIn';
         }
 
-        $booking = DB::table('rooms')
-            ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
+        $booking = DB::table('booking')
+            ->leftJoin('rooms', 'rooms.id', '=', 'booking.id_room')
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
             ->whereDate('booking.check_in', '<=', $date)
             ->whereDate('booking.check_out', '>=', $date)
@@ -51,20 +52,12 @@ class RoomsController extends Controller
             $item->status = 'booking';
         }
 
-//        $notFree = DB::table('booking')
-//            ->whereDate('check_out', '>', $date)
-//            ->whereDate('check_in', '<', $date)
-//            ->join('rooms', 'booking.id_room', '=', 'rooms.id')
-//            ->select('rooms.id', 'rooms.number')
-//            ->distinct('rooms.id')
-//            ->get();
-
         $notFree = [...$closed, ...$checkIn, ...$booking];
 
         $allRooms = DB::table('rooms')->select('id', 'number')->get();
 
         $free =[];
-        foreach ($allRooms as $key => $room)
+        foreach ($allRooms as $room)
         {
             $b = false;
             foreach ($notFree as $id)
@@ -95,14 +88,65 @@ class RoomsController extends Controller
 
         $freeRooms = [];
 
-        $data = DB::table('rooms')
-            ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
-            ->join( 'categories', 'rooms.id_category', '=', 'categories.id')
-            ->whereDate('booking.check_out', '<', $dateIn)
-            ->orWhereDate('booking.check_in', '>', $dateOut)
+        //Получаем id комнат на ремонте
+        $closedId = DB::table('rooms_closed')
+            ->where(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('closure_at', '>=', $dateIn)
+                    ->whereDate('closure_at', '<=', $dateOut);
+            })
+            ->orWhere(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('opening_at', '>=', $dateIn)
+                    ->whereDate('opening_at', '<=', $dateOut);
+            })
+            ->orWhere(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('closure_at', '<=', $dateIn)
+                    ->whereDate('opening_at', '>=', $dateOut);
+            })
+            ->select('rooms_closed.id_rooms as id')
+            ->get();
+
+        //Получаем id комнат на брони
+        $bookingId = DB::table('booking')
+            ->where(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('check_in', '>=', $dateIn)
+                    ->whereDate('check_in', '<=', $dateOut);
+            })
+            ->orWhere(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('check_out', '>=', $dateIn)
+                    ->whereDate('check_out', '<=', $dateOut);
+            })
+            ->orWhere(function (Builder $query) use ($dateOut, $dateIn) {
+                $query->whereDate('check_in', '<=', $dateIn)
+                    ->whereDate('check_out', '>=', $dateOut);
+            })
+            ->select('booking.id_room as id')
+            ->get();
+
+        //Собираем полученые id в один неименованый массив
+        $arrId = [...$closedId, ...$bookingId];
+        $arrSortId = [];
+        foreach ($arrId as $item)
+        {
+            $arrSortId[] = $item->id;
+        }
+
+        //Получаем данные на комнаты, id которых нет в массиве $arrSortId
+        $data = DB::table('booking')
+            ->leftJoin( 'rooms', 'rooms.id', '=', 'booking.id_room')
+            ->leftJoin( 'categories', 'rooms.id_category', '=', 'categories.id')
+            ->whereNotIn('rooms.id', $arrSortId)
             ->orderBy('rooms.number')
             ->distinct('rooms.number')
             ->get();
+
+//        $data = DB::table('rooms')
+//            ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
+//            ->join( 'categories', 'rooms.id_category', '=', 'categories.id')
+//            ->whereDate('booking.check_out', '<', $dateIn)
+//            ->orWhereDate('booking.check_in', '>', $dateOut)
+//            ->orderBy('rooms.number')
+//            ->distinct('rooms.number')
+//            ->get();
 
         foreach ($data as $oneData) {
             $freeRooms[] = [
