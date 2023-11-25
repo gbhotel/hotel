@@ -25,33 +25,31 @@ export default function Analysis() {
 
 
     return (
-        <><div className="d-flex flex-column mt-5">
-            <div className=" container my-2 col-md-6">
-                <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <Stack direction="horizontal" gap={2}>
-                        <div className="p-2">
-                            <button type="button" onClick={() => {setComponent(1)}} className="btn btn-sm btn-outline-secondary">
-                                Персонал
-                            </button>
-                        </div>
-                        <div className="p-2">
-                            <button type="button" onClick={() => {setComponent(2)}} className="btn btn-sm btn-outline-secondary">
-                                Гости
-                            </button>
-                        </div>
-                        <div className="p-2">
-                            <button type="button" onClick={() => {setComponent(3)}} className="btn btn-sm btn-outline-secondary">
-                                Комнаты
-                            </button>
-                        </div>
-                    </Stack>
+        <>
+            <div className="d-flex mx-4 flex-column">
+                <div className="width-1200 mt-5 col-md-6">
+                    <div className="row g-0 border rounded overflow-hidden flex-md-row shadow-sm position-relative">
+                        <Stack direction="horizontal" gap={2}>
+                            <div className="p-2">
+                                <button type="button" onClick={() => {setComponent(1)}} className="btn btn-sm btn-outline-secondary">
+                                    Персонал
+                                </button>
+                            </div>
+                            <div className="p-2">
+                                <button type="button" onClick={() => {setComponent(2)}} className="btn btn-sm btn-outline-secondary">
+                                    Гости
+                                </button>
+                            </div>
+                            <div className="p-2">
+                                <button type="button" onClick={() => {setComponent(3)}} className="btn btn-sm btn-outline-secondary">
+                                    Комнаты
+                                </button>
+                            </div>
+                        </Stack>
+                    </div>
                 </div>
+                {AnalysisRender(component)}
             </div>
-            {AnalysisRender(component)}
-        </div>
-
-
-
         </>
 
     )
