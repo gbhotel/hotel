@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\director\AnalysisController;
+use App\Http\Controllers\director\ProfileController;
 use App\Http\Controllers\files\FileController;
 use App\Http\Controllers\staff\EmployeeController;
 use Illuminate\Support\Facades\Route;
@@ -70,7 +71,8 @@ Route::put('director/dismiss-employee', [DirectorStaffController::class, 'dismis
 Route::get('director/analysis', [AnalysisController::class, 'getCountStaff'])->middleware('can:get-count-staff');
 Route::get('director/analysis-dismiss', [AnalysisController::class, 'getCountStaffDismiss'])->middleware('can:get-count-staff-dismiss');
 Route::post('director/analysis-quantity-rooms', [AnalysisController::class, 'getCountRooms'])->middleware('can:get-count-rooms');
-Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'getCountGuests'])->middleware('can:get-count-guests');;
+Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'getCountGuests'])->middleware('can:get-count-guests');
+Route::get('director/profile/get-position', [ProfileController::class, 'getPosition'])->middleware('can:get-position');
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);
