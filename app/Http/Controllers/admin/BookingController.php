@@ -5,14 +5,14 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Guests;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
-    protected $accessFor = ['директор', 'администратор'];
-
     public function getBooking()
     {
 
@@ -41,5 +41,26 @@ class BookingController extends Controller
 
 
         return response()->json($result);
+    }
+
+    public function deleteBooking($id)
+    {
+        $data['delete'] = 'error';
+        $booking = Booking::where('id', $id)->get()->first();
+        if ($booking) {
+            $guest_id = $booking->id_guest;
+            $guest = Guests::where('id', $guest_id)->get()->first();
+            if ($guest) {
+                $user_id = $guest->id_user;
+                $user = User::where('id', $user_id)->get()->first();
+                if ($user) {
+                    $user->delete();
+                    $data['delete'] = 'OK';
+                }
+            }
+
+            //dump($booking, $user, $guest);
+        }
+        return response()->json($data);
     }
 }
