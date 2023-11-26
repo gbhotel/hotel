@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\admin\BookingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomsController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
