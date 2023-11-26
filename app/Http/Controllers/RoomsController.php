@@ -94,9 +94,11 @@ class RoomsController extends Controller
         foreach ($data as $oneData) {
             $freeRooms[] = [
                 'id' => $oneData->id_room,
+                'images' => $oneData->images,
                 'number' => $oneData->number,
                 'category' => $oneData->category,
-                'comfort' => $oneData->comfort
+                'comfort' => $oneData->comfort,
+                'price' => $oneData->price,
             ];
         }
         return response()->json($freeRooms);
