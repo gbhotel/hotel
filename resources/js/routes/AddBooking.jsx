@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import FreeRooms from "../components/FreeRooms.jsx";
-import { Link } from "react-router-dom";
+
+
 
 export default function AddBooking() {
 
@@ -8,9 +9,24 @@ export default function AddBooking() {
     const [checkoutDate, setCheckoutDate] = useState('');
     const [freeRooms, setFreeRooms] = useState([]);
 
+    const currentDate = new Date();
+    const currentDateString = currentDate.toISOString().slice(0, 10);
+
+
+    useEffect(() => {
+        fetch('/api/admin/free-rooms-period')
+
+            .then(response => response.json())
+            .then(data => {
+                setData(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [])
+
     const handleSearchRooms = async () => {
         try {
-            // Создаем объект с данными для отправки
             const requestData = {
                 checkinDate,
                 checkoutDate,
@@ -39,48 +55,44 @@ export default function AddBooking() {
         }
     };
 
-
     return (
         <div  >
-            <div className=" mt-5 container">
-                <div className="row">
-                    <div className="col-md-4">
-                        <div className="form-group">
-                            <label htmlFor=" checkinDate">Дата заезда</label>
+            <div className=" mt-5 container col-11">
+                <div className="row p-3 justify-content-around btn-gradient-background">
+                    <div className="col-md-5 p-0">
+                        <div className="form-group ">
                             <input
-                                type="date"
-                                className="form-control"
+                                placeholder="Дата заезда"
+                                type="text"
+                                className="form-control uppercase py-2"
                                 id="checkinDate"
                                 onChange={(e) => setCheckinDate(e.target.value)}
+                                onBlur={(e) => e.target.type ='text'}
+                                onFocus={(e) => e.target.type ='date'}
                             />
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-5 p-0">
                         <div className="form-group">
-                            <label htmlFor="checkoutDate">Дата выезда</label>
                             <input
-                                type="date"
-                                className="form-control"
+                                placeholder="Дата выезда"
+                                type="text"
+                                className="form-control uppercase py-2"
                                 id="checkoutDate"
                                 onChange={(e) => setCheckoutDate(e.target.value)}
+                                onBlur={(e) => e.target.type ='text'}
+                                onFocus={(e) => e.target.type ='date'}
                             />
                         </div>
                     </div>
-                    <div className=" align-self-end col-md-4">
-                        <div className="form-group">
-                            <button
-                                type="submit"
-                                className="btn mx-3 text-20 h-37  btn-sm btn-outline-secondary"
-                                onClick={handleSearchRooms}
-                            >
-                                Найти свободные комнаты
-                            </button>
-                            <button
-                                type="button"
-                                className="  btn text-20 h-37 btn-sm btn-outline-secondary">
-                                <Link to="/booking" className=" mr-5 text-decoration-none text-dark "> Назад </Link>
-                            </button>
-                        </div>
+                    <div className=" d-flex justify-content-center col-md-1 p-0 btn-empty">
+                        <button
+                            type="submit"
+                            className="no-outline-on-active btn text-20 uppercase"
+                            onClick={handleSearchRooms}
+                        >
+                            Найти
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import star from "../../img/star3.svg";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import 'react-slideshow-image/dist/styles.css'
+import { Fade } from 'react-slideshow-image';
+import star_full from '../../img/star-full.svg';
 
 export default function FreeRooms(props) {
     const { checkinDate, checkoutDate, freeRooms } = props;
@@ -12,6 +17,7 @@ export default function FreeRooms(props) {
     const [isBooking, setIsBooking] = useState(false);
     const [success, setSuccess] = useState(false);
     const [bookingNumber, setBookingNumber] = useState('');
+    const [showRoom, setShowRoom] = useState(true);
 
     const [bookingData, setBookingData] = useState({
         checkinDate: "",
@@ -81,79 +87,95 @@ export default function FreeRooms(props) {
         setModalOpen(false);
     };
 
-    return ( <div className= 'my-4 container row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3' >
+    return ( <div className= 'my-4 justify-content-center container d-flex flex-wrap gap-5' >
                 {freeRooms.map((freeRoom,index)=>(
-                    <div key={index} className="">
-                        <div className="card shadow-sm">
-                            <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text  className="font-22" x="50%" y="50%" fill="#eceeef" dy=".3em" textAnchor="middle" dominantBaseline="middle">
-                                    {freeRoom.category}
-                                </text>
-                            </svg>
-
-                            <div className=" d-flex justify-content-between card-body">
-
-                                <button
-                                    className="btn blue-color rounded-pill px-3"
-                                    type="button"
-                                    onClick={() => {
-                                        setIsBooking(true)
-                                        setSelectedRoom(freeRoom)}}
-                                >Забронировать
-                                </button>
-
-                                <div className="d-flex justify-content-between  align-items-center">
-                                    <div
-                                        className=" mr-5 text-decoration-none text-dark "
-                                        onClick={() => openModal(freeRoom)}
-                                    > Подробнее...
+                        <div
+                            key={index}
+                            className="card-room"
+                             onClick={() => openModal(freeRoom)}
+                        >
+                            <img alt="photo"
+                                src = {"../../" + JSON.parse(freeRoom.images)[0]}
+                                className="photo-size"
+                            />
+                            <div className=" d-flex p-3 flex-column justify-content-between card-body">
+                                <div className="d-flex justify-content-between">
+                                    <p>№{freeRoom.number} {freeRoom.category}</p>
+                                    <p>{freeRoom.price} руб. в сутки</p>
+                                </div>
+                                <hr/>
+                                <div className="d-flex justify-content-between">
+                                    <div className="d-flex">
+                                        <img alt="star" src = {star}/>
+                                        <img alt="star" src = {star}/>
+                                        <img alt="star" src = {star}/>
+                                        <img alt="star" src = {star}/>
+                                        <img alt="star" src = {star}/>
                                     </div>
-                                    <div className="btn-group">
-                                        {/*<button type="button" className="btn btn-sm btn-outline-secondary">booking</button>*/}
-                                        {/*<button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>*/}
+                                    <p>0 отзывов</p>
                                 </div>
                             </div>
-                        </div>
                     </div>
-                </div>
             ))}
             {isModalOpen && selectedRoom && (
                 <div className="modal" style={{ display: 'block' }}>
-                    <div className="modal-dialog">
-                        <div className="modal-content">
+                    <div className="modal-dialog " >
+                        <div className="modal-content" style={{ width: '700px' }}>
                             <div className="modal-header">
-                                <h5 className="modal-title">Подробная информация о комнате</h5>
                                 <button
                                     type="button"
                                     className="btn-close"
                                     onClick={closeModal}
                                 ></button>
                             </div>
-                            <div className="modal-body">
-                                <p className="font-22">Номер: {selectedRoom.number}</p>
-                                <p className="font-22">Категория: {selectedRoom.category}</p>
-                                {
-                                    Object.keys(selectedRoomComfort).map(key => (
-                                        <div className="font-22" key={key}>
-                                            {key}: {selectedRoomComfort[key]}
+                            <div className="slide-container">
+                                <Fade>
+                                    {JSON.parse(selectedRoom["images"]).map((image, index) => (
+                                        <div key={index}>
+                                            <img alt="photo" style={{ width: '100%' }} src={image} />
                                         </div>
-                                    ))
-                                }
-                                {/*<p>Номер: {selectedRoom.comfort}</p>*/}
-                                {/* Другие данные о комнате */}
+                                    ))}
+                                </Fade>
                             </div>
-                            <div className="modal-footer">
+                            <div className="modal-body d-flex flex-column">
+                                <h2 className="text-bold" >Сведения о номере</h2>
+                                <div className="mb-1 d-flex gap-5 justify-content-between">
+                                    <div className="d-flex flex-column">
+                                        <h5>Комфорт</h5>
+                                        <div className="ml-5">
+                                            <div className="text-gray">{selectedRoomComfort.wifi === 'Да'? 'WIFI': 'NO WIFI'}</div>
+                                            <div className="text-gray">{selectedRoomComfort.conditioner === 'Да'? 'conditioner': 'no conditioner'}</div>
+                                        </div>
+                                        <hr/>
+                                        <h5>Удобства</h5>
+                                        <div>
+                                            <div className="text-gray">{selectedRoomComfort.bed}</div>
+                                            <div className="text-gray"> Туалет {selectedRoomComfort.toilet}</div>
+                                            <div className="text-gray"> Душ {selectedRoomComfort.shower}</div>
+                                        </div>
+                                        <hr/>
+                                        <h5>Количество проживающих</h5>
+                                        <div className="text-gray">2</div>
+                                    </div>
+                                    <div className="d-flex mx-5 flex-column">
+                                        <h5>Общая оценка: 5 из 5</h5>
+                                        <div>
+                                            <img alt="star" src={star_full}></img>
+                                            <img alt="star" src={star_full}></img>
+                                            <img alt="star" src={star_full}></img>
+                                            <img alt="star" src={star_full}></img>
+                                            <img alt="star" src={star_full}></img>
+                                        </div>
+                                    </div>
+                                </div>
                                 <button
+                                    className="btn w-25 align-self-end btn-task rounded-pill px-3"
                                     type="button"
-                                    className="btn btn-secondary"
-                                    onClick={closeModal}
-                                >
-                                    Закрыть
+                                    onClick={() =>
+                                        setIsBooking(true)}
+                                >Забронировать
                                 </button>
-                            </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -238,6 +260,7 @@ export default function FreeRooms(props) {
                     </div>
                 </div>
             )}
+
         </div>)
 }
 
