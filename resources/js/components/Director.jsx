@@ -9,6 +9,7 @@ import EditEmployeeDirector from "../routes/Director/EditEmployee.jsx";
 
 import AnalysisDirector from "@/routes/Director/Analysis/Analysis.jsx"
 import ProfileDirector from "@/routes/Director/Profile/Profile.jsx"
+import HeadTest from "../TestRedux/HeadTest"
 
 export default function Director (){
 
@@ -22,6 +23,7 @@ export default function Director (){
                 <Route path="/director/editEmployee/:id" element={<EditEmployeeDirector />} />
                 <Route path="/director/analysis" element={<AnalysisDirector />} />
                 <Route path="/director/profile" element={<ProfileDirector />} />
+                <Route path="/director/test" element={<HeadTest />} />
             </Routes>
         </div>
 

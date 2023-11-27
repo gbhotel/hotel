@@ -17,6 +17,9 @@ import './bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import {store} from './store/store'
+import { Provider } from 'react-redux'
+
 import App from './App';
 
 const Index = ReactDOM.createRoot(document.getElementById("root"));
@@ -31,7 +34,9 @@ let element =
 
                 Index.render(
                     <React.StrictMode>
-                        <App />
+                        <Provider store={store}>
+                            <App />
+                        </Provider>
                     </React.StrictMode>
                 )
         }
