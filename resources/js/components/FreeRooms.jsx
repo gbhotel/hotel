@@ -155,7 +155,7 @@ export default function FreeRooms(props) {
                                         </div>
                                         <hr/>
                                         <h5>Количество проживающих</h5>
-                                        <div className="text-gray">2</div>
+                                        <div className="text-gray">{selectedRoom.max_guests}</div>
                                     </div>
                                     <div className="d-flex mx-5 flex-column">
                                         <h5>Общая оценка: 5 из 5</h5>
