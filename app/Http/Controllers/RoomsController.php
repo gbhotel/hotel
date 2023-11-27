@@ -85,6 +85,7 @@ class RoomsController extends Controller
     {
         $dateIn = $request['checkinDate'];
         $dateOut = $request['checkoutDate'];
+        $peopleCount = $request['people'];
 
         $freeRooms = [];
 
@@ -134,6 +135,7 @@ class RoomsController extends Controller
         $data = DB::table('booking')
             ->leftJoin( 'rooms', 'rooms.id', '=', 'booking.id_room')
             ->leftJoin( 'categories', 'rooms.id_category', '=', 'categories.id')
+            ->where ('rooms.max_guests', '>=', (string)$peopleCount['adultCount'])
             ->whereNotIn('rooms.id', $arrSortId)
             ->orderBy('rooms.number')
             ->distinct('rooms.number')
@@ -156,6 +158,7 @@ class RoomsController extends Controller
                 'category' => $oneData->category,
                 'comfort' => $oneData->comfort,
                 'price' => $oneData->price,
+                'max_guests' => $oneData->max_guests
             ];
         }
         return response()->json($freeRooms);
