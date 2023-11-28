@@ -39,7 +39,6 @@ class StaffController extends Controller
 
         return response()->json($result);
     }
-
     public function getEmployee($id) {
 
         $employee = Staff::query()
@@ -77,7 +76,6 @@ class StaffController extends Controller
 
         return response()->json($employee);
     }
-
     public function getAllPositions()
     {
         $position = Positions::query()->get();
@@ -88,7 +86,6 @@ class StaffController extends Controller
         $position = Role::query()->get();
         return response()->json($position);
     }
-
     public function createEmployee(Request $request)
     {
         $person = $request->all();
@@ -147,7 +144,6 @@ class StaffController extends Controller
 
         return response()->json($data);
     }
-
     public function editEmployee(Request $request)
     {
         $person = $request->all();

@@ -1,15 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector,} from "react-redux";
+import {changeRender} from "../../../store/slices/director/directorRender.js";
+import {changeData} from "../../../store/slices/director/directorData.js";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 
 export default function ProfileDirector() {
 
+    // const profileState = useSelector(state => state.profile);
+
+    const dispatch = useDispatch();
+
+    const editData = 'editData';
+    const editPhoto = 'editPhoto';
+    const editPass = 'editPass';
+
+    const changeEditDataHandler = () => {
+        dispatch(changeRender(editData))
+    }
+    const changeEditPhotoHandler = () => {
+        dispatch(changeRender(editPhoto))
+    }
+    const changeEditPassHandler = () => {
+        dispatch(changeRender(editPass))
+    }
+
     const [employee, setEmployee] = useState({});
 
     useEffect(() => {
         const abortController = new AbortController();
-        fetch(`/api/director/profile/get-position`, {
+        fetch(`/api/director/profile/get-my-data`, {
             signal: abortController.signal,
         })
             .then(response => {
@@ -20,6 +41,7 @@ export default function ProfileDirector() {
             })
             .then(data => {
                 setEmployee(data)
+                dispatch(changeData(data))
             })
             .catch(error => {
                 console.error(error.message);
@@ -28,8 +50,6 @@ export default function ProfileDirector() {
             abortController.abort();
         }
     }, []);
-
-    console.log(employee)
 
     return (
                 <Container className="w-100 m-0 mb-3">
@@ -41,7 +61,7 @@ export default function ProfileDirector() {
                     <Row className="align-items-start text-center font-22" >
                         <Col className="p-0 d-flex justify-content-center" xs={4}>
                             <div className="d-flex justify-content-center" style={{width:'300px', height:'400px', overflow: 'hidden', borderRadius: '6px'}}>
-                                <img style={{height:'400px'}} src={"../" + employee.photo}/>
+                                <img style={{height:'400px'}} src={"../" + employee.photo} alt="Ваше фото"/>
                             </div>
                         </Col>
                         <Col xs={6}>
@@ -87,7 +107,7 @@ export default function ProfileDirector() {
                             </Row>
                             <Row className="align-items-center m-2" >
                                 <Col className="text-start" xs={6}>
-                                    Дата рождения
+                                    Возрост
                                 </Col>
                                 <Col className="text-start" xs={6}>
                                     <b>{employee.age}</b>
@@ -143,7 +163,7 @@ export default function ProfileDirector() {
                             </Row>
                             <Row className="align-items-center m-2" >
                                 <Col className="text-start" xs={6}>
-                                    Трудоустроен с
+                                    Стаж
                                 </Col>
                                 <Col className="text-start" xs={6}>
                                     <b>{employee.experience}</b>
@@ -170,7 +190,7 @@ export default function ProfileDirector() {
                             <Row className="align-items-center" >
                                 <Col xs={12}>
                                     <div className="p-2">
-                                        <button type="button" className="w-100 btn btn-sm btn-outline-secondary">
+                                        <button type="button" onClick={changeEditDataHandler} className="w-100 btn btn-sm btn-outline-secondary">
                                             Редактировать
                                         </button>
                                     </div>
@@ -179,7 +199,7 @@ export default function ProfileDirector() {
                             <Row className="align-items-center" >
                                 <Col xs={12}>
                                     <div className="p-2">
-                                        <button type="button" className="w-100 btn btn-sm btn-outline-secondary">
+                                        <button type="button" onClick={changeEditPhotoHandler} className="w-100 btn btn-sm btn-outline-secondary">
                                             Изменить фото
                                         </button>
                                     </div>
@@ -188,7 +208,7 @@ export default function ProfileDirector() {
                             <Row className="align-items-center" >
                                 <Col xs={12}>
                                     <div className="p-2">
-                                        <button type="button" className="w-100 btn btn-sm btn-outline-secondary">
+                                        <button type="button" onClick={changeEditPassHandler} className="w-100 btn btn-sm btn-outline-secondary">
                                             Изменить пароль
                                         </button>
                                     </div>

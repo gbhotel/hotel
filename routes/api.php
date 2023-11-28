@@ -73,7 +73,8 @@ Route::get('director/analysis', [AnalysisController::class, 'getCountStaff'])->m
 Route::get('director/analysis-dismiss', [AnalysisController::class, 'getCountStaffDismiss'])->middleware('can:get-count-staff-dismiss');
 Route::post('director/analysis-quantity-rooms', [AnalysisController::class, 'getCountRooms'])->middleware('can:get-count-rooms');
 Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'getCountGuests'])->middleware('can:get-count-guests');
-Route::get('director/profile/get-position', [ProfileController::class, 'getPosition'])->middleware('can:get-position');
+Route::get('director/profile/get-my-data', [ProfileController::class, 'getMyData'])->middleware('can:get-my-data');
+Route::post('director/profile/get-update-my-data', [ProfileController::class, 'updateMyData'])->middleware('can:get-update-my-data');
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);

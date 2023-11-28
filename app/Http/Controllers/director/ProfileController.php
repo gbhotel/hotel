@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
-    public function getPosition()
+    public function getMyData()
     {
 
         $user = Auth::user();
@@ -66,5 +66,65 @@ class ProfileController extends Controller
         $user->birthdayAt = $birthday;
 
         return response()->json($user);
+    }
+
+    public function updateMyData(Request $request)
+    {
+        $person = $request->all();
+
+        $data = [];
+        $data['username'] = DB::table('users')
+            ->select('username')
+            ->where('username', '=', $person['username'])
+            ->whereNot('id', '=', $person['userId'])
+            ->exists();
+        $data['passport'] = DB::table('users')
+            ->select('passport')
+            ->where('passport', '=', $person['passport'])
+            ->whereNot('id', '=', $person['userId'])
+            ->exists();
+        $data['email'] = DB::table('users')
+            ->select('email')
+            ->where('email', '=', $person['email'])
+            ->whereNot('id', '=', $person['userId'])
+            ->exists();
+        $data['phone'] = DB::table('users')
+            ->select('phone')
+            ->where('phone', '=', $person['phone'])
+            ->whereNot('id', '=', $person['userId'])
+            ->exists();
+
+        if($data['username'] || $data['passport'] || $data['email'] || $data['phone'] ){
+            $data['validation'] = 'bad';
+            return response()->json($data);
+        }
+
+        $employee = ['id_position' => $person['position'], 'employment_date' => $person['employment_date']];
+        $userId = $person['userId'];
+
+        unset($person['position']);
+        unset($person['_token']);
+        unset($person['userId']);
+        unset($person['employment_date']);
+
+        try{
+            $upUser = DB::table('users')->where('id', $userId)->update([...$person]);
+
+            $upStaff = DB::table('staff')->where('id_user', $userId)->update([...$employee]);
+
+        }catch (\Exception $e){
+
+            $data['saveUser'] = 'bad';
+            $data['error'] = $e->getMessage();
+
+            return response()->json($data);
+        }
+
+        $data['validation'] = 'good';
+        $data['updataUser'] = 'good';
+        $data['updataUserStr'] = $upUser;
+        $data['updataStaffStr'] = $upStaff;
+
+        return response()->json($data);
     }
 }
