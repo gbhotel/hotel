@@ -14,4 +14,14 @@ class GuestController extends Controller
 
        return response()->json($guestRequests);
     }
+
+    public function getInfoAboutGuestRoom(){
+        $guestRoom = DB::table('check_in')
+            ->get();
+        return response()->json($guestRoom);
+    }
+
+    public function setRequests(){
+
+    }
 }

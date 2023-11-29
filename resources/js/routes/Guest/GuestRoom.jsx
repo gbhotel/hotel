@@ -1,14 +1,25 @@
-import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 
 export default function GuestRoom() {
 
-    // const { id } = useParams();
-    //
-    // const [data, setData] = useState([]);
-    //
+    const { id } = useParams();
+
+    const [guestId, setGuestId] = useState([]);
+    const [checkInDate, setCheckInDate] = useState(''); //дата заселения
+    const [checkOutDate, setCheckOutDate] = useState('');//дата выселения
+    const [countGuests, setCountGuests] = useState(0); //общее количество гостей
+    const [totalCost, setTotalCost] = useState(0); //общая стоимость за всех гостей и все дни
+    const [showRoom, setShowRoom] = useState(false); //инфа о комнате
+
+
+
     // useEffect(() => {
-    //     fetch(`/api/admin/room/${id}/get-room`)
+    //     fetch(`/api/guest/room/${id}/get-room`)
     //         .then(response => response.json())
     //         .then(data => {
     //             setData(data[0]);
@@ -76,6 +87,27 @@ export default function GuestRoom() {
             {/*        <p>Трудоустроен с {data.staffEmploymentDateCh}</p>*/}
             {/*    </div>*/}
             {/*</div>*/}
+
+            {showRoom && (
+                <div className="room-info-container mt-5">
+                    <div className="room-info">
+                        <h3 className="text-purple">Категория номера</h3>
+                        <p className="uppercase text-bold" >"{selectedTask.room_category}"</p>
+                        <h3 className="text-purple">Принадлежности</h3>
+                        <ul className="d-flex flex-column justify-content-start">
+                            {
+                                Object.keys(sets).map(key => (
+                                    <li className=" li-task d-flex m-0" key={key}>
+                                        {key}: {sets[key]} шт.
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                        <h3 className="text-purple">Пожелания гостей</h3>
+                        <p>{selectedTask.comment}</p>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

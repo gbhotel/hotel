@@ -46,11 +46,12 @@ Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'edit
 Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('admin.booking')->middleware('can:get-booking');
 Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room')->middleware('can:book-room');
 
-
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks')->middleware('can:get-tasks');
 Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask')->middleware('can:add-task');
 
-
+//роуты гостя
+Route::get('/guest/room/{id}', [GuestController::class, 'getInfoAboutGuestRoom'])->name('guest.room.get-room')->middleware('can:get-room');
+Route::post('/guest/feedback', [GuestController::class, 'setRequests'])->name('admin.room.get-room')->middleware('can:get-room');
 Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
 
 //роуты для сотрудников
@@ -78,3 +79,6 @@ Route::get('user', [AuthController::class, 'getCurrentUser']);
 Route::put('user/update', [AuthController::class, 'update']);
 
 Route::post('/upload', [FileController::class, 'upload']);
+
+
+
