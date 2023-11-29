@@ -2,19 +2,26 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector,} from "react-redux";
 import {changeRender} from "../../../store/slices/director/directorRender.js";
 import {changeData} from "../../../store/slices/director/directorData.js";
+import {establishAlertPass} from "../../../store/slices/director/alertPass";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
 
 export default function ProfileDirector() {
 
-    // const profileState = useSelector(state => state.profile);
+    const alertPassState = useSelector(state => state.alertPass);
+    // const [alertShow, setAlertShow] = useState(alertPassState.condition);
+    // const [alertMessage, setAlertMessage] = useState(alertPassState.message);
+    let alertShow = alertPassState.condition;
+    const alertMessage = alertPassState.message;
 
     const dispatch = useDispatch();
 
     const editData = 'editData';
     const editPhoto = 'editPhoto';
     const editPass = 'editPass';
+    const clearAlert = {condition: 'false',message:'',}
 
     const changeEditDataHandler = () => {
         dispatch(changeRender(editData))
@@ -24,6 +31,10 @@ export default function ProfileDirector() {
     }
     const changeEditPassHandler = () => {
         dispatch(changeRender(editPass))
+    }
+
+    const clearAlertHandler = () => {
+        dispatch(establishAlertPass(clearAlert))
     }
 
     const [employee, setEmployee] = useState({});
@@ -51,7 +62,19 @@ export default function ProfileDirector() {
         }
     }, []);
 
+    function alertGood() {
+        if (alertShow) {
+            return (
+                <Alert variant="success" onClick={clearAlertHandler} dismissible>
+                    {alertMessage}
+                </Alert>
+            );
+        }
+    }
+
     return (
+        <>
+            {alertGood()}
                 <Container className="w-100 m-0 mb-3">
                     <Row className="align-items-center m-3 text-center" >
                         <Col xs={12}>
@@ -217,5 +240,6 @@ export default function ProfileDirector() {
                         </Col>
                     </Row>
                 </Container>
+        </>
     );
 }

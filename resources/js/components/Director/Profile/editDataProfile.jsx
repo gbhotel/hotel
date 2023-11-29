@@ -173,8 +173,6 @@ export default function EditDataProfileDirector() {
     if(M <10){m = '0' + M}else{m = M}
     let employmentDate4 = `${Y}-${m}-${D}`
 
-    const [employment, setEmployment] = useState(employmentDate4)
-
     let birthdayAtDate1 = employee.birthdayAt;
     let birthdayAtDate2 = birthdayAtDate1.split('.');
     let birthdayAtDate3 = new Date(birthdayAtDate2[2], birthdayAtDate2[1] - 1, birthdayAtDate2[0]);
@@ -184,8 +182,8 @@ export default function EditDataProfileDirector() {
     if(M <10){m = '0' + M}else{m = M}
     let birthdayAtDate4 = `${Y}-${m}-${D}`
 
+    const [employment, setEmployment] = useState(employmentDate4)
     const [birthdayAt, setBirthdayAt] = useState(birthdayAtDate4)
-
     const [gender, setGender] = useState(employee.gender)
 
     return (
