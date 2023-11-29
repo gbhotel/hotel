@@ -9,6 +9,8 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use function Laravel\Prompts\table;
 
 class ProfileController extends Controller
 {
@@ -126,5 +128,39 @@ class ProfileController extends Controller
         $data['updataStaffStr'] = $upStaff;
 
         return response()->json($data);
+    }
+
+    public function changePassword(Request $request){
+        $person = $request->all();
+        $arrPass = [...$person];
+        $arrPass['state'] = 'Good';
+
+        //Проверка правености старого пароля
+        if(!Hash::check($arrPass['password1'], auth()->user()->password)){
+            $arrPass['verification'] = 'Bad';
+            $arrPass['state'] = 'Bad';
+            $arrPass['message'] = 'Вы не верно ввели старый парой.';
+        }else{
+            $arrPass['verification'] = 'Good';
+            $hashPass = Hash::make($arrPass['password2']);
+            $user = Auth::user();
+            $change = DB::table('users')
+                ->where('id', '=', $user->id)
+                ->update(['password' => $hashPass]);
+            if($change === 0){
+                $arrPass['state'] = 'Bad';
+                $arrPass['DB'] = 'Bad';
+                $arrPass['message'] = 'Не удалось сохранить новый пароль в базу данных';
+            }else{
+                $arrPass['DB'] = 'Good';
+            }
+
+        }
+
+        if($arrPass['state'] === 'Good' && $arrPass['DB'] === 'Good' && $arrPass['verification'] === 'Good'){
+            $arrPass['message'] = 'Пароль успешно изменен';
+        }
+
+        return response()->json($arrPass);
     }
 }
