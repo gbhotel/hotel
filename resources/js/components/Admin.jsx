@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, Route, Routes} from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import Booking from "../routes/Booking.jsx";
 import AddBooking from "../routes/AddBooking.jsx";
 import Rooms from "../routes/Rooms.jsx";
@@ -10,11 +10,11 @@ import Tasks from "../routes/Tasks.jsx";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import EditBooking from "../routes/EditBooking.jsx";
 
+export default function Admin() {
 
-export default function Admin (){
-
-    return( <>
+    return (<>
         <div className="d-flex gap-5">
             <nav style={{ padding: '20px' }} className="col-md-2 d-none d-md-block bg-light sidebar">
                 <div className="sidebar-sticky">
@@ -41,7 +41,7 @@ export default function Admin (){
                 </div>
                 <form action="/logout" method='post' className=" btn-navbar px-3 py-2">
                     <input type="hidden" name="_token" defaultValue={_token} />
-                    <input type="submit" value="Выход"  className="nav-link text-black btn" />
+                    <input type="submit" value="Выход" className="nav-link text-black btn" />
                 </form>
             </nav>
             <Routes>
@@ -52,6 +52,8 @@ export default function Admin (){
                 <Route path="/staff" element={<Staff />} />
                 <Route path="/employee/:id" element={<Employee />} />
                 <Route path="/tasks" element={<Tasks />} />
+                <Route path="/editBooking/:id" element={<EditBooking />} />
+
             </Routes>
         </div>
 

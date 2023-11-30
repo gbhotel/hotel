@@ -35,6 +35,7 @@ Route::get('admin/check_in_rooms', [RoomsController::class, 'getCheckInRooms'])-
 Route::get('admin/roomsForCleaning', [RoomsController::class, 'getRoomsForCleaning'])->name('admin.roomsForCleaning')->middleware('can:get-rooms-for-cleaning');
 Route::post('admin/free-rooms-period', [RoomsController::class, 'getFreeRoomsPeriod'])->name('admin.free-rooms-period')->middleware('can:get-free-rooms-period');
 Route::get('admin/room/{id}/get-room', [RoomController::class, 'getRoom'])->name('admin.room.get-room')->middleware('can:get-room');
+Route::get('admin/room/{id}/get-room-info', [RoomController::class, 'getRoomInfo'])->name('admin.room.get-room-info')->middleware('can:admin-get-room-info');
 
 Route::put('admin/room/cancel-book-room', [RoomController::class, 'cancelBookRoom'])->name('admin.room.cancel-book-room')->middleware('can:cancel-book-room');
 Route::post('admin/room/check-in-room', [RoomController::class, 'checkInRoom'])->name('admin.room.check-in-room')->middleware('can:check-in-room');
@@ -46,8 +47,9 @@ Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'edit
 
 Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('admin.booking')->middleware('can:get-booking');
 Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room')->middleware('can:book-room');
-Route::delete('/admin/booking/{id}/delete', [BookingController::class, 'deleteBooking'])->name('addmin.delete.booking')->middleware('can:admin-delete-booking');
-
+Route::delete('/admin/booking/{id}/delete', [BookingController::class, 'deleteBooking'])->name('admin.delete.booking')->middleware('can:admin-delete-booking');
+Route::get('/admin/booking/get/{id}', [BookingController::class, 'getOneBooking'])->name('admin.get.one.booking')->middleware('can:admin-get-one-booking');
+Route::post('/admin/save-edited-booking', [BookingController::class, 'saveEditedBooking'])->name('admin.save.edited.booking')->middleware('can:admin-save-edited-booking');
 
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks')->middleware('can:get-tasks');
 Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask')->middleware('can:add-task');

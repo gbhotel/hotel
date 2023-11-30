@@ -11,7 +11,8 @@
     box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -62,7 +63,7 @@ body, html {
     background-color: #56CA00;
     color: white;
     border-color: #56CA00;
-    border-radius:  4px 0  0 4px;
+    border-radius: 4px 0 0 4px;
 }
 
 .ml-40px {
@@ -95,7 +96,7 @@ body, html {
 }
 
 .purple-button {
-    background-color:#9155FD;
+    background-color: #9155FD;
     color: #fffdfd;
     border: #b4a2e1;
 }
@@ -160,7 +161,8 @@ select:disabled {
 .no-box-shadow {
     box-shadow: none !important;
 }
- .invisible {
+
+.invisible {
     display: none;
 }
 
@@ -181,7 +183,7 @@ li {
 }
 
 li:active {
-    background-color: #b4a2e1!important;
+    background-color: #b4a2e1 !important;
 }
 
 button:hover {
@@ -204,7 +206,7 @@ button:hover {
 
 .login {
     position: relative;
-    background: url('../img/login_background.jpg') center center/cover  no-repeat fixed;
+    background: url('../img/login_background.jpg') center center/cover no-repeat fixed;
     overflow: hidden;
     background-size: cover;
     height: 100vh;
@@ -245,7 +247,7 @@ button:hover {
     position: relative;
     z-index: 1;
     border-radius: 5px;
-    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    background: linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
     cursor: pointer;
 }
 
@@ -266,7 +268,7 @@ button:hover {
     content: "LOGIN";
     font-size: 16px;
     font-weight: bold;
-    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    background: linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
     -webkit-background-clip: text;
     color: transparent;
     transition: 200ms
@@ -279,7 +281,8 @@ button:hover {
     bottom: 0;
     left: 0;
 }
-.btn-gradient-border:hover::after{
+
+.btn-gradient-border:hover::after {
     color: white;
 }
 
@@ -292,7 +295,7 @@ button:hover {
     box-shadow: 0 4px 8px -4px rgba(58, 53, 65, 0.42);
     background-image: linear-gradient(98deg, #C6A7FE, #9155FD 94%);
     transform: scale(1.1);
-  }
+}
 
 .btn-navbar:hover .nav-link {
     color: white !important;
@@ -305,13 +308,14 @@ button:hover {
     overflow: hidden;
 }
 
-.room-info  {
+.room-info {
     text-align: center;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .border-with-shadow {
     padding: 20px;
     border: 1px solid #ccc;
@@ -337,6 +341,7 @@ button:hover {
     width: 50px;
     height: 50px;
 }
+
 .li-task {
     border: 1px solid #ccc;
     min-width: 160px;
@@ -348,6 +353,7 @@ button:hover {
     background-color: transparent;
 
 }
+
 .btn-task {
     background-color: rgb(160, 119, 234);
     color: white;
@@ -377,7 +383,7 @@ button:hover {
 }
 
 .form-control::placeholder {
-    color:  gray;
+    color: gray;
 }
 
 
@@ -400,7 +406,7 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.text-bold{
+.text-bold {
     font-weight: bold;
     font-size: 17px;
 }
@@ -409,9 +415,11 @@ button:hover {
     color: rgb(128, 75, 223);
     font-weight: bold;
 }
+
 .text-purple {
     color: rgb(128, 75, 223);
 }
+
 .text-gray {
     color: #949494;
 }
@@ -427,6 +435,11 @@ button:hover {
 .photo-size {
     height: 230px;
     width: 350px;
+}
+
+.photo-edit-booking {
+    height: 165px;
+    width: 255px;
 }
 
 .purple-input {
@@ -451,18 +464,20 @@ button:hover {
     border: none;
 }
 
-.purple-input::placeholder{
+.purple-input::placeholder {
     color: #f3f1f1;
 }
 
 .purple-datepicker {
     .today {
-        background-color: rgb(160, 119, 234) ;
+        background-color: rgb(160, 119, 234);
         color: #f3f1f1;
     }
+
     .today:hover {
         background-color: #C6A7FE;
     }
+
     .react-datepicker__day--selected {
         background-color: rgb(160, 119, 234);
         border-color: rgb(160, 119, 234);
@@ -498,6 +513,7 @@ button:hover {
 .info-block {
     position: relative;
 }
+
 .hammer {
     position: absolute;
     width: 30px;
@@ -515,9 +531,10 @@ button:hover {
     border: none;
     outline: none;
     border-radius: 5px;
-    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    background: linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
     cursor: pointer;
 }
+
 //
 .gray-input {
     display: block;
@@ -540,7 +557,7 @@ button:hover {
     border: none;
 }
 
-.gray-input::placeholder{
+.gray-input::placeholder {
     color: gray;
 }
 
@@ -556,7 +573,7 @@ button:hover {
     transform: scale(1.1);
 }
 
-.btn-add:hover .link{
+.btn-add:hover .link {
     color: white !important;
 }
 
@@ -618,21 +635,10 @@ button:hover {
 .btn-border-purple {
     border: 2px solid #9155FD;
     border-radius: 8px;
-    transition:  transform 0.4s ease;
+    transition: transform 0.4s ease;
 }
 
 .btn-border-purple:hover {
     border: 2px solid #9155FD;
     transform: scale(1.1);
 }
-
-
-
-
-
-
-
-
-
-
-

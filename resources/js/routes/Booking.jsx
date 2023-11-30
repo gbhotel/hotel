@@ -65,6 +65,9 @@ export default function Booking() {
         console.log(filteredBooking);
 
     };
+    const editBooking = (booking_id) => {
+        window.location.href = '/editBooking/' + booking_id;
+    }
 
     const deleteBooking = (booking_id) => {
         //console.log(booking_id);
@@ -172,7 +175,9 @@ export default function Booking() {
                                     <Col className="my-3 flex-grow-1 d-flex justify-content-center" lg={2}
                                         xs={2}>
                                         <button type="button"
-                                            className="btn  btn-sm uppercase bright-green-button">Редактировать
+                                            className="btn  btn-sm uppercase bright-green-button"
+                                            onClick={() => editBooking(item.booking_number)}
+                                        >Редактировать
                                         </button>
                                         <button type="button"
                                             className="btn btn-sm uppercase bright-red-button"
@@ -206,7 +211,9 @@ export default function Booking() {
                                     <Col className="my-3 flex-grow-1 d-flex justify-content-center" lg={2}
                                         xs={2}>
                                         <button type="button"
-                                            className="btn  btn-sm uppercase bright-green-button">Редактировать
+                                            className="btn  btn-sm uppercase bright-green-button"
+                                            onClick={() => editBooking(item.booking_number)}
+                                        >Редактировать
                                         </button>
                                         <button type="button"
                                             className="btn btn-sm uppercase bright-red-button"

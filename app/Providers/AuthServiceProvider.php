@@ -133,5 +133,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin-delete-booking', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор']);
         });
+        Gate::define('admin-get-room-info', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор']);
+        });
+        Gate::define('admin-get-one-booking', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор']);
+        });
+        Gate::define('admin-save-edited-booking', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор']);
+        });
     }
 }
