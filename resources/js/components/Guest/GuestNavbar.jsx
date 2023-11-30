@@ -20,7 +20,7 @@ export default function Guests() {
                             <text>Password: besthotel</text>
                         </div>
                         <div className=" btn-navbar d-flex align-content-center w-100">
-                        <Link to="/guest/room:id" className="nav-link text-black w-100">О комнате</Link>
+                        <Link to="/guest/room" className="nav-link text-black w-100">О комнате</Link>
                         </div>
                         <div className=" btn-navbar d-flex align-content-center w-100">
                             <Link to="/guest/feedback" className="nav-link text-black w-100">Отзыв</Link>

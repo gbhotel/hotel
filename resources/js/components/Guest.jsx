@@ -11,7 +11,7 @@ export default function Guest (){
         <div className="d-flex gap-5">
             <GuestNavbar />
             <Routes>
-                <Route path="/guest/room:id" element={<GuestRoom />} />
+                <Route path="/guest/room" element={<GuestRoom />} />
                 <Route path="/guest/feedback" element={<GuestFeedback />} />
             </Routes>
         </div>
