@@ -214,7 +214,7 @@ export default function ProfileDirector() {
                                 <Col xs={12}>
                                     <div className="p-2">
                                         <button type="button" onClick={changeEditDataHandler} className="w-100 btn btn-sm btn-outline-secondary">
-                                            Редактировать
+                                            Изменить данные
                                         </button>
                                     </div>
                                 </Col>

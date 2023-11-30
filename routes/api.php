@@ -76,6 +76,7 @@ Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'ge
 Route::get('director/profile/get-my-data', [ProfileController::class, 'getMyData'])->middleware('can:get-my-data');
 Route::post('director/profile/get-update-my-data', [ProfileController::class, 'updateMyData'])->middleware('can:get-update-my-data');
 Route::post('director/profile/change-password', [ProfileController::class, 'changePassword'])->middleware('can:change-password');
+Route::post('director/profile/change-photo', [ProfileController::class, 'changePhoto']);//->middleware('can:change-photo');
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);
