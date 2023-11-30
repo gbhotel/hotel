@@ -163,4 +163,11 @@ class ProfileController extends Controller
 
         return response()->json($arrPass);
     }
+
+    public function changePhoto(Request $request)
+    {
+        $person = $request->all();
+
+        return response()->json('Проверка связи');
+    }
 }
