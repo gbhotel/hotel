@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import star from "../../img/star3.svg";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import 'react-slideshow-image/dist/styles.css'
+import { Fade } from 'react-slideshow-image';
+import star_full from '../../img/star-full.svg';
+
 
 export default function FreeRooms(props) {
-    const { checkinDate, checkoutDate, freeRooms } = props;
+    const { checkinDate, checkoutDate, freeRooms, isEditing, callBack } = props;
+
+
 
     console.log(checkinDate, checkoutDate);
 
@@ -12,6 +20,8 @@ export default function FreeRooms(props) {
     const [isBooking, setIsBooking] = useState(false);
     const [success, setSuccess] = useState(false);
     const [bookingNumber, setBookingNumber] = useState('');
+    const [showRoom, setShowRoom] = useState(true);
+
 
     const [bookingData, setBookingData] = useState({
         checkinDate: "",
@@ -81,163 +91,189 @@ export default function FreeRooms(props) {
         setModalOpen(false);
     };
 
-    return ( <div className= 'my-4 container row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3' >
-                {freeRooms.map((freeRoom,index)=>(
-                    <div key={index} className="">
-                        <div className="card shadow-sm">
-                            <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text  className="font-22" x="50%" y="50%" fill="#eceeef" dy=".3em" textAnchor="middle" dominantBaseline="middle">
-                                    {freeRoom.category}
-                                </text>
-                            </svg>
+    const checkEditing = (room) => {
+        if (!isEditing)
+            setIsBooking(true);
+        else {
+            callBack(room);
+            setModalOpen(false);
+        }
 
-                            <div className=" d-flex justify-content-between card-body">
+    }
 
-                                <button
-                                    className="btn blue-color rounded-pill px-3"
-                                    type="button"
-                                    onClick={() => {
-                                        setIsBooking(true)
-                                        setSelectedRoom(freeRoom)}}
-                                >Забронировать
-                                </button>
-
-                                <div className="d-flex justify-content-between  align-items-center">
-                                    <div
-                                        className=" mr-5 text-decoration-none text-dark "
-                                        onClick={() => openModal(freeRoom)}
-                                    > Подробнее...
+    return (<div className='my-4 justify-content-center container d-flex flex-wrap gap-5' >
+        {freeRooms.map((freeRoom, index) => (
+            <div
+                key={index}
+                className="card-room"
+                onClick={() => openModal(freeRoom)}
+            >
+                <img alt="photo"
+                    src={"../../" + JSON.parse(freeRoom.images)[0]}
+                    className="photo-size"
+                />
+                <div className=" d-flex p-3 flex-column justify-content-between card-body">
+                    <div className="d-flex justify-content-between">
+                        <p>№{freeRoom.number} {freeRoom.category}</p>
+                        <p>{freeRoom.price} руб. в сутки</p>
+                    </div>
+                    <hr />
+                    <div className="d-flex justify-content-between">
+                        <div className="d-flex">
+                            <img alt="star" src={star} />
+                            <img alt="star" src={star} />
+                            <img alt="star" src={star} />
+                            <img alt="star" src={star} />
+                            <img alt="star" src={star} />
+                        </div>
+                        <p>0 отзывов</p>
+                    </div>
+                </div>
+            </div>
+        ))}
+        {isModalOpen && selectedRoom && (
+            <div className="modal" style={{ display: 'block' }}>
+                <div className="modal-dialog " >
+                    <div className="modal-content" style={{ width: '700px' }}>
+                        <div className="modal-header">
+                            <button
+                                type="button"
+                                className="btn-close"
+                                onClick={closeModal}
+                            ></button>
+                        </div>
+                        <div className="slide-container">
+                            <Fade>
+                                {JSON.parse(selectedRoom["images"]).map((image, index) => (
+                                    <div key={index}>
+                                        <img alt="photo" style={{ width: '100%' }} src={'../../' + image} />
                                     </div>
-                                    <div className="btn-group">
-                                        {/*<button type="button" className="btn btn-sm btn-outline-secondary">booking</button>*/}
-                                        {/*<button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>*/}
+                                ))}
+                            </Fade>
+                        </div>
+                        <div className="modal-body d-flex flex-column">
+                            <h2 className="text-bold" >Сведения о номере</h2>
+                            <div className="mb-1 d-flex gap-5 justify-content-between">
+                                <div className="d-flex flex-column">
+                                    <h5>Комфорт</h5>
+                                    <div className="ml-5">
+                                        <div className="text-gray">{selectedRoomComfort.wifi === 'Да' ? 'WIFI' : 'NO WIFI'}</div>
+                                        <div className="text-gray">{selectedRoomComfort.conditioner === 'Да' ? 'conditioner' : 'no conditioner'}</div>
+                                    </div>
+                                    <hr />
+                                    <h5>Удобства</h5>
+                                    <div>
+                                        <div className="text-gray">{selectedRoomComfort.bed}</div>
+                                        <div className="text-gray"> Туалет {selectedRoomComfort.toilet}</div>
+                                        <div className="text-gray"> Душ {selectedRoomComfort.shower}</div>
+                                    </div>
+                                    <hr />
+                                    <h5>Количество проживающих</h5>
+                                    <div className="text-gray">{selectedRoom.max_guests}</div>
+                                </div>
+                                <div className="d-flex mx-5 flex-column">
+                                    <h5>Общая оценка: 5 из 5</h5>
+                                    <div>
+                                        <img alt="star" src={star_full}></img>
+                                        <img alt="star" src={star_full}></img>
+                                        <img alt="star" src={star_full}></img>
+                                        <img alt="star" src={star_full}></img>
+                                        <img alt="star" src={star_full}></img>
+                                    </div>
                                 </div>
                             </div>
+                            <button
+                                className="btn w-25 align-self-end btn-task rounded-pill px-3"
+                                type="button"
+                                onClick={() => checkEditing(selectedRoom)}
+                            >Забронировать
+                            </button>
                         </div>
                     </div>
                 </div>
-            ))}
-            {isModalOpen && selectedRoom && (
-                <div className="modal" style={{ display: 'block' }}>
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Подробная информация о комнате</h5>
-                                <button
-                                    type="button"
-                                    className="btn-close"
-                                    onClick={closeModal}
-                                ></button>
+            </div>
+        )}
+        {isBooking && (
+            <div className="modal" style={{ display: "block" }}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Форма бронирования</h5>
+                            <button type="button" className="btn-close" onClick={() => setIsBooking(false)}></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label htmlFor="firstName">Имя:</label>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="first_name"
+                                    onChange={handleBookingDataChange}
+                                    className="form-control"
+                                />
                             </div>
-                            <div className="modal-body">
-                                <p className="font-22">Номер: {selectedRoom.number}</p>
-                                <p className="font-22">Категория: {selectedRoom.category}</p>
-                                {
-                                    Object.keys(selectedRoomComfort).map(key => (
-                                        <div className="font-22" key={key}>
-                                            {key}: {selectedRoomComfort[key]}
-                                        </div>
-                                    ))
-                                }
-                                {/*<p>Номер: {selectedRoom.comfort}</p>*/}
-                                {/* Другие данные о комнате */}
+                            <div className="form-group">
+                                <label htmlFor="lastName">Фамилия:</label>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="last_name"
+                                    onChange={handleBookingDataChange}
+                                    className="form-control"
+                                />
                             </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    onClick={closeModal}
-                                >
-                                    Закрыть
-                                </button>
+                            <div className="form-group">
+                                <label htmlFor="phone">Телефон:</label>
+                                <input
+                                    type="tel"
+                                    id="phoneNumber"
+                                    name="phone"
+                                    onChange={handleBookingDataChange}
+                                    className="form-control"
+                                />
                             </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={() => setIsBooking(false)}
+                            >
+                                Отмена
+                            </button>
+                            <button
+                                type="button" className="btn btn-primary"
+                                onClick={handleBookingSubmit}
+                            >
+                                Забронировать
+                            </button>
                         </div>
                     </div>
                 </div>
-            )}
-            {isBooking && (
-                <div className="modal" style={{ display: "block" }}>
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Форма бронирования</h5>
-                                <button type="button" className="btn-close" onClick={() => setIsBooking(false)}></button>
-                            </div>
-                            <div className="modal-body">
-                                <div className="form-group">
-                                    <label htmlFor="firstName">Имя:</label>
-                                    <input
-                                        type="text"
-                                        id="firstName"
-                                        name="first_name"
-                                        onChange={handleBookingDataChange}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="lastName">Фамилия:</label>
-                                    <input
-                                        type="text"
-                                        id="lastName"
-                                        name="last_name"
-                                        onChange={handleBookingDataChange}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="phone">Телефон:</label>
-                                    <input
-                                        type="tel"
-                                        id="phoneNumber"
-                                        name="phone"
-                                        onChange={handleBookingDataChange}
-                                        className="form-control"
-                                    />
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    onClick={() => setIsBooking(false)}
-                                >
-                                    Отмена
-                                </button>
-                                <button
-                                    type="button" className="btn btn-primary"
-                                    onClick={handleBookingSubmit}
-                                >
-                                    Забронировать
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            </div>
+        )}
 
-            {success && (
-                <div className="modal" style={{ display: "block" }}>
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content rounded-3 shadow">
-                            <div className="modal-body p-4 text-center">
-                                <h3 className="mb-0">Ваша бронь успешно добавлена</h3>
-                                <p className="mb-0">Номер брони: {bookingNumber.bookingId} </p>
+        {success && (
+            <div className="modal" style={{ display: "block" }}>
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content rounded-3 shadow">
+                        <div className="modal-body p-4 text-center">
+                            <h3 className="mb-0">Ваша бронь успешно добавлена</h3>
+                            <p className="mb-0">Номер брони: {bookingNumber.bookingId} </p>
 
-                            </div>
-                            <div className="modal-footer flex-nowrap p-0">
-                                <button type="button"
-                                    className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
-                                    onClick={() => setSuccess(false)}
-                                >
-                                    <strong>Закрыть</strong></button>
-                            </div>
+                        </div>
+                        <div className="modal-footer flex-nowrap p-0">
+                            <button type="button"
+                                className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
+                                onClick={() => setSuccess(false)}
+                            >
+                                <strong>Закрыть</strong></button>
                         </div>
                     </div>
                 </div>
-            )}
-        </div>)
+            </div>
+        )}
+
+    </div>)
 }
 

@@ -16,12 +16,12 @@ html {
     margin: 0;
     padding: 0;
     height: 100vh;
-    //overflow: hidden;
     box-sizing: border-box;
 }
 
-* {
-    box-sizing: border-box;
+.main-container {
+    width: 1500px;
+    margin: 0 auto;
 }
 
 .width-1200 {
@@ -90,6 +90,10 @@ html {
     flex-grow: 1;
 }
 
+.flex-grow-0_5 {
+    flex-grow: 0.5;
+}
+
 .green-button {
     background-color: #c0e1a2;
     color: #fffdfd;
@@ -118,7 +122,6 @@ html {
     background-color: #a2cbd7;
 }
 
-
 .mr_auto {
     margin-right: auto;
 }
@@ -133,7 +136,7 @@ html {
 }
 
 .font-22 {
-    font-size: 22px;
+    font-size: 22px !important;
 }
 
 input::placeholder {
@@ -169,22 +172,15 @@ select:disabled {
 }
 
 li {
-    /* Добавьте общие стили для ваших элементов li */
     list-style: none;
-    /* Убрать маркеры списка, если они есть */
     padding: 10px;
-    /* Пример общего отступа */
     transition: background-color 0.3s, box-shadow 0.3s;
-    /* Дополнительные общие стили... */
 }
 
-/* Стиль при hover */
+
 li:hover {
     background-color: #6495ED;
-    /* Грязно голубой цвет */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    /* Тень */
-    /* Дополнительные стили при hover... */
 }
 
 li {
@@ -203,20 +199,13 @@ button:hover {
 
 .name-block {
     width: 90px;
-    /* Задайте желаемую ширину */
     height: 70px;
     overflow: hidden;
-    /* Обрежьте текст, если он выходит за границы блока */
     border: 1px solid #ccc;
-    /* Цвет рамки */
     border-radius: 8px;
-    /* Скругленные углы */
     padding: 8px;
-    /* Внутренний отступ */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Тень */
     background-color: #f8f8f8;
-    /* Цвет фона */
 }
 
 
@@ -227,7 +216,6 @@ button:hover {
     background-size: cover;
     height: 100vh;
     margin: 0;
-    /* Другие стили для вашего контента */
 }
 
 .login-card {
@@ -257,7 +245,6 @@ button:hover {
     background-color: white;
 }
 
-//стили кнопок на странице login
 
 .btn-gradient-border {
     border: none;
@@ -344,14 +331,7 @@ button:hover {
 .tasks-section {
     text-align: center;
     padding: 20px;
-    //border: 1px solid #ccc;
-    //border-radius: 8px;
-    //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-//.room-info h3 {
-//    color:  rgb(128, 75, 223);
-//}
 
 .room-info ul {
     list-style-type: none;
@@ -391,7 +371,6 @@ button:hover {
     color: white;
 }
 
-
 .form-control {
     display: block;
     width: 100%;
@@ -399,8 +378,8 @@ button:hover {
     font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.6;
-    color: var(--bs-body-color);
-    appearance: none;
+    color: gray;
+    //appearance: none;
     background-color: var(--bs-body-bg);
     background-clip: padding-box;
     border: var(--bs-border-width) solid var(--bs-border-color);
@@ -408,13 +387,16 @@ button:hover {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.form-control::placeholder {
+    color: gray;
+}
+
+
 .form-control:focus {
-    color: var(--bs-body-color);
+    //color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
     border: 1px solid #ccc;
     outline: 0;
-    //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    //box-shadow: 0 0 0 0.25rem rgb(223, 214, 255);
 }
 
 .form-control:hover {
@@ -422,8 +404,6 @@ button:hover {
 }
 
 .trophy-block {
-    //width: 80%;
-    //margin: 0 auto;
     position: relative;
     border: 1px solid #ccc;
     min-width: 160px;
@@ -457,7 +437,13 @@ button:hover {
 }
 
 .photo-size {
-    height: 250px;
+    height: 230px;
+    width: 350px;
+}
+
+.photo-edit-booking {
+    height: 165px;
+    width: 255px;
 }
 
 .purple-input {
@@ -505,7 +491,6 @@ button:hover {
     .today {
         background-color: rgb(160, 119, 234);
         color: #f3f1f1;
-        /* Text color for the current date */
     }
 
     .today:hover {
@@ -518,18 +503,12 @@ button:hover {
         color: white;
     }
 
-    //.react-datepicker__day--keyboard-selected {
-    //    background-color: rgb(160, 119, 234);
-    //    border-color: rgb(160, 119, 234);
-    //    color: white;
-    //}
     .react-datepicker__navigation--previous,
     .react-datepicker__navigation--next {
         border-color: rgb(160, 119, 234);
         color: white;
     }
 
-    /* Hover styles for month change arrows */
     .react-datepicker__navigation:hover {
         background-color: transparent;
         border-color: rgb(160, 119, 234);
@@ -542,7 +521,6 @@ button:hover {
 }
 
 .custom-option:checked:hover {
-    //background: none !important;
     background-color: white !important;
 }
 
@@ -582,9 +560,7 @@ button:hover {
     font-weight: 400;
     line-height: 1.6;
     color: black;
-    //text-transform: uppercase;
     appearance: none;
-    //background-color: rgb(213, 211, 217);
     background-clip: padding-box;
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
@@ -651,6 +627,53 @@ button:hover {
 .rating-area:not(:checked)>label:hover,
 .rating-area:not(:checked)>label:hover~label {
     color: #C6A7FE;
+
+.btn-empty {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.card-room {
+    position: relative;
+    box-shadow: rgba(58, 53, 65, 0.56) 0 6px 18px -8px;
+    transition: transform 0.4s ease;
+}
+
+.card-room:hover {
+    transform: scale(1.1);
+}
+
+.room-block {
+    position: absolute;
+    background: white;
+    z-index: 1;
+}
+
+.no-outline-on-active:focus {
+    outline: none;
+    border: none;
+}
+
+.input-guest-amount {
+    position: relative;
+}
+
+.block-guest-amount {
+    opacity: 100%;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    top: 48px;
+    left: -64px;
+    color: black !important;
 }
 
 .rating-area>input:checked+label:hover,
@@ -692,15 +715,18 @@ button:hover {
     text-transform: uppercase;
 }
 
-.btn-empty {
-    font-size: 0.9rem;
-    font-weight: 400;
-    line-height: 1.6;
-    color: var(--bs-body-color);
-    appearance: none;
-    background-color: var(--bs-body-bg);
-    background-clip: padding-box;
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    border-radius: var(--bs-border-radius);
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+.border-without-shadow {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.btn-border-purple {
+    border: 2px solid #9155FD;
+    border-radius: 8px;
+    transition: transform 0.4s ease;
+}
+
+.btn-border-purple:hover {
+    border: 2px solid #9155FD;
+    transform: scale(1.1);
 }

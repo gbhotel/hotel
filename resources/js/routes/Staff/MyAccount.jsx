@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import hammer from "../../../img/hammer.svg";
@@ -11,7 +10,6 @@ export default function MyAccount () {
     const [file, setFile] = useState({});
     const [showForm, setShowForm] = useState(false);
     const [response, setResponse] = useState([]);
-
     const [birthday, setBirthday] = useState(new Date()); // Added state for birthday
 
     useEffect(() => {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\director\AnalysisController;
+use App\Http\Controllers\director\ProfileController;
 use App\Http\Controllers\files\FileController;
 use App\Http\Controllers\staff\EmployeeController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,7 @@ Route::get('admin/check_in_rooms', [RoomsController::class, 'getCheckInRooms'])-
 Route::get('admin/roomsForCleaning', [RoomsController::class, 'getRoomsForCleaning'])->name('admin.roomsForCleaning')->middleware('can:get-rooms-for-cleaning');
 Route::post('admin/free-rooms-period', [RoomsController::class, 'getFreeRoomsPeriod'])->name('admin.free-rooms-period')->middleware('can:get-free-rooms-period');
 Route::get('admin/room/{id}/get-room', [RoomController::class, 'getRoom'])->name('admin.room.get-room')->middleware('can:get-room');
+Route::get('admin/room/{id}/get-room-info', [RoomController::class, 'getRoomInfo'])->name('admin.room.get-room-info')->middleware('can:admin-get-room-info');
 
 Route::put('admin/room/cancel-book-room', [RoomController::class, 'cancelBookRoom'])->name('admin.room.cancel-book-room')->middleware('can:cancel-book-room');
 Route::post('admin/room/check-in-room', [RoomController::class, 'checkInRoom'])->name('admin.room.check-in-room')->middleware('can:check-in-room');
@@ -45,7 +47,6 @@ Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'edit
 
 Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('admin.booking')->middleware('can:get-booking');
 Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room')->middleware('can:book-room');
-
 Route::delete('/admin/booking/{id}/delete', [BookingController::class, 'deleteBooking'])->name('admin.delete.booking')->middleware('can:admin-delete-booking');
 Route::get('/admin/booking/get/{id}', [BookingController::class, 'getOneBooking'])->name('admin.get.one.booking')->middleware('can:admin-get-one-booking');
 Route::post('/admin/save-edited-booking', [BookingController::class, 'saveEditedBooking'])->name('admin.save.edited.booking')->middleware('can:admin-save-edited-booking');
@@ -75,7 +76,10 @@ Route::put('director/dismiss-employee', [DirectorStaffController::class, 'dismis
 Route::get('director/analysis', [AnalysisController::class, 'getCountStaff'])->middleware('can:get-count-staff');
 Route::get('director/analysis-dismiss', [AnalysisController::class, 'getCountStaffDismiss'])->middleware('can:get-count-staff-dismiss');
 Route::post('director/analysis-quantity-rooms', [AnalysisController::class, 'getCountRooms'])->middleware('can:get-count-rooms');
-Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'getCountGuests'])->middleware('can:get-count-guests');;
+Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'getCountGuests'])->middleware('can:get-count-guests');
+Route::get('director/profile/get-my-data', [ProfileController::class, 'getMyData'])->middleware('can:get-my-data');
+Route::post('director/profile/get-update-my-data', [ProfileController::class, 'updateMyData'])->middleware('can:get-update-my-data');
+Route::post('director/profile/change-password', [ProfileController::class, 'changePassword'])->middleware('can:change-password');
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);

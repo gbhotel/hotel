@@ -8,11 +8,12 @@ import CreateEmployeeDirector from "../routes/Director/CreateEmployee.jsx";
 import EditEmployeeDirector from "../routes/Director/EditEmployee.jsx";
 
 import AnalysisDirector from "@/routes/Director/Analysis/Analysis.jsx"
+import ProfileDirector from "@/routes/Director/Profile/Profile.jsx"
 
 export default function Director (){
 
     return( <>
-        <div className="d-flex gap-5">
+        <div className="d-flex">
             <Navbar />
             <Routes>
                 <Route path="/director/staff" element={<StaffDirector />} />
@@ -20,6 +21,7 @@ export default function Director (){
                 <Route path="/director/createEmployee" element={<CreateEmployeeDirector />} />
                 <Route path="/director/editEmployee/:id" element={<EditEmployeeDirector />} />
                 <Route path="/director/analysis" element={<AnalysisDirector />} />
+                <Route path="/director/profile" element={<ProfileDirector />} />
             </Routes>
         </div>
 
