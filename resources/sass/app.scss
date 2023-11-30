@@ -28,6 +28,11 @@ html {
     width: 1200px;
 }
 
+.main-container {
+    width: 1500px;
+    margin: 0 auto;
+}
+
 .container {
     width: 1200px;
     margin: 0 auto;
@@ -424,7 +429,6 @@ button:hover {
     color: #949494;
 }
 
-
 .trophy {
     position: absolute;
     top: 20px;
@@ -457,6 +461,21 @@ button:hover {
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.guest_inf {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #9155FD;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.guest_inf:hover {
+    transform: scale(1.1);
+    transition: background-image 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
 }
 
 .purple-input:focus {
@@ -497,7 +516,6 @@ button:hover {
     }
 }
 
-
 .grey-color {
     color: #f3f1f1;
 }
@@ -519,7 +537,6 @@ button:hover {
     width: 30px;
     right: 20px;
 }
-
 
 .purple-background {
     box-shadow: 0 4px 8px -4px rgba(58, 53, 65, 0.42);
@@ -577,6 +594,40 @@ button:hover {
     color: white !important;
 }
 
+.rating-area {
+    display: inline-block;
+    overflow: hidden;
+    margin: 30px auto;
+}
+
+.rating-area:not(:checked)>input {
+    display: none;
+}
+
+.rating-area:not(:checked)>label {
+    float: right;
+    width: 100px;
+    padding: 10px 0;
+    cursor: pointer;
+    font-size: 70px;
+    line-height: 70px;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
+}
+
+.rating-area:not(:checked)>label:before {
+    content: '★';
+}
+
+.rating-area>input:checked~label {
+    color: #9155FD;
+    text-shadow: 1px 1px #4158d0;
+}
+
+.rating-area:not(:checked)>label:hover,
+.rating-area:not(:checked)>label:hover~label {
+    color: #C6A7FE;
+
 .btn-empty {
     font-size: 0.9rem;
     font-weight: 400;
@@ -625,7 +676,44 @@ button:hover {
     color: black !important;
 }
 
+.rating-area>input:checked+label:hover,
+.rating-area>input:checked+label:hover~label,
+.rating-area>input:checked~label:hover,
+.rating-area>input:checked~label:hover~label,
+.rating-area>label:hover~input:checked~label {
+    color: #e070ff;
+    text-shadow: 1px 1px #a050c8;
+}
 
+.rate-area>label:active {
+    position: relative;
+}
+
+.textarea-guest-feedback {
+    width: 600px;
+    line-height: 150%;
+    margin: 30px 0;
+    padding: 9px;
+    border: 1px solid #9155FD;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.textarea-guest-feedback:hover {
+    border-color: #C6A7FE;
+}
+
+.submit-guest-feedback {
+    width: auto;
+    border: 1px solid #9155FD;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.submit-guest-feedback:hover {
+    border: none;
+    color: white;
+    text-transform: uppercase;
+}
 
 .border-without-shadow {
     border: 1px solid #ccc;

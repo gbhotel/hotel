@@ -84,7 +84,7 @@ export default function Rooms() {
                                     <Col xs={6}>{data.roomsNumber}</Col>
                                 </Row>
                                 <Row className="align-items-center my-1 text-start" >
-                                    <Col xs={6}>Душь:</Col>
+                                    <Col xs={6}>Душ:</Col>
                                     <Col xs={6}>{data.shower}</Col>
                                 </Row>
                                 <Row className="align-items-center my-1 text-start" >

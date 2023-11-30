@@ -54,7 +54,9 @@ Route::post('/admin/save-edited-booking', [BookingController::class, 'saveEdited
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks')->middleware('can:get-tasks');
 Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask')->middleware('can:add-task');
 
-
+//роуты гостя
+Route::get('/guest/room', [GuestController::class, 'getInfoAboutGuestRoom']);
+Route::post('/guest/feedback', [GuestController::class, 'setRequests'])->name('admin.room.get-room')->middleware('can:get-room');
 Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
 
 //роуты для сотрудников

@@ -17,7 +17,9 @@ import EditEmployeeDirector from "./routes/Director/EditEmployee.jsx";
 import Admin from "./components/Admin.jsx";
 import Director from "./components/Director.jsx";
 import EmployeeAccount from "./components/Staff/EmployeeAccount";
+import Guest from "./components/Guest.jsx";
 import {useEffect, useState} from "react";
+
 
 
 
@@ -55,6 +57,7 @@ export default function App() {
                 {role.role === 'администратор'&& <Admin />}
                 {role.role === 'директор' && <Director />}
                 {role.role === 'горничная'&& <EmployeeAccount />}
+                {role.role === 'гость'&& <Guest />}
             </BrowserRouter>
         </>
     )
