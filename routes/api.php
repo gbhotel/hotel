@@ -40,11 +40,15 @@ Route::post('admin/room/check-in-room', [RoomController::class, 'checkInRoom'])-
 Route::put('admin/room/eviction-from-room', [RoomController::class, 'evictionFromRoom'])->name('admin.eviction-from-room')->middleware('can:aviction-from-room');
 
 Route::get('admin/staff', [StaffController::class, 'getStaff'])->name('admin.staff')->middleware('can:get-staff');
-Route::match(['get', 'post'],'admin/employee/{id}', [StaffController::class, 'getEmployee'])->name('admin.employee')->middleware('can:get-employee');
+Route::match(['get', 'post'], 'admin/employee/{id}', [StaffController::class, 'getEmployee'])->name('admin.employee')->middleware('can:get-employee');
 Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'editEmployee'])->name('admin.edit.employee')->middleware('can:edit-employee');;
 
 Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('admin.booking')->middleware('can:get-booking');
 Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room')->middleware('can:book-room');
+
+Route::delete('/admin/booking/{id}/delete', [BookingController::class, 'deleteBooking'])->name('admin.delete.booking')->middleware('can:admin-delete-booking');
+Route::get('/admin/booking/get/{id}', [BookingController::class, 'getOneBooking'])->name('admin.get.one.booking')->middleware('can:admin-get-one-booking');
+Route::post('/admin/save-edited-booking', [BookingController::class, 'saveEditedBooking'])->name('admin.save.edited.booking')->middleware('can:admin-save-edited-booking');
 
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks')->middleware('can:get-tasks');
 Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask')->middleware('can:add-task');
@@ -79,6 +83,3 @@ Route::get('user', [AuthController::class, 'getCurrentUser']);
 Route::put('user/update', [AuthController::class, 'update']);
 
 Route::post('/upload', [FileController::class, 'upload']);
-
-
-

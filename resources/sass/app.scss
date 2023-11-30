@@ -7,7 +7,8 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -18,6 +19,7 @@ body, html {
 * {
     box-sizing: border-box;
 }
+
 .width-1200 {
     width: 1200px;
 }
@@ -26,6 +28,7 @@ body, html {
     width: 1500px;
     margin: 0 auto;
 }
+
 .container {
     width: 1200px;
     margin: 0 auto;
@@ -61,7 +64,7 @@ body, html {
     background-color: #56CA00;
     color: white;
     border-color: #56CA00;
-    border-radius:  4px 0  0 4px;
+    border-radius: 4px 0 0 4px;
 }
 
 .ml-40px {
@@ -78,6 +81,7 @@ body, html {
 .flex-grow-0_1 {
     flex-grow: 0.1;
 }
+
 .flex-grow-1 {
     flex-grow: 1;
 }
@@ -89,10 +93,11 @@ body, html {
 }
 
 .purple-button {
-    background-color:#9155FD;
+    background-color: #9155FD;
     color: #fffdfd;
     border: #b4a2e1;
 }
+
 .blue-button {
     background-color: #a2cbd7;
     color: #fffdfd;
@@ -122,6 +127,7 @@ body, html {
 .h-37 {
     height: 37.2px;
 }
+
 .font-22 {
     font-size: 22px;
 }
@@ -153,30 +159,36 @@ select:disabled {
 .no-box-shadow {
     box-shadow: none !important;
 }
- .invisible {
+
+.invisible {
     display: none;
 }
 
 li {
     /* Добавьте общие стили для ваших элементов li */
-    list-style: none; /* Убрать маркеры списка, если они есть */
-    padding: 10px; /* Пример общего отступа */
+    list-style: none;
+    /* Убрать маркеры списка, если они есть */
+    padding: 10px;
+    /* Пример общего отступа */
     transition: background-color 0.3s, box-shadow 0.3s;
     /* Дополнительные общие стили... */
 }
 
 /* Стиль при hover */
 li:hover {
-    background-color: #6495ED; /* Грязно голубой цвет */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Тень */
+    background-color: #6495ED;
+    /* Грязно голубой цвет */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* Тень */
     /* Дополнительные стили при hover... */
 }
+
 li {
     outline: none;
 }
 
 li:active {
-    background-color: #b4a2e1!important;
+    background-color: #b4a2e1 !important;
 }
 
 button:hover {
@@ -186,20 +198,27 @@ button:hover {
 
 
 .name-block {
-    width: 90px; /* Задайте желаемую ширину */
+    width: 90px;
+    /* Задайте желаемую ширину */
     height: 70px;
-    overflow: hidden; /* Обрежьте текст, если он выходит за границы блока */
-    border: 1px solid #ccc; /* Цвет рамки */
-    border-radius: 8px; /* Скругленные углы */
-    padding: 8px; /* Внутренний отступ */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
-    background-color: #f8f8f8; /* Цвет фона */
+    overflow: hidden;
+    /* Обрежьте текст, если он выходит за границы блока */
+    border: 1px solid #ccc;
+    /* Цвет рамки */
+    border-radius: 8px;
+    /* Скругленные углы */
+    padding: 8px;
+    /* Внутренний отступ */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Тень */
+    background-color: #f8f8f8;
+    /* Цвет фона */
 }
 
 
 .login {
     position: relative;
-    background: url('../img/login_background.jpg') center center/cover  no-repeat fixed;
+    background: url('../img/login_background.jpg') center center/cover no-repeat fixed;
     overflow: hidden;
     background-size: cover;
     height: 100vh;
@@ -242,9 +261,10 @@ button:hover {
     position: relative;
     z-index: 1;
     border-radius: 5px;
-    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    background: linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
     cursor: pointer;
 }
+
 .btn-gradient-border::before {
     content: "";
     position: absolute;
@@ -257,11 +277,12 @@ button:hover {
     z-index: -1;
     transition: 200ms
 }
+
 .btn-gradient-border::after {
     content: "LOGIN";
     font-size: 16px;
     font-weight: bold;
-    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    background: linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
     -webkit-background-clip: text;
     color: transparent;
     transition: 200ms
@@ -274,7 +295,8 @@ button:hover {
     bottom: 0;
     left: 0;
 }
-.btn-gradient-border:hover::after{
+
+.btn-gradient-border:hover::after {
     color: white;
 }
 
@@ -287,7 +309,7 @@ button:hover {
     box-shadow: 0 4px 8px -4px rgba(58, 53, 65, 0.42);
     background-image: linear-gradient(98deg, #C6A7FE, #9155FD 94%);
     transform: scale(1.1);
-  }
+}
 
 .btn-navbar:hover .nav-link {
     color: white !important;
@@ -300,13 +322,14 @@ button:hover {
     overflow: hidden;
 }
 
-.room-info  {
+.room-info {
     text-align: center;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .border-with-shadow {
     padding: 20px;
     border: 1px solid #ccc;
@@ -321,6 +344,7 @@ button:hover {
     //border-radius: 8px;
     //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 //.room-info h3 {
 //    color:  rgb(128, 75, 223);
 //}
@@ -338,6 +362,7 @@ button:hover {
     width: 50px;
     height: 50px;
 }
+
 .li-task {
     border: 1px solid #ccc;
     min-width: 160px;
@@ -349,6 +374,7 @@ button:hover {
     background-color: transparent;
 
 }
+
 .btn-task {
     background-color: rgb(160, 119, 234);
     color: white;
@@ -401,7 +427,7 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.text-bold{
+.text-bold {
     font-weight: bold;
     font-size: 17px;
 }
@@ -410,12 +436,15 @@ button:hover {
     color: rgb(128, 75, 223);
     font-weight: bold;
 }
+
 .text-purple {
     color: rgb(128, 75, 223);
 }
+
 .text-gray {
     color: #949494;
 }
+
 .trophy {
     position: absolute;
     top: 20px;
@@ -443,6 +472,7 @@ button:hover {
     border-radius: var(--bs-border-radius);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
 .guest_inf {
     display: flex;
     flex-direction: column;
@@ -452,7 +482,8 @@ button:hover {
     padding: 10px;
     margin-bottom: 10px;
 }
-.guest_inf:hover{
+
+.guest_inf:hover {
     transform: scale(1.1);
     transition: background-image 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
 }
@@ -462,18 +493,21 @@ button:hover {
     border: none;
 }
 
-.purple-input::placeholder{
+.purple-input::placeholder {
     color: #f3f1f1;
 }
 
 .purple-datepicker {
     .today {
-        background-color: rgb(160, 119, 234) ;
-        color: #f3f1f1; /* Text color for the current date */
+        background-color: rgb(160, 119, 234);
+        color: #f3f1f1;
+        /* Text color for the current date */
     }
+
     .today:hover {
         background-color: #C6A7FE;
     }
+
     .react-datepicker__day--selected {
         background-color: rgb(160, 119, 234);
         border-color: rgb(160, 119, 234);
@@ -515,6 +549,7 @@ button:hover {
 .info-block {
     position: relative;
 }
+
 .hammer {
     position: absolute;
     width: 30px;
@@ -531,9 +566,10 @@ button:hover {
     border: none;
     outline: none;
     border-radius: 5px;
-    background:linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
+    background: linear-gradient(90deg, #4158d0 0%, #a050c8 46%, #e070ff 100%);
     cursor: pointer;
 }
+
 //
 .gray-input {
     display: block;
@@ -558,7 +594,7 @@ button:hover {
     border: none;
 }
 
-.gray-input::placeholder{
+.gray-input::placeholder {
     color: gray;
 }
 
@@ -574,7 +610,7 @@ button:hover {
     transform: scale(1.1);
 }
 
-.btn-add:hover .link{
+.btn-add:hover .link {
     color: white !important;
 }
 
@@ -583,10 +619,12 @@ button:hover {
     overflow: hidden;
     margin: 30px auto;
 }
-.rating-area:not(:checked) > input {
+
+.rating-area:not(:checked)>input {
     display: none;
-    }
-.rating-area:not(:checked) > label {
+}
+
+.rating-area:not(:checked)>label {
     float: right;
     width: 100px;
     padding: 10px 0;
@@ -596,30 +634,35 @@ button:hover {
     color: lightgrey;
     text-shadow: 1px 1px #bbb;
 }
-.rating-area:not(:checked) > label:before {
+
+.rating-area:not(:checked)>label:before {
     content: '★';
 }
-.rating-area > input:checked ~ label {
+
+.rating-area>input:checked~label {
     color: #9155FD;
     text-shadow: 1px 1px #4158d0;
 }
-.rating-area:not(:checked) > label:hover,
-.rating-area:not(:checked) > label:hover ~ label {
+
+.rating-area:not(:checked)>label:hover,
+.rating-area:not(:checked)>label:hover~label {
     color: #C6A7FE;
 }
-.rating-area > input:checked + label:hover,
-.rating-area > input:checked + label:hover ~ label,
-.rating-area > input:checked ~ label:hover,
-.rating-area > input:checked ~ label:hover ~ label,
-.rating-area > label:hover ~ input:checked ~ label {
+
+.rating-area>input:checked+label:hover,
+.rating-area>input:checked+label:hover~label,
+.rating-area>input:checked~label:hover,
+.rating-area>input:checked~label:hover~label,
+.rating-area>label:hover~input:checked~label {
     color: #e070ff;
     text-shadow: 1px 1px #a050c8;
 }
-.rate-area > label:active {
+
+.rate-area>label:active {
     position: relative;
 }
 
-.textarea-guest-feedback{
+.textarea-guest-feedback {
     width: 600px;
     line-height: 150%;
     margin: 30px 0;
@@ -629,28 +672,31 @@ button:hover {
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
 
-.textarea-guest-feedback:hover{
+.textarea-guest-feedback:hover {
     border-color: #C6A7FE;
 }
 
-.submit-guest-feedback{
+.submit-guest-feedback {
     width: auto;
     border: 1px solid #9155FD;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
 
-.submit-guest-feedback:hover{
+.submit-guest-feedback:hover {
     border: none;
     color: white;
     text-transform: uppercase;
 }
 
-
-
-
-
-
-
-
-
-
+.btn-empty {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
