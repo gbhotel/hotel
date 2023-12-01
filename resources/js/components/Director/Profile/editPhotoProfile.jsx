@@ -39,23 +39,18 @@ export default function EditPhotoProfileDirector() {
         event.preventDefault()
         const urlEditPhoto = '/api/director/profile/change-photo';
 
-        const fileImg = {image:event.target[0].files[0]}
-        console.dir(fileImg)
+        // const fileImg = {image:event.target[0].files[0]}
+        // console.dir(fileImg)
 
         let input = document.getElementById('avatar')
 
         let formObj = new FormData()
-        // formObj.append('key1', fileImg)
-        // formObj.append('key1', event.target[0])
-        // formObj.append('key1', event.target[0].files[0])
-        formObj.append('key1', input.files[0])
-        formObj.append('key2', 'Хрен')
+        formObj.append('photo', input.files[0])
 
         const requestOptions = {
             method: 'POST',
             headers: {
                 'X-CSRF-Token': _token,
-                // 'Content-Type': 'multipart/form-data',
                 "type": "formData"
                 },
             body: formObj
