@@ -171,11 +171,9 @@ class ProfileController extends Controller
         $answer = [];
 
         if (!$request->hasFile('photo')) {
-            $answer['load'] = 'false';
+            $answer['condition'] = false;
             $answer['message'] = 'Сервер не получил файл или файл не пригоден для сохранения';
             return response()->json($answer);
-        }else{
-            $answer['load'] = 'true';
         }
 
         //Оригинальное имя файла
@@ -188,7 +186,6 @@ class ProfileController extends Controller
         $user = Auth::user();
         $idUser = $user->id;
         $oldPathPhoto = $user->photo;
-        $answer['oldPath'] = $oldPathPhoto;
 
         $dateObj = new DateTime();
         //Строка из даты и времени без разделителей
@@ -200,7 +197,7 @@ class ProfileController extends Controller
         $urlFull = Storage::url(Storage::putFileAs('/public/img/avatar', $request->file('photo'), $newFileName));
 
         if(!is_string($urlFull)){
-            $answer['save'] = 'false';
+            $answer['condition'] = false;
             $answer['message'] = 'Неудалось сохранить файл на сервере. При попытке сохранить файл, не получен путь к сохраняемому файлу.';
             return response()->json($answer);
         }
@@ -208,38 +205,32 @@ class ProfileController extends Controller
         $arrPath = explode('/', $urlFull, PHP_INT_MAX);
 
         if (count($arrPath) !== 5 || $arrPath[4] !== $newFileName) {
-            $answer['save'] = 'false';
+            $answer['condition'] = false;
             $answer['message'] = 'Неудалось сохранить файл на сервере. При попытке сохранить файл, получен не коректный путь к сохраняемому файлу';
             return response()->json($answer);
         }
-        $answer['save'] = 'true';
-        $answer['path'] = $urlFull;
 
         $url = substr($urlFull, 1);
 
         $user->photo = $url;
 
         if(!$user->save()){
-            $answer['bd'] = 'false';
+            $answer['condition'] = false;
             $answer['message'] = 'Не удалось обновить путь к файлу в базе данных';
             return response()->json($answer);
         }
-        $answer['bd'] = 'true';
 
         $length = explode('/', $oldPathPhoto, PHP_INT_MAX);
         unset($length[0]);
         $urlRemove = 'public/' . implode ('/', $length);
 
-
+        $answer['condition'] = true;
         if(Storage::delete($urlRemove)){
-            $answer['remove'] = 'true';
             $answer['message'] = 'Ваша аватарка успешно изменена';
-
         }else{
-            $answer['remove'] = 'false';
             $answer['message'] = 'Ваша аватарка успешно изменена. Не получилось удалить фтарый файл';
-
         }
+
         return response()->json($answer);
     }
 }

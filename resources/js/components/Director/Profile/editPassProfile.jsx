@@ -131,7 +131,6 @@ export default function EditPassProfileDirector() {
                                        className="form-control"
                                        aria-label="password1"
                                        id="password1"
-                                    // ref={firstNameRef}
                                 />
                             </Col>
                             <Col xs={1}></Col>
@@ -145,7 +144,6 @@ export default function EditPassProfileDirector() {
                                        className="form-control"
                                        aria-label="password2"
                                        id="password2"
-                                    // ref={firstNameRef}
                                 />
                             </Col>
                             <Col xs={1}></Col>
@@ -159,7 +157,6 @@ export default function EditPassProfileDirector() {
                                        className="form-control"
                                        aria-label="password3"
                                        id="password3"
-                                    // ref={firstNameRef}
                                 />
                             </Col>
                             <Col xs={1}></Col>

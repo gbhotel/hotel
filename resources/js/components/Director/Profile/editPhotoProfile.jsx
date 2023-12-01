@@ -4,10 +4,12 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import {useDispatch, useSelector} from "react-redux";
 import {changeRender} from "../../../store/slices/director/directorRender.js";
-// import ReactDOM from "react-dom/client.js";
+import Alert from "react-bootstrap/Alert";
+import {establishAlertPass} from "../../../store/slices/director/alertPass.js";
 
 export default function EditPhotoProfileDirector() {
     const profileState = useSelector(state => state.profile);
+    const alertPassState = useSelector(state => state.alertPass);
     const employee = profileState.profile;
 
     const dispatch = useDispatch();
@@ -25,6 +27,9 @@ export default function EditPhotoProfileDirector() {
     const changeEditPassHandler = () => {
         dispatch(changeRender(editPass))
     }
+    const establishGoodAlertHandler = (goodAlert) => {
+        dispatch(establishAlertPass(goodAlert))
+    }
 
     const [image, setImage] = useState("../" + employee.photo)
     const onImageChange = (event) => {
@@ -33,14 +38,17 @@ export default function EditPhotoProfileDirector() {
         }
     }
 
-    // const myForm = ReactDOM.createRoot(document.getElementById("formEditPhoto"));
+    const [show, setShow] = useState(false);
+    const [err, setErr] = useState('');
 
+    /**
+     * Функция отпраляет на сервер новую фотографию и получает ответ
+     * @param event
+     * @returns {Promise<void>}
+     */
     async function setPhoto(event){
         event.preventDefault()
         const urlEditPhoto = '/api/director/profile/change-photo';
-
-        // const fileImg = {image:event.target[0].files[0]}
-        // console.dir(fileImg)
 
         let input = document.getElementById('avatar')
 
@@ -56,14 +64,49 @@ export default function EditPhotoProfileDirector() {
             body: formObj
         };
 
-        let response = await fetch(urlEditPhoto, requestOptions);
-        let answer = await response.json() // читаем ответ в формате JSON
+        const answer = await sendFetch(urlEditPhoto, requestOptions)
 
         console.log(answer)
 
+        if(answer.ok && answer.condition){
+            establishGoodAlertHandler(answer)
+            changeDataHandler()
+        }else{
+            setShow(true);
+            setErr(answer.message)
+        }
+    }
+
+    /**
+     * Принимает api и опции (метод, заголовки и нагрузку), дезает запрос на сервер, возвращает ответ от сервера
+     * @param url - string api для запроса на сервер
+     * @param requestOptions - array (метод, заголовки, тело)
+     * @returns {Promise<any>} - ответ от сервера
+     */
+    async function sendFetch(url, requestOptions){
+
+        let response = await fetch(url, requestOptions);
+        let answer = await response.json();
+
+        answer.ok = response.ok;
+        answer.status = response.status;
+
+        return answer;
+    }
+
+    function AlertError() {
+        if (show) {
+            return (
+                <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+                    {err}
+                </Alert>
+            );
+        }
     }
 
     return (
+        <>
+            {AlertError(show)}
         <Container className="w-100 m-0 mb-3">
             <Row className="align-items-center m-3 text-center" >
                 <Col xs={12}>
@@ -97,7 +140,6 @@ export default function EditPhotoProfileDirector() {
                                            aria-label="avatar"
                                            id="avatar"
                                            accept="image/*"
-                                        // ref={firstNameRef}
                                     />
                                 </div>
                             </Col>
@@ -108,7 +150,6 @@ export default function EditPhotoProfileDirector() {
                             <div className="p-2" style={{width:'300px'}}>
                                 <button type="submit"
                                         form="formEditPhoto"
-                                        // onClick={setPhoto}
                                         className="w-100 btn btn-sm btn-outline-secondary"
                                 >
                                     Сохранить
@@ -279,5 +320,6 @@ export default function EditPhotoProfileDirector() {
                 </Col>
             </Row>
         </Container>
+        </>
     );
 }

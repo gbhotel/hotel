@@ -21,7 +21,7 @@ export default function ProfileDirector() {
     const editData = 'editData';
     const editPhoto = 'editPhoto';
     const editPass = 'editPass';
-    const clearAlert = {condition: 'false',message:'',}
+    const clearAlert = {condition: false, message:'',}
 
     const changeEditDataHandler = () => {
         dispatch(changeRender(editData))
