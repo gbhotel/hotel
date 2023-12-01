@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Positions;
 use App\Models\Staff;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use function Laravel\Prompts\table;
 
 class ProfileController extends Controller
@@ -166,8 +168,69 @@ class ProfileController extends Controller
 
     public function changePhoto(Request $request)
     {
-        $person = $request->all();
+        $answer = [];
 
-        return response()->json('Проверка связи');
+        if (!$request->hasFile('photo')) {
+            $answer['condition'] = false;
+            $answer['message'] = 'Сервер не получил файл или файл не пригоден для сохранения';
+            return response()->json($answer);
+        }
+
+        //Оригинальное имя файла
+        $newFileName = $request->file('photo')->getClientOriginalName();
+        //Путь к файлу до сохранения
+        $path = $request->file('photo')->path();
+        //Получаем расширение файла
+        $path_parts = pathinfo($path . '/' . $newFileName, PATHINFO_EXTENSION);
+
+        $user = Auth::user();
+        $idUser = $user->id;
+        $oldPathPhoto = $user->photo;
+
+        $dateObj = new DateTime();
+        //Строка из даты и времени без разделителей
+        $dateTimeStr = $dateObj->format('dmYhHis');
+
+        //Формируем имя файла для сохранения в базу данных
+        $newFileName = 'avatar-' . $idUser . '-' . $dateTimeStr . '.' . $path_parts;
+
+        $urlFull = Storage::url(Storage::putFileAs('/public/img/avatar', $request->file('photo'), $newFileName));
+
+        if(!is_string($urlFull)){
+            $answer['condition'] = false;
+            $answer['message'] = 'Неудалось сохранить файл на сервере. При попытке сохранить файл, не получен путь к сохраняемому файлу.';
+            return response()->json($answer);
+        }
+
+        $arrPath = explode('/', $urlFull, PHP_INT_MAX);
+
+        if (count($arrPath) !== 5 || $arrPath[4] !== $newFileName) {
+            $answer['condition'] = false;
+            $answer['message'] = 'Неудалось сохранить файл на сервере. При попытке сохранить файл, получен не коректный путь к сохраняемому файлу';
+            return response()->json($answer);
+        }
+
+        $url = substr($urlFull, 1);
+
+        $user->photo = $url;
+
+        if(!$user->save()){
+            $answer['condition'] = false;
+            $answer['message'] = 'Не удалось обновить путь к файлу в базе данных';
+            return response()->json($answer);
+        }
+
+        $length = explode('/', $oldPathPhoto, PHP_INT_MAX);
+        unset($length[0]);
+        $urlRemove = 'public/' . implode ('/', $length);
+
+        $answer['condition'] = true;
+        if(Storage::delete($urlRemove)){
+            $answer['message'] = 'Ваша аватарка успешно изменена';
+        }else{
+            $answer['message'] = 'Ваша аватарка успешно изменена. Не получилось удалить фтарый файл';
+        }
+
+        return response()->json($answer);
     }
 }
