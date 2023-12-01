@@ -45,11 +45,11 @@ export default function MyAccount () {
         setEmployee((prevState) => ({...prevState, "birthday": dateString}))
     };
 
-    const customOptions = [
-        { value: "", label: "Выберите пол", className: "option-purple" },
-        { value: "male", label: "м" },
-        { value: "female", label: "ж" },
-    ];
+    // const customOptions = [
+    //     { value: "", label: "Выберите пол", className: "option-purple" },
+    //     { value: "male", label: "м" },
+    //     { value: "female", label: "ж" },
+    // ];
 
     const handleShowForm =() => {
         setShowForm((prevState) => !prevState)
@@ -75,18 +75,19 @@ export default function MyAccount () {
 
         const formData = new FormData();
         formData.append('file', file);
-       // const formData  = {photo: file};
+        console.log(formData.append.file);
 
-        console.log('Form Data:', formData);
+        // console.log('Form Data:', formData);
 
         try {
             const response = await fetch('/api/upload', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
                     'X-CSRF-Token': _token,
+                    'type': 'formData',
                 },
-                body: file,
+                body: formData,
             });
 
             if (response.ok) {
@@ -161,15 +162,15 @@ export default function MyAccount () {
             {
                 showForm && (
                     <div className="d-flex gap-1 flex-column purple-form border-with-shadow">
-                        {/*<form encType="multipart/form-data">*/}
-                        {/*    <input*/}
-                        {/*        type="file"*/}
-                        {/*        name="image"*/}
-                        {/*        accept="image/*"*/}
-                        {/*        onChange={handleFileChange}*/}
-                        {/*    />*/}
-                        {/*    <button onClick={(event) =>handleUpload(event)}>Upload</button>*/}
-                        {/*</form>*/}
+                        <form encType="multipart/form-data">
+                            <input
+                                type="file"
+                                name="image"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                            />
+                            <button onClick={(event) =>handleUpload(event)}>Upload</button>
+                        </form>
                         <input
                             placeholder="Имя"
                             className="col-9 purple-input"

@@ -57,7 +57,8 @@ Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.a
 //роуты гостя
 Route::get('/guest/room', [GuestController::class, 'getInfoAboutGuestRoom']);
 Route::post('/guest/feedback', [GuestController::class, 'setRequests'])->name('admin.room.get-room')->middleware('can:get-room');
-Route::get('guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
+Route::get('/guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
+Route::post('guest/setRequests', [GuestController::class, 'setRequests'])->name('guest.setRequests');
 
 //роуты для сотрудников
 
@@ -88,3 +89,5 @@ Route::get('user', [AuthController::class, 'getCurrentUser']);
 Route::put('user/update', [AuthController::class, 'update']);
 
 Route::post('/upload', [FileController::class, 'upload']);
+
+
