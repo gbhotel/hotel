@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\guest;
 
 use App\Http\Controllers\Controller;
+use App\Models\Guest_requests;
 use DateTime;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class GuestController extends Controller
@@ -66,6 +68,7 @@ class GuestController extends Controller
         $check_out = $checkOut->format('d.m.Y');
 
         $user->guestName = $first_name .' '. $last_name;
+        $user->roomId = $room->id;
         $user->roomNumber = $roomNumber;
         $user->roomCategory = $roomCategory;
         $user->dates = $check_in .' - '.$check_out;
@@ -79,7 +82,26 @@ class GuestController extends Controller
 //        return response()->json('привет');
     }
 
-    public function setRequests(){
+    public function setRequests(Request $request){
+
+        $date = new Date();
+
+//        $request = DB::table('guest_requests')->get();
+
+        $response = Guest_requests::query()->insert([
+            'name'=>$request->name,
+            'id_room'=>$request->roomId,
+            'id_guest'=>$request->guestId,
+            'comment'=>$request->comment,
+            'created_date' => now(),
+        ]);
+
+        if($response){
+            return response()->json(['message' => 'Заявка принята!']);
+        }
+
+        return response()->json(['message' => 'Произошла ошибка, заявка не отправлена(']);
 
     }
+
 }

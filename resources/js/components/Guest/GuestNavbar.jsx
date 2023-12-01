@@ -1,11 +1,22 @@
-import React, {useEffect, useState} from "react";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import React, {useEffect} from "react";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setRoomInfoForGuest} from "../../store/actions/guest_actions.jsx";
 
 export default function Guests() {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        fetch(`/api/guest/room`)
+            .then(response => response.json())
+            .then(data => {
+                dispatch(setRoomInfoForGuest(data))
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [])
 
     return (
         <>
@@ -20,10 +31,13 @@ export default function Guests() {
                             <text>Password: besthotel</text>
                         </div>
                         <div className=" btn-navbar d-flex align-content-center w-100">
-                        <Link to="/guest/room" className="nav-link text-black w-100">О комнате</Link>
+                            <Link to="/guest/room" className="nav-link text-black w-100">О комнате</Link>
                         </div>
                         <div className=" btn-navbar d-flex align-content-center w-100">
                             <Link to="/guest/feedback" className="nav-link text-black w-100">Отзыв</Link>
+                        </div>
+                        <div className=" btn-navbar d-flex align-content-center w-100">
+                            <Link to="/guest/requests" className="nav-link text-black w-100">Заявки</Link>
                         </div>
                     </ul>
                 </div>

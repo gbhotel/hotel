@@ -9,19 +9,21 @@ class FileController extends Controller
 {
     public function upload(Request $request)
     {
-        // Validate the uploaded file
+
+        $response = $request->all();
+//         Validate the uploaded file
 //        $request->validate([
 //            'file' => 'required|mimes:pdf,doc,docx|max:2048', // Adjust the allowed file types and size
 //        ]);
 
-        // Get the uploaded file
-//        $file = $request->file('form-data');
+//         Get the uploaded file
+        $file = $request->file('file');
 //
 //        // Store the file on disk (e.g., in the 'public' disk)
-//        $path = $file->store('uploads', 'public');
+        $path = $file->store('uploads', 'public');
 
         // Do any additional processing if needed (e.g., save the file path to a database)
 
-        return response()->json(['message' => $request]);
+        return response()->json(['message' => $response]);
     }
 }
