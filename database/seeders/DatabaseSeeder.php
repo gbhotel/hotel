@@ -9,6 +9,7 @@ use Database\Seeders\people\PositionSeeder;
 use Database\Seeders\people\RolesSeeder;
 use Database\Seeders\people\StaffSeeder;
 use Database\Seeders\people\UserSeeder;
+use Database\Seeders\people\WorkingHoursSeeder;
 use Database\Seeders\rooms\BookingSeeder;
 use Database\Seeders\rooms\CategoriesSeeder;
 use Database\Seeders\rooms\CheckInSeeder;
@@ -36,7 +37,8 @@ class DatabaseSeeder extends Seeder
             BookingSeeder::class,
             CheckInSeeder::class,
             TasksSeeder::class,
-            GuestRequestSeeder::class
+            GuestRequestSeeder::class,
+            WorkingHoursSeeder::class
         ]);
     }
 }
