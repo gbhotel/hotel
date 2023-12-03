@@ -52,6 +52,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Две односпальные кровати',
                     'toilet' => 'на этаже',
                     'shower' => 'на этаже',
+                    'roomsNumber' => 1
                 ]),
             'sets' => json_encode(
                 [
@@ -77,6 +78,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Две односпальные кровати',
                     'toilet' => 'на этаже',
                     'shower' => 'на этаже',
+                    'roomsNumber' => 1
                 ]),
             'sets' => json_encode(
                 [
@@ -102,6 +104,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Три односпальные кровати',
                     'toilet' => 'на этаже',
                     'shower' => 'на этаже',
+                    'roomsNumber' => 2
                 ]),
             'sets' => json_encode(
                 [
@@ -127,6 +130,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Двуспальная кровать',
                     'toilet' => 'в номере',
                     'shower' => 'в номере',
+                    'roomsNumber' => 1
                 ]),
             'sets' => json_encode(
                 [
@@ -152,6 +156,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Двуспальная и односпальная кровати',
                     'toilet' => 'в номере',
                     'shower' => 'в номере',
+                    'roomsNumber' => 2
                 ]),
             'sets' => json_encode(
                 [
@@ -177,6 +182,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Двуспальная и две односпальные кровати',
                     'toilet' => 'в номере',
                     'shower' => 'в номере',
+                    'roomsNumber' => 3
                 ]),
             'sets' => json_encode(
                 [
@@ -202,6 +208,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Двуспальная кровать',
                     'toilet' => 'в номере',
                     'shower' => 'в номере',
+                    'roomsNumber' => 2
                 ]),
             'sets' => json_encode(
                 [
@@ -227,6 +234,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Двуспальная кровать и односпальная кровать',
                     'toilet' => 'в номере',
                     'shower' => 'в номере',
+                    'roomsNumber' => 2
                 ]),
             'sets' => json_encode(
                 [
@@ -252,6 +260,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Двуспальная кровать KING SIZE',
                     'toilet' => 'в номере',
                     'shower' => 'в номере',
+                    'roomsNumber' => 2
                 ]),
             'sets' => json_encode(
                 [
@@ -277,6 +286,7 @@ class RoomsSeeder extends Seeder
                     'bed' => 'Двуспальная (king size) и односпальная кровати',
                     'toilet' => 'в номере',
                     'shower' => 'в номере',
+                    'roomsNumber' => 3
                 ]),
             'sets' => json_encode(
                 [
