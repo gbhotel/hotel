@@ -56,7 +56,7 @@ Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.a
 
 //роуты гостя
 Route::get('/guest/room', [GuestController::class, 'getInfoAboutGuestRoom']);
-Route::post('/guest/feedback', [GuestController::class, 'setRequests'])->name('admin.room.get-room')->middleware('can:get-room');
+Route::post('/guest/feedback', [GuestController::class, 'setFeedback']);
 Route::get('/guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
 Route::post('guest/setRequests', [GuestController::class, 'setRequests'])->name('guest.setRequests');
 
