@@ -61,6 +61,14 @@ class AuthServiceProvider extends ServiceProvider
             return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
+        Gate::define('update-task', function (User $user) {
+            return in_array($this->getRole($user), ['администратор']);
+        });
+
+        Gate::define('delete-task', function (User $user) {
+            return in_array($this->getRole($user), ['администратор']);
+        });
+
         Gate::define('change-tasks-status', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор', 'горничная']);
         });

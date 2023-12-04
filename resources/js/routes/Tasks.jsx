@@ -1,21 +1,31 @@
 import React, {useEffect, useState} from "react";
-import StatusBtn from "../components/Status.jsx";
-
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import {Link} from "react-router-dom";
+import done from "../../img/done.svg";
+import {useDispatch, useSelector} from "react-redux";
+import {setTasksAction} from "../store/actions/admin_actions";
+import {setStaffAction} from "../store/actions/staff_actions.jsx";
+import {setTasksNameAction} from "../store/actions/tasksName_action.jsx";
+import {setRoomsAction} from "../store/actions/rooms_actions.jsx";
 
 export default function Tasks() {
 
-    const [date, setDate] = useState('');
-    const [currentDate, setCurrentDate] = useState('');
-    const [tasksName, setTasksName] = useState([]);
-    const [roomForCleaning, setRoomForCleaning] = useState([]);
     const [tasks, setTasks] = useState([]);
-    const [staff, setStaff] = useState([]);
-    const [rooms, setRooms] = useState([]);
-    const [guestRequest, setGuestRequest] = useState([]);
-    const [createdTask, setCreatedTask ] = useState([]);
-    const [success, setSuccess] = useState(false);
-    const [response , setResponse ] = useState([]);
 
+    const tasksName = [
+        'уборка номера',
+        'услуги прачечной',
+        'смена белья',
+        'доставка еды в номер',
+        'ремонт'
+    ];
+
+    const dispatch = useDispatch();
+
+    dispatch(setTasksNameAction(tasksName));
+
+    //tasks
     useEffect(() => {
         const abortController = new AbortController();
 
@@ -29,8 +39,8 @@ export default function Tasks() {
                 return response.json();
             })
             .then(data => {
-                setTasksName(data.tasks_name);
                 setTasks(data.tasks);
+                dispatch(setTasksAction(data.tasks));
             })
             .catch(error => {
                 console.error(error);
@@ -41,32 +51,7 @@ export default function Tasks() {
         }
     }, []);
 
-    useEffect(() => {
-        const abortController = new AbortController();
-
-        fetch('/api/admin/roomsForCleaning', {
-            signal: abortController.signal,
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                setRoomForCleaning(data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
-        return () => {
-            abortController.abort();
-        }
-    }, []);
-
-
+    //staff
     useEffect(() => {
         const abortController = new AbortController();
 
@@ -80,24 +65,22 @@ export default function Tasks() {
                 return response.json();
             })
             .then(data => {
-                setStaff(data);
+                // setStaff(data);
+                dispatch(setStaffAction(data));
+
             })
             .catch(error => {
                 console.error(error);
             });
-
         return () => {
             abortController.abort();
         }
     }, []);
 
+    //rooms
     useEffect( () => {
 
-        const requestData = {
-            date
-        };
-
-                fetch('/api/admin/rooms')
+        fetch('/api/admin/rooms')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Ошибка при выполнении fetch-запроса');
@@ -105,244 +88,124 @@ export default function Tasks() {
                 return response.json();
             })
             .then(data => {
-                setRooms(data);
+                // setRooms(data);
+                dispatch(setRoomsAction(data));
             })
             .catch(error => {
                 console.error('Произошла ошибка:', error);
             });
     }, []);
 
-    useEffect( () => {
 
-        fetch('/api/guest/requests')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка при выполнении fetch-запроса');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setGuestRequest(data);
-            })
-            .catch(error => {
-                console.error('Произошла ошибка:', error);
-            });
-    }, []);
-
-    const generateTask = async () => {
-        try {
-            const response = await fetch('/api/admin/addTask', {
-                method: 'POST',
+        const deleteTask = (id) => {
+        if (confirm('Вы уверены, что хотите удалить задачу №' + id + '?'))
+            fetch(`/api/admin/deleteTask/${id}`, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-Token': _token,
                 },
-                body: JSON.stringify(createdTask),
-            });
+                body: JSON.stringify(id),
+            })
+                .then(response => response.json())
+                .then((data) => {
+                    console.log(data);
+                    if (data['status'] === 'success') {
+                        console.log(data['message']);
 
-            if (response.ok) {
-                const data = await response.json();
-                setResponse(data);
-                setSuccess(true);
-            } else {
-                console.error('Ошибка при выполнении fetch-запроса');
-            }
-        } catch (error) {
-            console.error('Произошла ошибка:', error);
-        }
-    };
-
-
-    // useEffect для обновления даты при монтировании компонента
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-
-            setCurrentDate(new Date());
-        }, 3600000);
-
-        // Очистка интервала при размонтировании компонента
-        return () => clearInterval(intervalId);
-    }, []);
-
+                        let filteredTasks = tasks.filter(item => item.id !== id)
+                        setTasks(filteredTasks);
+                        dispatch(setTasksAction(filteredTasks));
+                    }
+                    else
+                        console.log(data['message']);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+    }
 
     return (
-        <div className="d-flex flex-column gap-3 small-container mt-5">
-            <div className="d-flex justify-content-between gap-5  mt-5">
-                <div className="d-flex justify-content-between flex-column">
-                    <div className="text-center">
-                        <label className="uppercase mb-1">Задачи</label>
-                        <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-                            {
-                                tasksName.map((item, index) => (
-                                    <li
-                                        className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
-                                        key={index}
-                                        value={index}
-                                        onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['task_name']:tasksName[e.target.value] }))}
-                                    >
-                                        {item}
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </div>
-                    <div className="text-center mt-4">
-                        <label className="uppercase">Исполнители</label>
-                            <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow">
-                                {
-                                    staff.map((item, index) => (
-                                        <li
-                                            className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
-                                            key={index}
-                                            value ={item.id}
-                                            onClick={(e)=>  setCreatedTask(prevState => ({...prevState, ['id_staff']: e.target.value}))}
-                                        >
-                                            {item.first_name} {item.last_name} ({item.position})
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                    </div>
-                </div>
-            <div className=" d-flex flex-column text-center">
-                <label className="uppercase">Номера комнат</label>
-                <ul className=" flex-grow-1 dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-
-                    {
-                        rooms.map((item, index) => (
-                            <li
-                                className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
-                                key={index}
-                                value ={item.number}
-                                onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_room']: e.target.parentNode.value}))}
-                            >
-                                <div className={`d-flex ${item.number === '10' ? 'gap-3' : 'gap-4'}`} > Комната номер - {item.number}
-                                    <StatusBtn status={item.status} />
-                                </div>
-
-                                <div> {(item.checkOut === currentDate)?
-                                    <StatusBtn status='clean'/>: ''}
-                                </div>
-
-                                <div>
-                                    {roomForCleaning.map((room,index) => ((item.id === room.id_room)?
-                                        <StatusBtn key = {index} status='clean'/>: ''))}
-                                </div>
-
-                            </li>
-                        ))
-                    }
-                </ul>
-            </div>
-            </div>
-            <div className=" mt-3">
-                <div className="text-center">
-                    <label className="uppercase">Заявки от гостей гостиницы</label>
-                    <ul className="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-
-                        {
-                            guestRequest.map((item, index) => (
-
-                                // item.created_date === '2023-11-12' ? (
-                                    <li
-                                        className="d-flex align-items-center dropdown-item rounded-2 gap-4 "
-                                        key={index}
-                                        value={item.id}
-                                        onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_room']: item.id_room, ['task_name']: item.name}))}
-                                    >
-                                        <div className="name-block d-flex flex-column justify-content-center align-items-center">
-                                            {item.name.split(' ').map((word, wordIndex) => (
-                                                <div key={wordIndex}>{word}</div>
-                                            ))}
-                                        </div>
-
-                                            <div>
-                                                <p className="m-0">Дата составления: {item.created_date}</p>
-                                                <p className="m-0">Номер комнаты: {item.id_room}</p>
-                                                <p className="m-0">Комментарий гостя: "{item.comment?? "здесь пока ничего не оставили..."}"</p>
-                                            </div>
-
-
-                                    </li>
-                                // ) : null
-                            ))
-                        }
-                    </ul>
-                </div>
-            </div>
-            <div className="align-self-center mt-3">
-                <button className=" btn btn-primary purple-button py-3 px-4 mb-4" onClick={generateTask}>Сформировать задачу</button>
-            </div>
-
-
-            {success && (
-                <div  className="modal" style={{ display: "block" }}>
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content rounded-3 shadow">
-                            <div className="modal-body p-4 text-center">
-                                <h3 className="mb-0">{response.message}</h3>
-                                <p className="mb-0">{response.task}</p>
-
-                            </div>
-                            <div className="modal-footer flex-nowrap p-0">
-                                <button type="button"
-                                        className="text-black btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
-                                        onClick={() => setSuccess(false)}
-                                >
-                                    <strong>Закрыть</strong></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+        <div className=" ml-40px flex-grow-0_1 mt-5 col-7 col-md-7">
+            <div className=" d-flex justify-content-end align-items-center m-3 text-center">
+            <button type="button" className="btn p-2 btn-add btn-sm uppercase text-black btn-sm">
+                <Link to="/addTasks" className="  link text-decoration-none text-black"> Сформировать задачу</Link>
+            </button>
         </div>
+            <div className="row g-0 p-4 my-5 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+
+                <Row className=" uppercase align-items-center">
+                    <Col className="my-3" lg={2} xs={1}>
+                        <b>задача</b>
+                    </Col>
+                    <Col className="my-3" lg={1} xs={1}>
+                        <b>номер</b>
+                    </Col>
+                    <Col className="my-3" lg={2} xs={1}>
+                        <b>сотрудник</b>
+                    </Col>
+                    <Col className="my-3" lg={2} xs={1}>
+                        <b>составлена</b>
+                    </Col>
+                    {/*<Col className="my-3" lg={2} xs={1}>*/}
+                    {/*    <b>выполнена</b>*/}
+                    {/*</Col>*/}
+                    {/*<Col className="my-3" lg={1} xs={1}>*/}
+                    {/*    <b>комментарий</b>*/}
+                    {/*</Col>*/}
+                    <Col className="my-3" lg={2} xs={1}>
+                        <b>статус</b>
+                    </Col>
+
+                    <Col className="my-3 flex-grow-1" lg={2} xs={1}>
+                        <b></b>
+                    </Col>
+                </Row>
+                {
+                    tasks.map((item, index) => (
+                        <Row key={index} className="align-items-center border-top">
+                            <Col className="my-3" lg={2} xs={1}>
+                                {item.name}
+                            </Col>
+                            <Col className="my-3" lg={1} xs={1}>
+                                {item.id_room}
+                            </Col>
+                            <Col className="my-3" lg={2} xs={2}>
+                                {item.employee_name}
+                            </Col>
+                            <Col className="my-3" lg={2} xs={2}>
+                                {item.created_date}
+                            </Col>
+                            {/*<Col className="my-3" lg={2} xs={1}>*/}
+                            {/*    {item.execution_date}*/}
+                            {/*</Col>*/}
+                            {/*<Col className="my-3" lg={1} xs={1}>*/}
+                            {/*    {item.comment}*/}
+                            {/*</Col>*/}
+                            <Col className="my-3" lg={2} xs={1}>
+
+                                {item.status === 'сделано'? (<img alt="done" className="done-icon m-auto" src={done}/>):
+                                    (item.status) }
+                            </Col>
+                            <Col className="my-3 flex-grow-1 d-flex justify-content-center" lg={2}
+                                 xs={2}>
+                                <button type="button"
+                                        className="btn  btn-sm uppercase btn-border-purple-angle"
+                                >
+                                    <Link to={`/editTask/${item.id}`} className="  link text-decoration-none text-black">Редактировать</Link>
+                                </button>
+                                <button type="button"
+                                        className="btn btn-sm uppercase btn-purple-angle"
+                                    onClick={() => deleteTask(item.id)}
+                                >Удалить
+                                </button>
+                            </Col>
+                        </Row>
+                    ))
+                }
+            </div>
+        </div>
+
+
     )
 }
-
-// <label>Номер</label>
-// <select
-//     className="form-control h-37"
-//     id="employeeSelector"
-//     onClick={(e)=> addTask(e, 'id_room')}
-// >
-//     {
-//         rooms.map((item, index) => (
-//             <option key={index} value ={item.id}>
-//                 Номер комнаты: {item.number} {item.status}
-//
-//                 {(item.checkOut === currentDate )? ' clean': ''}
-//
-//                 {roomForCleaning.map((room,index) => ((item.id === room.id_room)? ' clean': ''))}
-//
-//             </option>
-//         ))
-//     }
-// </select>
-
-{/*<select*/}
-{/*    className="form-control"*/}
-{/*    id="taskSelector"*/}
-{/*    onClick={(e)=> addTask(e, 'task_name')}*/}
-{/*>*/}
-{/*    {*/}
-
-{/*        tasksName.map((item, index)=>(*/}
-{/*            <option key={index} value={item}>{item}</option>*/}
-{/*        ))*/}
-{/*    }*/}
-{/*</select>*/}
-
-{/*<select*/}
-{/*    className="form-control"*/}
-{/*    id="employeeSelector"*/}
-{/*    onClick={(e)=> addTask(e, 'id_staff')}*/}
-{/*>*/}
-{/*    {*/}
-{/*        staff.map((item, index) => (*/}
-{/*            <option key={index} value = {item.id}>*/}
-{/*                {item.first_name} {item.last_name}*/}
-{/*                  ({item.position})*/}
-{/*            </option>*/}
-{/*        ))*/}
-{/*    }*/}
-{/*</select>*/}

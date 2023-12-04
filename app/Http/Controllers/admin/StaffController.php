@@ -30,6 +30,7 @@ class StaffController extends Controller
                 'id' => $employee->id,
                 'first_name' => $employee->user->first_name,
                 'last_name' => $employee->user->last_name,
+                'full_name' => $employee->user->first_name . ' ' . $employee->user->last_name,
                 'phone' => $employee->user->phone,
                 'email' => $employee->user->email,
                 'passport' => $employee->user->passport,
