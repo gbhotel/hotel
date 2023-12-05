@@ -28,6 +28,10 @@ export default function GuestRequests() {
             if (response.ok) {
                 const data = await response.json();
                 setResponse(data);
+
+                setTimeout(()=> {
+                    setResponse([])
+                }, 2000)
             } else {
                 console.error('Ошибка при выполнении fetch-запроса');
             }
@@ -38,36 +42,38 @@ export default function GuestRequests() {
 
 
     return (
-        <div className="requests-form">
-            <div className="requests-form-group">
-                <label className="request-label" htmlFor="request4">Услуги в номер:</label>
-                <select
-                    id="request4"
-                    name="request4"
-                    onClick={(e)=>handleRequest('name', e)}
-                >
-                    <option value="уборка номера">уборка номера</option>
-                    <option value="смена белья">смена белья</option>
-                    <option value="доставки еды">доставки еды</option>
-                    <option value="услуги прачечной">услуги прачечной</option>
-                    <option value="другое">другое</option>
-                </select>
+        <div>
+            <div className="requests-form">
+                <div className="requests-form-group">
+                    <label className="request-label" htmlFor="request4">Услуги в номер:</label>
+                    <select
+                        id="request4"
+                        name="request4"
+                        onClick={(e)=>handleRequest('name', e)}
+                    >
+                        <option value="уборка номера">уборка номера</option>
+                        <option value="смена белья">смена белья</option>
+                        <option value="доставки еды">доставки еды</option>
+                        <option value="услуги прачечной">услуги прачечной</option>
+                        <option value="другое">другое</option>
+                    </select>
+                </div>
+                <div className="requests-form-group">
+                    <label className="request-label" htmlFor="feedback">Комментарий:</label>
+                    <textarea
+                        className="request-textarea"
+                        id="feedback"
+                        name="feedback"
+                        rows="4"
+                        placeholder="Введите ваши пожелания..."
+                        onChange={(e)=>handleRequest('comment', e)}
+                    ></textarea>
+                </div>
+                <button className="w-100 btn btn-task" onClick={handleRequestSent}>Отправить</button>
             </div>
-            <div className="requests-form-group">
-                <label className="request-label" htmlFor="feedback">Комментарий:</label>
-                <textarea
-                    className="request-textarea"
-                    id="feedback"
-                    name="feedback"
-                    rows="4"
-                    placeholder="Введите ваши пожелания..."
-                    onChange={(e)=>handleRequest('comment', e)}
-                ></textarea>
-            </div>
-            <button className=" btn btn-task" onClick={handleRequestSent}>Отправить</button>
             {
                 response && (
-                    <h3 className={` purple-background text-white uppercase border-with-shadow ${response.length === 0 ? 'invisible' : ''}`}>{response.message}</h3>
+                    <h3 className={`btn-border-purple text-black border-with-shadow ${response.length === 0 ? 'invisible' : ''}`}>{response.message}</h3>
                 )
             }
         </div>

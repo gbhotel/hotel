@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import hammer from "../../../img/hammer.svg";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 
 export default function MyAccount () {
@@ -71,13 +73,15 @@ export default function MyAccount () {
             return;
         }
 
-        console.log(file);
+        let input = document.getElementById('avatar')
 
-        const formData = new FormData();
-        formData.append('file', file);
-        console.log(formData.append.file);
+        let formObj = new FormData()
+        formObj.append('photo', input.files[0])
 
-        // console.log('Form Data:', formData);
+        // const formData = new FormData();
+        // formData.append('file', file);
+        // console.log(formData.append.file);
+
 
         try {
             const response = await fetch('/api/upload', {
@@ -87,7 +91,7 @@ export default function MyAccount () {
                     'X-CSRF-Token': _token,
                     'type': 'formData',
                 },
-                body: formData,
+                body: formObj,
             });
 
             if (response.ok) {
@@ -162,15 +166,41 @@ export default function MyAccount () {
             {
                 showForm && (
                     <div className="d-flex gap-1 flex-column purple-form border-with-shadow">
-                        <form encType="multipart/form-data">
-                            <input
-                                type="file"
-                                name="image"
-                                accept="image/*"
-                                onChange={handleFileChange}
-                            />
-                            <button onClick={(event) =>handleUpload(event)}>Upload</button>
-                        </form>
+                        <Row>
+                            <form method="POST"
+                                  id="formEditPhoto"
+                                  name="formEditPhoto"
+                                  onSubmit={handleUpload}
+                            >
+                                <Col xs={12} className="d-flex align-items-center justify-content-center">
+                                    <div className="p-2" style={{width:'300px'}}>
+                                        <input type="file"
+                                               // onChange={onImageChange}
+                                               required
+                                               className="form-control"
+                                               aria-label="avatar"
+                                               id="avatar"
+                                               accept="image/*"
+                                        />
+                                    </div>
+                                </Col>
+                                <button type="submit"
+                                        form="formEditPhoto"
+                                        className="w-100 btn btn-sm btn-outline-secondary"
+                                >
+                                    загрузить
+                                </button>
+                            </form>
+                        </Row>
+                        {/*<div >*/}
+                        {/*    <input*/}
+                        {/*        type="file"*/}
+                        {/*        name="image"*/}
+                        {/*        accept="image/*"*/}
+                        {/*        onChange={handleFileChange}*/}
+                        {/*    />*/}
+                        {/*    <button type="submit" onClick={(event) =>handleUpload(event)}>Upload</button>*/}
+                        {/*</div>*/}
                         <input
                             placeholder="Имя"
                             className="col-9 purple-input"

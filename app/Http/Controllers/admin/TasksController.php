@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Check_in;
 use App\Models\Room_cleaning;
-use App\Models\Rooms;
 use App\Models\Tasks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +20,8 @@ class TasksController extends Controller
 
         $tasks = Tasks::query()
             ->with('room')
+            ->with('employee.user')
+            ->orderByDesc('id')
             ->get();
 
         foreach ($tasks as $task) {
@@ -31,9 +31,11 @@ class TasksController extends Controller
             }
 
             $result['tasks'][] = [
+                'id' => $task->id,
                 'name' => $task->name,
                 'id_room' => $task->room->number,
                 'id_staff' => $task->id_staff,
+                'employee_name' => $task->employee->user->first_name . ' ' . $task->employee->user->last_name,
                 'created_date' => $task->created_date,
                 'execution_date' => $task->execution_date,
                 'comment' => $task->comment,
@@ -60,7 +62,7 @@ class TasksController extends Controller
         foreach ($tasks as $task) {
             $result[] = [
                 'id' => $task->id,
-                'employee_name' =>  $task->employee->user->first_name . ' ' . $task->employee->user->last_name,
+                'employee_name' => $task->employee->user->first_name . ' ' . $task->employee->user->last_name,
                 'id_staff' => $task->employee->id,
                 'name' => $task->name,
                 'room_number' => $task->room->number,
@@ -99,6 +101,8 @@ class TasksController extends Controller
     public function addTask(Request $request)
     {
 
+
+
         $data = $request->only([
             'room_number',
             'task_name',
@@ -111,11 +115,67 @@ class TasksController extends Controller
                 'name' => $data['task_name'],
                 'id_room' => $data['id_room'],
                 'id_staff' => $data['id_staff'],
-                'created_date' => '2023-11-12',
+                'created_date' => date(now()),
 
             ]);
 
 
         return response()->json(['message' => 'Задача успешно добавлена', 'task' => $data['task_name'] . ' ' . '(комната №' . $data['id_room'] . ')'], 200);
+    }
+
+    public function updateTask(Request $request) {
+
+        $data['status'] = 'success';
+        $data['message'] = 'данные обнавлены';
+
+        $updatedData = $request->only([
+            'id',
+            'name',
+            'id_room',
+            'id_staff',
+            'comment'
+        ]);
+
+        $task = Tasks::query()->find($updatedData['id']);
+
+        if(!$task) {
+            $data['status'] = 'error';
+            $data['message'] = 'задача не найдена';
+            return $data;
+        }
+
+         $result = $task->update([
+            'name' => $updatedData['name'],
+            'id_room'=> $updatedData['id_room'],
+            'id_staff' => $updatedData['id_staff'],
+            'comment'  => $updatedData['comment']
+        ]);
+
+        if(!$result) {
+            $data['status'] = 'error';
+            $data['message'] = 'данные не обнавлены';
+            return $data;
+        }
+
+        return response()->json($data);
+    }
+
+    public function deleteTask($id) {
+
+        $data['status'] = 'error';
+        $data['message'] = 'ошика, задание не удалено';
+
+        $task = Tasks::query()->find($id);
+
+        if(!$task) {
+            $data['message'] = 'задание не найдено';
+        }
+
+        if($task->delete()) {
+            $data['status'] = 'success';
+            $data['message'] = 'задание успешно удалено';
+        }
+
+        return $data;
     }
 }

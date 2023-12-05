@@ -371,6 +371,19 @@ button:hover {
     color: white;
 }
 
+.btn-purple-angle {
+    background-color: rgb(160, 119, 234);
+    color: white;
+    border-radius:  0 8px 8px 0 ;
+}
+
+.btn-purple-angle:hover {
+    text-decoration: none;
+    background-color: rgb(128, 75, 223);
+    box-shadow: rgba(58, 53, 65, 0.56) 0 6px 18px -8px;
+    color: white;
+}
+
 .form-control {
     display: block;
     width: 100%;
@@ -419,6 +432,10 @@ button:hover {
 .text-bold-purple {
     color: rgb(128, 75, 223);
     font-weight: bold;
+}
+
+.justify-self-center {
+    justify-self: center;
 }
 
 .text-purple {
@@ -727,11 +744,23 @@ button:hover {
         transition: transform 0.4s ease;
     }
 
+
     .btn-border-purple:hover {
         border: 2px solid #9155FD;
         transform: scale(1.1);
     }
 
+.btn-border-purple-angle {
+    border: 2px solid #9155FD;
+    border-radius: 8px 0 0 8px;
+    transition: transform 0.4s ease;
+}
+
+
+.btn-border-purple-angle:hover {
+    border: 2px solid #9155FD;
+    transform: scale(1.1);
+}
 
 .requests-form {
     max-width: 600px;
@@ -744,6 +773,19 @@ button:hover {
 .requests-form-group {
     margin-bottom: 20px;
 }
+
+.requests-form-group select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.requests-form-group textarea {
+    outline: none;
+}
+
 .request-label {
     display: block;
     font-weight: bold;
@@ -763,6 +805,17 @@ button:hover {
 
 textarea {
     resize: vertical;
+}
+
+.add-scroll {
+    max-height: 230px;
+    overflow-y: auto;
+}
+
+.dropdown-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 //button {
