@@ -8,7 +8,7 @@ import Employee from "./routes/Employee.jsx";
 import AddBooking from "./routes/AddBooking.jsx";
 import Room from "./routes/Room.jsx";
 import Booking from "./routes/Booking.jsx";
-import AddTasks from "./routes/AddTasks.jsx";
+import CreateTasks from "./routes/CreateTasks.jsx";
 
 import StaffDirector from "./routes/Director/Staff.jsx";
 import EmployeeDirector from "./routes/Director/Employee.jsx";

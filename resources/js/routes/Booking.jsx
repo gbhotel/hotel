@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ReactPaginate from "react-paginate";
 
 export default function Booking() {
 
@@ -14,6 +13,7 @@ export default function Booking() {
     const [checkInDateString, setCheckInDateString] = useState('');
 
     document.getElementById('auth').innerHTML = '';
+
     useEffect(() => {
         const abortController = new AbortController();
 
