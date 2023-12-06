@@ -154,5 +154,11 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('set-request', function (User $user) {
             return in_array($this->getRole($user), ['гость']);
         });
+        Gate::define('working-in', function (User $user) {
+            return in_array($this->getRole($user), ['администратор']);
+        });
+        Gate::define('working-out', function (User $user) {
+            return in_array($this->getRole($user), ['администратор']);
+        });
     }
 }
