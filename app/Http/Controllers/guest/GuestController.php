@@ -35,6 +35,7 @@ class GuestController extends Controller
         $last_name = $user->last_name;
 
         //получаем информацию о комнате
+        $roomId = $room->id;
         $roomNumber = $room->number;
         $roomCategory = $category->category;
         $maxGuests = $room->max_guests;
@@ -72,6 +73,7 @@ class GuestController extends Controller
 
         $user->guestName = $first_name .' '. $last_name;
         $user->roomNumber = $roomNumber;
+        $user->roomId = $roomId;
         $user->roomCategory = $roomCategory;
         $user->dates = $checkIn .' - '.$checkOut;
         $user->adults = $adults;

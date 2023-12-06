@@ -8,7 +8,7 @@ import Staff from "../routes/Staff.jsx";
 import Employee from "../routes/Employee.jsx";
 import EditBooking from "../routes/EditBooking.jsx";
 import Tasks from "../routes/Tasks.jsx";
-import AddTasks from "../routes/AddTasks.jsx";
+import CreateTasks from "../routes/CreateTasks.jsx";
 import EditTask from "../routes/EditTask.jsx";
 
 export default function Admin() {
@@ -51,7 +51,7 @@ export default function Admin() {
                 <Route path="/staff" element={<Staff />} />
                 <Route path="/employee/:id" element={<Employee />} />
                 <Route path="/tasks" element={<Tasks />} />
-                <Route path="/addTasks" element={<AddTasks />} />
+                <Route path="/addTasks" element={<CreateTasks />} />
                 <Route path="/editTask/:id" element={<EditTask/>} />
                 <Route path="/editBooking/:id" element={<EditBooking />} />
 
