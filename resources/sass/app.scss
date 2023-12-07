@@ -623,8 +623,8 @@ button:hover {
 }
 
 .rating-area {
-    display: inline-block;
-    overflow: hidden;
+    display: block;
+    //overflow: hidden;
     margin: 30px auto;
 }
 
@@ -634,13 +634,15 @@ button:hover {
 
 .rating-area:not(:checked)>label {
     float: right;
-    width: 100px;
-    padding: 10px 0;
+    width: 30px;
     cursor: pointer;
-    font-size: 70px;
-    line-height: 70px;
+    font-size: 30px;
+    line-height: 30px;
     color: lightgrey;
     text-shadow: 1px 1px #bbb;
+}
+.star {
+    margin-right: 300px;
 }
 
 .rating-area:not(:checked)>label:before {
@@ -657,109 +659,110 @@ button:hover {
     color: #C6A7FE;
 }
 
-    .btn-empty {
-        font-size: 0.9rem;
-        font-weight: 400;
-        line-height: 1.6;
-        color: var(--bs-body-color);
-        appearance: none;
-        background-color: var(--bs-body-bg);
-        background-clip: padding-box;
-        border: var(--bs-border-width) solid var(--bs-border-color);
-        border-radius: var(--bs-border-radius);
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
+.btn-empty {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 
-    .card-room {
-        position: relative;
-        box-shadow: rgba(58, 53, 65, 0.56) 0 6px 18px -8px;
-        transition: transform 0.4s ease;
-    }
+.card-room {
+    position: relative;
+    box-shadow: rgba(58, 53, 65, 0.56) 0 6px 18px -8px;
+    transition: transform 0.4s ease;
+}
 
-    .card-room:hover {
-        transform: scale(1.1);
-    }
+.card-room:hover {
+    transform: scale(1.1);
+}
 
-    .room-block {
-        position: absolute;
-        background: white;
-        z-index: 1;
-    }
+.room-block {
+    position: absolute;
+    background: white;
+    z-index: 1;
+}
 
-    .no-outline-on-active:focus {
-        outline: none;
-        border: none;
-    }
+.no-outline-on-active:focus {
+    outline: none;
+    border: none;
+}
 
-    .input-guest-amount {
-        position: relative;
-    }
+.input-guest-amount {
+    position: relative;
+}
 
-    .block-guest-amount {
-        opacity: 100%;
-        position: absolute;
-        z-index: 1;
-        background-color: white;
-        top: 48px;
-        left: -64px;
-        color: black !important;
-    }
+.block-guest-amount {
+    opacity: 100%;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    top: 48px;
+    left: -64px;
+    color: black !important;
+}
 
-    .rating-area > input:checked + label:hover,
-    .rating-area > input:checked + label:hover ~ label,
-    .rating-area > input:checked ~ label:hover,
-    .rating-area > input:checked ~ label:hover ~ label,
-    .rating-area > label:hover ~ input:checked ~ label {
-        color: #e070ff;
-        text-shadow: 1px 1px #a050c8;
-    }
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+    color: #e070ff;
+    text-shadow: 1px 1px #a050c8;
+}
 
-    .rate-area > label:active {
-        position: relative;
-    }
+.rate-area > label:active {
+    position: relative;
+}
 
-    .textarea-guest-feedback {
-        width: 600px;
-        line-height: 150%;
-        margin: 30px 0;
-        padding: 9px;
-        border: 1px solid #9155FD;
-        border-radius: 0 15px 15px 0;
-        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-    }
+.textarea-guest-feedback {
+    width: 300px;
+    height: 100px;
+    line-height: 150%;
+    margin: 10px 0;
+    padding: 9px;
+    border: 1px solid #9155FD;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
 
-    .textarea-guest-feedback:hover {
-        border-color: #C6A7FE;
-    }
+.textarea-guest-feedback:hover {
+    border-color: #C6A7FE;
+}
 
-    .submit-guest-feedback {
-        width: auto;
-        border: 1px solid #9155FD;
-        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-    }
+.submit-guest-feedback {
+    width: auto;
+    border: 1px solid #9155FD;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
 
-    .submit-guest-feedback:hover {
-        border: none;
-        color: white;
-        text-transform: uppercase;
-    }
+.submit-guest-feedback:hover {
+    border: none;
+    color: white;
+    text-transform: uppercase;
+}
 
-    .border-without-shadow {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-    }
+.border-without-shadow {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
 
-    .btn-border-purple {
-        border: 2px solid #9155FD;
-        border-radius: 8px;
-        transition: transform 0.4s ease;
-    }
+.btn-border-purple {
+    border: 2px solid #9155FD;
+    border-radius: 8px;
+    transition: transform 0.4s ease;
+}
 
 
-    .btn-border-purple:hover {
-        border: 2px solid #9155FD;
-        transform: scale(1.1);
-    }
+.btn-border-purple:hover {
+    border: 2px solid #9155FD;
+    transform: scale(1.1);
+}
 
 .btn-border-purple-angle {
     border: 2px solid #9155FD;
