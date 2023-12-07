@@ -44,6 +44,38 @@ class BookingController extends Controller
         return response()->json($result);
     }
 
+    public function getNoCheckInBooking()
+    {
+
+        $result = [];
+
+        $checkins = DB::table('check_in')->select(['id_booking'])->get();
+
+        $allBookings = Booking::query()
+            ->with('room')
+            ->with('guest.user')
+            ->with('employee.user')
+            ->orderByDesc('id')
+            ->get();
+
+        foreach ($allBookings as $booking) {
+            if (!$checkins->contains('id_booking', $booking->id))
+                $result[] = [
+                    'booking_number' => $booking->id,
+                    'room_number' => $booking->room->number,
+                    'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->user->last_name,
+                    'guest_phone' => $booking->guest->user->phone,
+                    'check_in' => $booking->check_in,
+                    'check_out' => $booking->check_out,
+                    'admin_name' => $booking->employee->user->first_name . ' ' . $booking->employee->last_name
+
+                ];
+        }
+
+
+        return response()->json($result);
+    }
+
     public function getOneBooking($id)
     {
         $booking = Booking::where('id', $id)->with('guest.user')->get()->first();

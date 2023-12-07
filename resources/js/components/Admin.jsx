@@ -11,6 +11,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import EditBooking from "../routes/EditBooking.jsx";
+import CheckInGuest from "../routes/CheckInGuest.jsx";
 
 export default function Admin() {
 
@@ -24,6 +25,9 @@ export default function Admin() {
                         </div>
                         <div className=" btn-navbar d-flex align-content-center">
                             <Link to="/booking" className="nav-link text-black">Бронирование</Link>
+                        </div>
+                        <div className=" btn-navbar d-flex align-content-center">
+                            <Link to="/checkInGuest" className="nav-link text-black">Заселение</Link>
                         </div>
                         <div className=" btn-navbar d-flex align-content-center ">
                             <Link to="/rooms" className=" nav-link text-black">Комнаты</Link>
@@ -53,6 +57,7 @@ export default function Admin() {
                 <Route path="/employee/:id" element={<Employee />} />
                 <Route path="/tasks" element={<Tasks />} />
                 <Route path="/editBooking/:id" element={<EditBooking />} />
+                <Route path="/checkInGuest" element={<CheckInGuest />} />
 
             </Routes>
         </div>

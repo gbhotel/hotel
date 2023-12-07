@@ -8,7 +8,7 @@ import star_full from '../../img/star-full.svg';
 
 
 export default function FreeRooms(props) {
-    const { checkinDate, checkoutDate, freeRooms, isEditing, callBack } = props;
+    const { checkinDate, checkoutDate, freeRooms, isEditing, callBack, isCheckInWithoutBooking, saveCheckIn } = props;
 
 
 
@@ -66,6 +66,7 @@ export default function FreeRooms(props) {
             // Обработка успешного ответа от сервера
             const data = await response.json();
             setBookingNumber(data);
+
             console.log(data);
         } else {
             // Обработка ошибки
@@ -74,7 +75,10 @@ export default function FreeRooms(props) {
         }
 
         setIsBooking(false);
-        setSuccess(true);
+        if (isCheckInWithoutBooking)
+            saveCheckIn();
+        else
+            setSuccess(true);
     }
 
 
@@ -94,6 +98,7 @@ export default function FreeRooms(props) {
     const checkEditing = (room) => {
         if (!isEditing)
             setIsBooking(true);
+
         else {
             callBack(room);
             setModalOpen(false);

@@ -7,6 +7,7 @@ use App\Http\Controllers\files\FileController;
 use App\Http\Controllers\staff\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\BookingController;
+use App\Http\Controllers\admin\CheckInController;
 use App\Http\Controllers\admin\StaffController;
 use App\Http\Controllers\admin\TasksController;
 use App\Http\Controllers\guest\GuestController;
@@ -53,6 +54,10 @@ Route::post('/admin/save-edited-booking', [BookingController::class, 'saveEdited
 
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks')->middleware('can:get-tasks');
 Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask')->middleware('can:add-task');
+Route::post('admin/checkin/add', [CheckInController::class, 'checkIn'])->name('admin.checkin');
+Route::get('admin/nocheckin/booking', [BookingController::class, 'getNoCheckInBooking'])->name('admin.no.checkin.booking');
+Route::get('admin/checkin/{date}/get', [CheckInController::class, 'getCheckIns'])->name('admin.get.checkins');
+Route::post('admin/checkout', [CheckInController::class, 'checkOut'])->name('admin.checkout');
 
 //роуты гостя
 Route::get('/guest/room', [GuestController::class, 'getInfoAboutGuestRoom']);
@@ -81,7 +86,7 @@ Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'ge
 Route::get('director/profile/get-my-data', [ProfileController::class, 'getMyData'])->middleware('can:get-my-data');
 Route::post('director/profile/get-update-my-data', [ProfileController::class, 'updateMyData'])->middleware('can:get-update-my-data');
 Route::post('director/profile/change-password', [ProfileController::class, 'changePassword'])->middleware('can:change-password');
-Route::post('director/profile/change-photo', [ProfileController::class, 'changePhoto']);//->middleware('can:change-photo');
+Route::post('director/profile/change-photo', [ProfileController::class, 'changePhoto']); //->middleware('can:change-photo');
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);
@@ -89,5 +94,3 @@ Route::get('user', [AuthController::class, 'getCurrentUser']);
 Route::put('user/update', [AuthController::class, 'update']);
 
 Route::post('/upload', [FileController::class, 'upload']);
-
-
