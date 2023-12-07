@@ -169,9 +169,8 @@ export default function EditDataProfileDirector() {
     let Y = employmentDate3.getFullYear()
     let M = employmentDate3.getMonth()+1
     let D = employmentDate3.getDate()
-    let m = ''
-    if(M <10){m = '0' + M}else{m = M}
-    let employmentDate4 = `${Y}-${m}-${D}`
+    if(M <10){M = '0' + M}
+    let employmentDate4 = `${Y}-${M}-${D}`
 
     let birthdayAtDate1 = employee.birthdayAt;
     let birthdayAtDate2 = birthdayAtDate1.split('.');
@@ -179,8 +178,8 @@ export default function EditDataProfileDirector() {
     Y = birthdayAtDate3.getFullYear()
     M = birthdayAtDate3.getMonth()+1
     D = birthdayAtDate3.getDate()
-    if(M <10){m = '0' + M}else{m = M}
-    let birthdayAtDate4 = `${Y}-${m}-${D}`
+    if(M <10){M = '0' + M}
+    let birthdayAtDate4 = `${Y}-${M}-${D}`
 
     const [employment, setEmployment] = useState(employmentDate4)
     const [birthdayAt, setBirthdayAt] = useState(birthdayAtDate4)
