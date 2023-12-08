@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreignId('id_booking')
                 ->constrained('booking')
                 ->cascadeOnDelete();
-            $table->timestamp('checkIn');
+            $table->dateTime('checkIn');
             $table->dateTime('checkOut');
+            $table->string('actualCheckOut', 20);
             $table->integer('quantity_adults');
             $table->integer('quantity_children');
         });

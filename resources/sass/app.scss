@@ -71,8 +71,26 @@ html {
     border-radius: 4px 0 0 4px;
 }
 
+.bright-orange-button {
+    background-color: #c70;
+    color: white;
+    border-color: #aaaaaa;
+    border-radius: 0 4px 4px 0;
+}
+
+.bright-orange-button:hover {
+    background-color: #a50;
+    color: white;
+    border-color: #888888;
+    border-radius: 0 4px 4px 0;
+}
+
 .ml-40px {
     margin-left: 40px;
+}
+
+.mr-5 {
+    margin-right: 5px;
 }
 
 .bright-green-button:hover {
@@ -707,6 +725,8 @@ button:hover {
     color: black !important;
 }
 
+
+
 .rating-area > input:checked + label:hover,
 .rating-area > input:checked + label:hover ~ label,
 .rating-area > input:checked ~ label:hover,
@@ -715,6 +735,7 @@ button:hover {
     color: #e070ff;
     text-shadow: 1px 1px #a050c8;
 }
+
 
 .rate-area > label:active {
     position: relative;
@@ -788,6 +809,7 @@ button:hover {
     margin-bottom: 20px;
 }
 
+
 .requests-form-group select {
     padding: 5px;
     border: 1px solid #ccc;
@@ -820,6 +842,31 @@ button:hover {
 textarea {
     resize: vertical;
 }
+
+
+.check-in-nav {
+    height: 50px;
+}
+
+.innactive-check-in {
+    background-color: #FFFFFF;
+    color: #aaaaaa;
+    border-color: #aaaaaa;
+    border-radius: 4px 0 0 4px;
+}
+
+//button {
+//    background-color: #4caf50;
+//    color: white;
+//    padding: 10px 15px;
+//    border: none;
+//    border-radius: 4px;
+//    cursor: pointer;
+//}
+//
+//button:hover {
+//    background-color: #45a049;
+//}
 
 .add-scroll {
     max-height: 230px;
