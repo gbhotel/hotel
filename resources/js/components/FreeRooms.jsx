@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'react-slideshow-image/dist/styles.css'
 import { Fade } from 'react-slideshow-image';
 import star_full from '../../img/star-full.svg';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FreeRooms(props) {
 
@@ -30,6 +30,8 @@ export default function FreeRooms(props) {
         phone: ""
     });
 
+    console.log('freeRoom')
+    console.log(freeRooms);
 
     const [isDragging, setIsDragging] = useState(false);
     const modalRef = useRef(null);
@@ -135,6 +137,7 @@ export default function FreeRooms(props) {
         else {
             setModalOpen(false);
             callBack(room);
+        }
     }
 
 
@@ -304,11 +307,11 @@ export default function FreeRooms(props) {
 
             <div className="overlay">
                 <div className="modal"
-                     ref={modalRef}
-                     style={{ display: "block" }}
-                     onMouseDown={handleMouseDown}
-                     onMouseMove={handleMouseMove}
-                     onMouseUp={handleMouseUp}
+                    ref={modalRef}
+                    style={{ display: "block" }}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
                 >
                     <div className="modal-dialog" role="document">
                         <div className="modal-content rounded-3 shadow">
@@ -319,8 +322,8 @@ export default function FreeRooms(props) {
                             </div>
                             <div className="modal-footer flex-nowrap p-0">
                                 <button type="button"
-                                        className="btn btn-lg text-purple fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
-                                        onClick={closeBookingResponse}
+                                    className="btn btn-lg text-purple fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
+                                    onClick={closeBookingResponse}
                                 >
                                     <strong>Закрыть</strong>
                                 </button>
@@ -334,4 +337,3 @@ export default function FreeRooms(props) {
 
     </div>)
 }
-
