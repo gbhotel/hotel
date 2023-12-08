@@ -1,27 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import star from "../../img/star3.svg";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-slideshow-image/dist/styles.css'
 import { Fade } from 'react-slideshow-image';
 import star_full from '../../img/star-full.svg';
-
+import { useNavigate } from "react-router-dom";
 
 export default function FreeRooms(props) {
+
+    const navigate = useNavigate();
+
     const { checkinDate, checkoutDate, freeRooms, isEditing, callBack, isCheckInWithoutBooking, saveCheckIn } = props;
-
-
-
-    console.log(checkinDate, checkoutDate);
-
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [selectedRoomComfort, setSelectedRoomComfort] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
     const [isBooking, setIsBooking] = useState(false);
-    const [success, setSuccess] = useState(false);
+    const [response, setResponce] = useState(false);
     const [bookingNumber, setBookingNumber] = useState('');
-    const [showRoom, setShowRoom] = useState(true);
-
 
     const [bookingData, setBookingData] = useState({
         checkinDate: "",
@@ -31,6 +27,32 @@ export default function FreeRooms(props) {
         last_name: "",
         phone: ""
     });
+
+
+    const [isDragging, setIsDragging] = useState(false);
+    const modalRef = useRef(null);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        const offsetX = e.clientX - modalRef.current.getBoundingClientRect().left;
+        const offsetY = e.clientY - modalRef.current.getBoundingClientRect().top;
+        setPosition({ x: offsetX, y: offsetY });
+    };
+
+    const handleMouseMove = (e) => {
+        if (isDragging) {
+            const x = e.clientX - position.x;
+            const y = e.clientY - position.y;
+            modalRef.current.style.left = `${x}px`;
+            modalRef.current.style.top = `${y}px`;
+        }
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
 
     useEffect(() => {
         setBookingData(prevState => ({
@@ -63,10 +85,8 @@ export default function FreeRooms(props) {
         });
 
         if (response.ok) {
-            // Обработка успешного ответа от сервера
             const data = await response.json();
             setBookingNumber(data);
-
             console.log(data);
         } else {
             // Обработка ошибки
@@ -78,7 +98,7 @@ export default function FreeRooms(props) {
         if (isCheckInWithoutBooking)
             saveCheckIn();
         else
-            setSuccess(true);
+            setResponce(true);
     }
 
 
@@ -95,9 +115,20 @@ export default function FreeRooms(props) {
         setModalOpen(false);
     };
 
+    const showBookingForm = () => {
+        setIsBooking(true);
+        setModalOpen(false);
+    }
+
+    const closeBookingResponse = () => {
+        setResponce(false);
+        onUpdateFreeRooms();
+
+    }
+
     const checkEditing = (room) => {
         if (!isEditing)
-            setIsBooking(true);
+            showBookingForm();
 
         else {
             callBack(room);
@@ -258,7 +289,7 @@ export default function FreeRooms(props) {
             </div>
         )}
 
-        {success && (
+        {response && (
             <div className="modal" style={{ display: "block" }}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content rounded-3 shadow">
@@ -270,7 +301,7 @@ export default function FreeRooms(props) {
                         <div className="modal-footer flex-nowrap p-0">
                             <button type="button"
                                 className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
-                                onClick={() => setSuccess(false)}
+                                onClick={() => setResponce(false)}
                             >
                                 <strong>Закрыть</strong></button>
                         </div>

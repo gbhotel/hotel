@@ -6,11 +6,12 @@ import Rooms from "../routes/Rooms.jsx";
 import Room from "../routes/Room.jsx";
 import Staff from "../routes/Staff.jsx";
 import Employee from "../routes/Employee.jsx";
+import EditBooking from "../routes/EditBooking.jsx";
 import Tasks from "../routes/Tasks.jsx";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import EditBooking from "../routes/EditBooking.jsx";
+
 import CheckInGuest from "../routes/CheckInGuest.jsx";
 
 export default function Admin() {

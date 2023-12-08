@@ -8,7 +8,7 @@ import arrow from "../../img/arrow.svg";
 export default function AddBooking(props) {
     const { isCheckInWithoutBooking, callBackFunc, inDate } = props;
 
-    const [checkinDate, setCheckinDate] = useState('');
+    const [checkinDate, setCheckinDate] = useState(inDate);
     const [checkoutDate, setCheckoutDate] = useState('');
     const [freeRooms, setFreeRooms] = useState([]);
     const currentDate = new Date();
@@ -16,7 +16,6 @@ export default function AddBooking(props) {
     const [showGuestsAmount, setShowGuestsAmount] = useState(false);
     const [adultCount, setAdultCount] = useState(0);
     const [childrenCount, setChildrenCount] = useState(0);
-
 
     useEffect(() => {
         fetch('/api/admin/free-rooms-period')
@@ -66,6 +65,10 @@ export default function AddBooking(props) {
 
     const handleShowGuestsAmount = () => {
         setShowGuestsAmount((prevState) => (!prevState));
+    }
+
+    const updateFreeRooms = () => {
+        setFreeRooms([]);
     }
 
     return (
@@ -189,7 +192,7 @@ export default function AddBooking(props) {
                     </div>
                 </div>
             </div>
-            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms} isCheckInWithoutBooking={isCheckInWithoutBooking} saveCheckIn={callBackFunc}></FreeRooms>
+            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms} onUpdateFreeRooms={updateFreeRooms} isEditing={false} callBack={() => { }} isCheckInWithoutBooking={isCheckInWithoutBooking} saveCheckIn={callBackFunc}></FreeRooms>
         </div>
 
     );

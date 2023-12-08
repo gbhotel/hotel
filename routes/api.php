@@ -54,6 +54,9 @@ Route::post('/admin/save-edited-booking', [BookingController::class, 'saveEdited
 
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks')->middleware('can:get-tasks');
 Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.addTask')->middleware('can:add-task');
+Route::put('admin/updateTask', [TasksController::class, 'updateTask'])->name('admin.updateTask')->middleware('can:update-task');
+Route::delete('admin/deleteTask/{id}', [TasksController::class, 'deleteTask'])->name('admin.deleteTask')->middleware('can:delete-task');
+
 Route::post('admin/checkin/add', [CheckInController::class, 'checkIn'])->name('admin.checkin');
 Route::get('admin/nocheckin/booking', [BookingController::class, 'getNoCheckInBooking'])->name('admin.no.checkin.booking');
 Route::get('admin/checkin/{date}/get', [CheckInController::class, 'getCheckIns'])->name('admin.get.checkins');
