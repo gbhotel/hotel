@@ -278,7 +278,7 @@ export default function EditBooking(props) {
                     </Container>
                 </form>
             </div>
-            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms} isEditing={true} callBack={newRoom}></FreeRooms>
+            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms} onUpdateFreeRooms={() => { }} isEditing={true} callBack={newRoom}></FreeRooms>
         </div >
 
     );

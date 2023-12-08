@@ -11,7 +11,7 @@ export default function FreeRooms(props) {
 
     const navigate = useNavigate();
 
-    const { checkinDate, checkoutDate, freeRooms, isEditing, callBack, isCheckInWithoutBooking, saveCheckIn } = props;
+    const { checkinDate, checkoutDate, freeRooms, onUpdateFreeRooms, isEditing, callBack, isCheckInWithoutBooking, saveCheckIn } = props;
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [selectedRoomComfort, setSelectedRoomComfort] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);

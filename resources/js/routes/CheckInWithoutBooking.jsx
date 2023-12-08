@@ -15,7 +15,7 @@ export default function CheckInWithoutBooking(props) {
     }
     return (
         <>
-            <AddBooking checkinDate={''} checkoutDate={''} freeRooms={null} isEditing={false} callBack={() => { }} isCheckInWithoutBooking={true} callBackFunc={checkIn} inDate={convertDate(new Date())} />
+            <AddBooking checkinDate={''} checkoutDate={''} freeRooms={null} onUpdateFreeRooms={() => { }} isEditing={false} callBack={() => { }} isCheckInWithoutBooking={true} callBackFunc={checkIn} inDate={convertDate(new Date())} />
         </>
     );
 }
