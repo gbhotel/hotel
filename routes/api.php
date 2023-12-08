@@ -44,7 +44,10 @@ Route::put('admin/room/eviction-from-room', [RoomController::class, 'evictionFro
 
 Route::get('admin/staff', [StaffController::class, 'getStaff'])->name('admin.staff')->middleware('can:get-staff');
 Route::match(['get', 'post'], 'admin/employee/{id}', [StaffController::class, 'getEmployee'])->name('admin.employee')->middleware('can:get-employee');
-Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'editEmployee'])->name('admin.edit.employee')->middleware('can:edit-employee');;
+Route::match(['put'], 'admin/employee/edit/{id}', [StaffController::class, 'editEmployee'])->name('admin.edit.employee')->middleware('can:edit-employee');
+Route::post('admin/staff/working-in', [StaffController::class, 'setWorkingInEmployee'])->middleware('can:working-in');
+Route::post('admin/staff/working-out', [StaffController::class, 'setWorkingOutEmployee'])->middleware('can:working-out');
+
 
 Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('admin.booking')->middleware('can:get-booking');
 Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room')->middleware('can:book-room');
@@ -62,9 +65,10 @@ Route::get('admin/nocheckin/booking', [BookingController::class, 'getNoCheckInBo
 Route::get('admin/checkin/{date}/get', [CheckInController::class, 'getCheckIns'])->name('admin.get.checkins');
 Route::post('admin/checkout', [CheckInController::class, 'checkOut'])->name('admin.checkout');
 
+
 //роуты гостя
 Route::get('/guest/room', [GuestController::class, 'getInfoAboutGuestRoom']);
-Route::post('/guest/feedback', [GuestController::class, 'setRequests'])->name('admin.room.get-room')->middleware('can:get-room');
+Route::post('/guest/feedback', [GuestController::class, 'setFeedback']);
 Route::get('/guest/requests', [GuestController::class, 'getRequests'])->name('guest.requests');
 Route::post('guest/setRequests', [GuestController::class, 'setRequests'])->name('guest.setRequests');
 
@@ -89,7 +93,8 @@ Route::post('director/analysis-quantity-guests', [AnalysisController::class, 'ge
 Route::get('director/profile/get-my-data', [ProfileController::class, 'getMyData'])->middleware('can:get-my-data');
 Route::post('director/profile/get-update-my-data', [ProfileController::class, 'updateMyData'])->middleware('can:get-update-my-data');
 Route::post('director/profile/change-password', [ProfileController::class, 'changePassword'])->middleware('can:change-password');
-Route::post('director/profile/change-photo', [ProfileController::class, 'changePhoto']); //->middleware('can:change-photo');
+Route::post('director/profile/change-photo', [ProfileController::class, 'changePhoto'])->middleware('can:change-photo');
+
 
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);

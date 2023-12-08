@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import star from "../../img/star3.svg";
 import 'slick-carousel/slick/slick.css';
@@ -5,7 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'react-slideshow-image/dist/styles.css'
 import { Fade } from 'react-slideshow-image';
 import star_full from '../../img/star-full.svg';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function FreeRooms(props) {
 
@@ -16,7 +17,8 @@ export default function FreeRooms(props) {
     const [selectedRoomComfort, setSelectedRoomComfort] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
     const [isBooking, setIsBooking] = useState(false);
-    const [response, setResponce] = useState(false);
+    const [response, setResponse] = useState(false);
+
     const [bookingNumber, setBookingNumber] = useState('');
 
     const [bookingData, setBookingData] = useState({
@@ -54,6 +56,7 @@ export default function FreeRooms(props) {
     };
 
 
+
     useEffect(() => {
         setBookingData(prevState => ({
             ...prevState,
@@ -89,7 +92,6 @@ export default function FreeRooms(props) {
             setBookingNumber(data);
             console.log(data);
         } else {
-            // Обработка ошибки
             console.log(response.body)
             console.error('Ошибка при выполнении fetch-запроса');
         }
@@ -98,7 +100,7 @@ export default function FreeRooms(props) {
         if (isCheckInWithoutBooking)
             saveCheckIn();
         else
-            setResponce(true);
+            setResponse(true);
     }
 
 
@@ -121,7 +123,7 @@ export default function FreeRooms(props) {
     }
 
     const closeBookingResponse = () => {
-        setResponce(false);
+        setResponse(false);
         onUpdateFreeRooms();
 
     }
@@ -131,11 +133,10 @@ export default function FreeRooms(props) {
             showBookingForm();
 
         else {
-            callBack(room);
             setModalOpen(false);
-        }
-
+            callBack(room);
     }
+
 
     return (<div className='my-4 justify-content-center container d-flex flex-wrap gap-5' >
         {freeRooms.map((freeRoom, index) => (
@@ -221,7 +222,7 @@ export default function FreeRooms(props) {
                             <button
                                 className="btn w-25 align-self-end btn-task rounded-pill px-3"
                                 type="button"
-                                onClick={() => checkEditing(selectedRoom)}
+                                onClick={() => showBookingForm(selectedRoom)}
                             >Забронировать
                             </button>
                         </div>
@@ -230,80 +231,101 @@ export default function FreeRooms(props) {
             </div>
         )}
         {isBooking && (
-            <div className="modal" style={{ display: "block" }}>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Форма бронирования</h5>
-                            <button type="button" className="btn-close" onClick={() => setIsBooking(false)}></button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="form-group">
-                                <label htmlFor="firstName">Имя:</label>
-                                <input
-                                    type="text"
-                                    id="firstName"
-                                    name="first_name"
-                                    onChange={handleBookingDataChange}
-                                    className="form-control"
-                                />
+            <div className="overlay">
+                <div
+                    className="modal"
+                    ref={modalRef}
+                    style={{ display: "block" }}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                >
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Форма бронирования</h5>
+                                <button type="button" className="btn-close" onClick={() => setIsBooking(false)}></button>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="lastName">Фамилия:</label>
-                                <input
-                                    type="text"
-                                    id="lastName"
-                                    name="last_name"
-                                    onChange={handleBookingDataChange}
-                                    className="form-control"
-                                />
+                            <div className=" d-flex flex-column modal-body">
+                                <div className="form-group">
+                                    <label htmlFor="firstName">Имя:</label>
+                                    <input
+                                        type="text"
+                                        id="firstName"
+                                        name="first_name"
+                                        onChange={handleBookingDataChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="lastName">Фамилия:</label>
+                                    <input
+                                        type="text"
+                                        id="lastName"
+                                        name="last_name"
+                                        onChange={handleBookingDataChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="phone">Телефон:</label>
+                                    <input
+                                        type="tel"
+                                        id="phoneNumber"
+                                        name="phone"
+                                        onChange={handleBookingDataChange}
+                                        className="form-control"
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="phone">Телефон:</label>
-                                <input
-                                    type="tel"
-                                    id="phoneNumber"
-                                    name="phone"
-                                    onChange={handleBookingDataChange}
-                                    className="form-control"
-                                />
+                            <div className="d-flex p-3 justify-content-end gap-3">
+                                <button
+                                    type="button"
+                                    className="btn btn-border-purple"
+                                    onClick={() => setIsBooking(false)}
+                                >
+                                    Отмена
+                                </button>
+                                <button
+                                    type="button" className="btn btn-task btn-primary"
+                                    onClick={handleBookingSubmit}
+                                >
+                                    Забронировать
+                                </button>
                             </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-secondary"
-                                onClick={() => setIsBooking(false)}
-                            >
-                                Отмена
-                            </button>
-                            <button
-                                type="button" className="btn btn-primary"
-                                onClick={handleBookingSubmit}
-                            >
-                                Забронировать
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+
         )}
 
         {response && (
-            <div className="modal" style={{ display: "block" }}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content rounded-3 shadow">
-                        <div className="modal-body p-4 text-center">
-                            <h3 className="mb-0">Ваша бронь успешно добавлена</h3>
-                            <p className="mb-0">Номер брони: {bookingNumber.bookingId} </p>
 
-                        </div>
-                        <div className="modal-footer flex-nowrap p-0">
-                            <button type="button"
-                                className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
-                                onClick={() => setResponce(false)}
-                            >
-                                <strong>Закрыть</strong></button>
+            <div className="overlay">
+                <div className="modal"
+                     ref={modalRef}
+                     style={{ display: "block" }}
+                     onMouseDown={handleMouseDown}
+                     onMouseMove={handleMouseMove}
+                     onMouseUp={handleMouseUp}
+                >
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content rounded-3 shadow">
+                            <div className="modal-body p-4 text-center">
+                                <h3 className="mb-0">Ваша бронь успешно добавлена</h3>
+                                <p className="mb-0">Номер брони: {bookingNumber.bookingId} </p>
+
+                            </div>
+                            <div className="modal-footer flex-nowrap p-0">
+                                <button type="button"
+                                        className="btn btn-lg text-purple fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
+                                        onClick={closeBookingResponse}
+                                >
+                                    <strong>Закрыть</strong>
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>

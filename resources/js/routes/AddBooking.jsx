@@ -50,12 +50,10 @@ export default function AddBooking(props) {
             });
 
             if (response.ok) {
-                // Обработка успешного ответа от сервера
                 const data = await response.json();
                 setFreeRooms(data);
                 console.log(data);
             } else {
-                // Обработка ошибки
                 console.error('Ошибка при выполнении fetch-запроса');
             }
         } catch (error) {

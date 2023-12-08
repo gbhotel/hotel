@@ -4,6 +4,7 @@ namespace Database\Seeders\people;
 
 use DateInterval;
 use DateTime;
+use DateTimeZone;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,8 +14,10 @@ class WorkingHoursSeeder extends Seeder
     {
         $ShiftDuration1 = 12;   //Продолжительность смены у горничной
         $ShiftDuration2 = 24;   //Продолжительность смены у администратора
-        $employee1 = 5;          //С какого сотрудника начинать проставляють отметки (горничная)
-        $employee2 = 2;          //С какого сотрудника начинать проставляють отметки (админ)
+        $employee11 = 5;          //С какого сотрудника начинать проставляють отметки (горничная)
+        $employee12 = 2;          //С какого сотрудника начинать проставляють отметки (админ)
+        $employee21 = 7;          //С какого сотрудника начинать проставляють отметки (горничная)
+        $employee22 = 4;          //С какого сотрудника начинать проставляють отметки (админ)
         $admin1 = 4;            //С какого админа начинаем отмечать приход на работу
         $admin2 = 2;            //С какого админа начинаем отмечать уход с работы для горницной
         $admin3 = 3;            //С какого админа начинаем отмечать уход с работы для администратора
@@ -22,10 +25,10 @@ class WorkingHoursSeeder extends Seeder
         $admin = 1;             //Составляем график для администратора
 
         //Внимание, даты, с какого и по какое с отметкой о работе и с какого без отметки о работе нужно согласовывать в ручную
-        DB::table('working_hours')->insert($this->workSchedule($ShiftDuration1, $employee1, $admin1, $admin2, $maid));        //Засеиваем Горничных
-        DB::table('working_hours')->insert($this->workSchedule($ShiftDuration2, $employee2, $admin1, $admin3, $admin));        //Засеиваем администраторов
-        DB::table('working_hours')->insert($this->workSchedule2($ShiftDuration1, $employee1, $maid));
-        DB::table('working_hours')->insert($this->workSchedule2($ShiftDuration2, $employee2, $admin));
+        DB::table('working_hours')->insert($this->workSchedule($ShiftDuration1, $employee11, $admin1, $admin2, $maid));        //Засеиваем Горничных
+        DB::table('working_hours')->insert($this->workSchedule($ShiftDuration2, $employee12, $admin1, $admin3, $admin));        //Засеиваем администраторов
+        DB::table('working_hours')->insert($this->workSchedule2($ShiftDuration1, $employee21,                  $maid));
+        DB::table('working_hours')->insert($this->workSchedule2($ShiftDuration2, $employee22,                  $admin));
     }
 
     /**
@@ -36,6 +39,7 @@ class WorkingHoursSeeder extends Seeder
      * @param $admin2 int - С какого админа начинаем отмечать уход с работы для горницной
      * @param $staffType int - Для какой должности составляем график
      * @return array[]
+     * @throws \Exception
      */
     public function workSchedule(int $duration, int $staff, int $admin1, int $admin2, int $staffType): array
     {
@@ -139,12 +143,13 @@ class WorkingHoursSeeder extends Seeder
      * @param $staff int - С какого сотрудника начинать проставляють отметки (горничная)
      * @param $staffType int - Для какой должности составляем график
      * @return array[]
+     * @throws \Exception
      */
     public function workSchedule2(int $duration, int $staff, int $staffType): array
     {
         $shiftDuration = $duration;                                                          //Продолжительность смены горничнйой
         $period = 24;                                                                       //Период между началом первой смены и началом следующей смены
-        $beginning = new DateTime('2023-12-01 06:00:00');                            //Начало первой смены горничнйой
+        $beginning = new DateTime('2023-12-02 06:00:00');                            //Начало первой смены горничнйой
         $end = (clone $beginning)->add(new DateInterval("PT{$shiftDuration}H"));    //Конец первой смены горничнйой
         $finish = new DateTime('2024-02-01 00:00:00');                              //Дата окончания цикла (до какой даты строить график)
 

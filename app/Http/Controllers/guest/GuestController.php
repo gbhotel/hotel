@@ -35,51 +35,60 @@ class GuestController extends Controller
         $last_name = $user->last_name;
 
         //получаем информацию о комнате
+        $roomId = $room->id;
         $roomNumber = $room->number;
         $roomCategory = $category->category;
         $maxGuests = $room->max_guests;
         $additionalGuest = $room->additional_guest;
-        $comfort = $room->comfort;
-        $sets = $room->sets;
+        $comfort = json_decode($room->comfort);
+
+        $bed = $comfort->bed;
+        $conditioner = $comfort->conditioner;
+        $roomsNumber = $comfort->roomsNumber;
+        $toilet = $comfort->toilet;
+        $shower = $comfort->shower;
+        $wifi = $comfort->wifi;
+
 
         //получаем информацию о проживании
-//         $checkIn = $check_in->checkIn;
-//         $checkOut = $check_in->checkOut;
-         $adults = $check_in->quantity_adults;
-         $children = $check_in->quantity_children;
-         $price = $room->price;
-
-
-         //считаем общую стоимость проживания
-//         $b = $checkOut->diff(new DateTime)->format('%d');
-//         $a = $checkIn->diff(new DateTime)->format('%d');
-//         $days = $b - $a;
-//         $c = $maxGuests - ($adults + $children);
-//         $totalCost = 0;
-//        if($c >= 0){
-//            $totalCost = $price * $days;
-//        }else {
-//            $totalCost = $c * $additionalGuest + $price * $days;
-//        }
-        $checkIn = new DateTime($check_in->checkIn);
-        $checkOut = new DateTime($check_in->checkOut);
-        $age = $checkOut->diff($checkIn)->format('%day');
-        $check_in = $checkIn->format('d.m.Y');
-        $check_out = $checkOut->format('d.m.Y');
+        $adults = $check_in->quantity_adults;
+        $children = $check_in->quantity_children;
+        $price = $room->price;
+        $checkInObj = new DateTime($check_in->checkIn);
+        $checkOutObj = new DateTime($check_in->checkOut);
+        $checkIn = $checkInObj->format('d.m.Y');
+        $checkOut = $checkOutObj->format('d.m.Y');
+        //расчет общего количества дней проживания
+        $checkIn_ts = strtotime($checkIn);
+        $checkOut_ts = strtotime($checkOut);
+        $days = (abs($checkIn_ts - $checkOut_ts))/86400;
+        //считаем общую стоимость проживания
+         $people = $maxGuests - ($adults + $children);
+         $totalCost = 0;
+        if($people >= 0){
+            $totalCost = $price * $days;
+        }else {
+            $totalCost = $people * $additionalGuest + $price * $days;
+        }
 
         $user->guestName = $first_name .' '. $last_name;
-        $user->roomId = $room->id;
         $user->roomNumber = $roomNumber;
+        $user->roomId = $roomId;
         $user->roomCategory = $roomCategory;
-        $user->dates = $check_in .' - '.$check_out;
+        $user->dates = $checkIn .' - '.$checkOut;
         $user->adults = $adults;
         $user->children = $children;
         $user->price = $price;
-//        $user->totalCost = $totalCost;
-        $user->age = $age;
+        $user->totalCost = $totalCost;
+        $user->comfort = $comfort;
+        $user->bed = $bed;
+        $user->conditioner = $conditioner;
+        $user->roomsNumber = $roomsNumber;
+        $user->toilet = $toilet;
+        $user->shower = $shower;
+        $user->wifi = $wifi;
 
         return response()->json($user);
-//        return response()->json('привет');
     }
 
     public function setRequests(Request $request){
@@ -101,6 +110,10 @@ class GuestController extends Controller
         }
 
         return response()->json(['message' => 'Произошла ошибка, заявка не отправлена(']);
+
+    }
+
+    public function setFeedback (){
 
     }
 

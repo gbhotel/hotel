@@ -61,6 +61,14 @@ class AuthServiceProvider extends ServiceProvider
             return in_array($this->getRole($user), ['директор', 'администратор']);
         });
 
+        Gate::define('update-task', function (User $user) {
+            return in_array($this->getRole($user), ['администратор']);
+        });
+
+        Gate::define('delete-task', function (User $user) {
+            return in_array($this->getRole($user), ['администратор']);
+        });
+
         Gate::define('change-tasks-status', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор', 'горничная']);
         });
@@ -153,6 +161,12 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('set-request', function (User $user) {
             return in_array($this->getRole($user), ['гость']);
+        });
+        Gate::define('working-in', function (User $user) {
+            return in_array($this->getRole($user), ['администратор']);
+        });
+        Gate::define('working-out', function (User $user) {
+            return in_array($this->getRole($user), ['администратор']);
         });
     }
 }

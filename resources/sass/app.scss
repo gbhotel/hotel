@@ -51,9 +51,9 @@ html {
 }
 
 .bright-red-button {
-    background-color: #FF4C51;
+    background-color: #F44336;
     color: white;
-    border-color: #FF4C51;
+    border-color: #F44336;
     border-radius: 0 4px 4px 0;
 }
 
@@ -65,9 +65,9 @@ html {
 }
 
 .bright-green-button {
-    background-color: #56CA00;
+    background-color: #4CAF50;
     color: white;
-    border-color: #56CA00;
+    border-color: #4CAF50;
     border-radius: 4px 0 0 4px;
 }
 
@@ -379,10 +379,27 @@ button:hover {
 
 .btn-task {
     background-color: rgb(160, 119, 234);
+    border-radius: 8px;
+    border-color: rgb(160, 119, 234);
     color: white;
 }
 
 .btn-task:hover {
+    text-decoration: none;
+    background-color: rgb(128, 75, 223);
+    border-color: rgb(160, 119, 234);
+    box-shadow: rgba(58, 53, 65, 0.56) 0 6px 18px -8px;
+    color: white;
+}
+
+.btn-purple-angle {
+    background-color: rgb(160, 119, 234);
+    color: white;
+    border-radius:  0 8px 8px 0;
+    border-color: rgb(160, 119, 234);
+}
+
+.btn-purple-angle:hover {
     text-decoration: none;
     background-color: rgb(128, 75, 223);
     box-shadow: rgba(58, 53, 65, 0.56) 0 6px 18px -8px;
@@ -439,8 +456,15 @@ button:hover {
     font-weight: bold;
 }
 
+.justify-self-center {
+    justify-self: center;
+}
+
 .text-purple {
     color: rgb(128, 75, 223);
+}
+.text-red {
+    color: #c53a3e;
 }
 
 .text-gray {
@@ -607,14 +631,18 @@ button:hover {
     color: white;
     transform: scale(1.1);
 }
+.task-box {
+    border-right: 1px solid #bfbfbf;
+    padding-right: 50px;
+}
 
 .btn-add:hover .link {
     color: white !important;
 }
 
 .rating-area {
-    display: inline-block;
-    overflow: hidden;
+    display: block;
+    //overflow: hidden;
     margin: 30px auto;
 }
 
@@ -624,13 +652,15 @@ button:hover {
 
 .rating-area:not(:checked)>label {
     float: right;
-    width: 100px;
-    padding: 10px 0;
+    width: 30px;
     cursor: pointer;
-    font-size: 70px;
-    line-height: 70px;
+    font-size: 30px;
+    line-height: 30px;
     color: lightgrey;
     text-shadow: 1px 1px #bbb;
+}
+.star {
+    margin-right: 300px;
 }
 
 .rating-area:not(:checked)>label:before {
@@ -695,23 +725,27 @@ button:hover {
     color: black !important;
 }
 
-.rating-area>input:checked+label:hover,
-.rating-area>input:checked+label:hover~label,
-.rating-area>input:checked~label:hover,
-.rating-area>input:checked~label:hover~label,
-.rating-area>label:hover~input:checked~label {
+
+
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
     color: #e070ff;
     text-shadow: 1px 1px #a050c8;
 }
 
-.rate-area>label:active {
+
+.rate-area > label:active {
     position: relative;
 }
 
 .textarea-guest-feedback {
-    width: 600px;
+    width: 300px;
+    height: 100px;
     line-height: 150%;
-    margin: 30px 0;
+    margin: 10px 0;
     padding: 9px;
     border: 1px solid #9155FD;
     border-radius: 0 15px 15px 0;
@@ -745,11 +779,23 @@ button:hover {
     transition: transform 0.4s ease;
 }
 
+
 .btn-border-purple:hover {
     border: 2px solid #9155FD;
     transform: scale(1.1);
 }
 
+.btn-border-purple-angle {
+    border: 2px solid #9155FD;
+    border-radius: 8px 0 0 8px;
+    transition: transform 0.4s ease;
+}
+
+
+.btn-border-purple-angle:hover {
+    border: 2px solid #9155FD;
+    transform: scale(1.1);
+}
 
 .requests-form {
     max-width: 600px;
@@ -761,6 +807,19 @@ button:hover {
 
 .requests-form-group {
     margin-bottom: 20px;
+}
+
+
+.requests-form-group select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.requests-form-group textarea {
+    outline: none;
 }
 
 .request-label {
@@ -783,6 +842,7 @@ button:hover {
 textarea {
     resize: vertical;
 }
+
 
 .check-in-nav {
     height: 50px;
@@ -807,3 +867,25 @@ textarea {
 //button:hover {
 //    background-color: #45a049;
 //}
+
+.add-scroll {
+    max-height: 230px;
+    overflow-y: auto;
+}
+
+.dropdown-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5); /* Белый цвет с 50% прозрачности */
+    z-index: 1000; /* Установите z-index так, чтобы ваш фон находился под модальным окном */
+}
+

@@ -11,8 +11,10 @@ import Tasks from "../routes/Tasks.jsx";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
 import CheckInGuest from "../routes/CheckInGuest.jsx";
+import CreateTasks from "../routes/CreateTasks.jsx";
+import EditTask from "../routes/EditTask.jsx";
+
 
 export default function Admin() {
 
@@ -57,6 +59,8 @@ export default function Admin() {
                 <Route path="/staff" element={<Staff />} />
                 <Route path="/employee/:id" element={<Employee />} />
                 <Route path="/tasks" element={<Tasks />} />
+                <Route path="/addTasks" element={<CreateTasks />} />
+                <Route path="/editTask/:id" element={<EditTask/>} />
                 <Route path="/editBooking/:id" element={<EditBooking />} />
                 <Route path="/checkInGuest" element={<CheckInGuest />} />
 

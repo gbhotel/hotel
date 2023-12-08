@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Tasks extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'employee_name',
+        'name',
+        'id_room',
+        'id_staff',
+        'comment'
+    ];
 
     public function room() {
         return $this->belongsTo(Rooms::class, 'id_room');
