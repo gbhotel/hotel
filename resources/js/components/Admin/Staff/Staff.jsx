@@ -2,13 +2,18 @@ import React, {useEffect, useRef, useState} from 'react';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Alert from "react-bootstrap/Alert";
 import {Link} from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 
 export default function Staff() {
 
     const [data, setData] = useState([]);
     const [dateTime, setDateTime] = useState([])
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState('');
+    const [stateAnswer, setStateAnswer] = useState('info')
+
 
     useEffect(() => {
         fetch('/api/admin/staff', {
@@ -53,10 +58,16 @@ export default function Staff() {
             //Изменения сохранены
             console.log('Изменения сохранены');
             console.log(answer);
+            setStateAnswer('success')
+            setMessage(answer.message)
+            setShow(true)
         }else{
             //действия, если пользователь не сохранен
             console.log('Изменения не сохранены');
             console.log(answer);
+            setStateAnswer('danger')
+            setMessage(answer.message)
+            setShow(true)
         }
     }
 
@@ -70,8 +81,6 @@ export default function Staff() {
 
         return answer;
     }
-
-
 
     function setWorkingData(event){
         event.preventDefault();
@@ -91,9 +100,21 @@ export default function Staff() {
         }
     }
 
+    function AlertMessage() {
+        if (show) {
+            return (
+                <Alert variant={stateAnswer} onClose={() => setShow(false)} dismissible>
+                    <p className="p-0 m-0">
+                        {message}
+                    </p>
+                </Alert>
+            );
+        }
+    }
+
     return (
         <>
-            {/*{alertGood()}*/}
+            {AlertMessage()}
             <Container className="w-100 m-0 mb-3" >
                 <Row className="align-items-center m-3 text-start" >
                     <Col xs={12}>
@@ -167,7 +188,7 @@ export default function Staff() {
                                     <Col xs={4}>
                                         <button type="submit"
                                                 disabled={item.disabled}
-                                                className={`w-100 btn btn-sm ${item.buttonColor}`}
+                                                className={`w-75 h-100 btn btn-sm ${item.buttonColor}`}
                                         >
                                             {item.action}
                                         </button>
