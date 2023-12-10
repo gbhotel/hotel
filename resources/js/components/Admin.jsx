@@ -51,7 +51,7 @@ export default function Admin() {
                 <Route path="/staff" element={<Staff />} />
                 <Route path="/employee/:id" element={<Employee />} />
                 <Route path="/tasks" element={<Tasks />} />
-                <Route path="/addTasks" element={<CreateTasks />} />
+                <Route path="/createTasks" element={<CreateTasks />} />
                 <Route path="/editTask/:id" element={<EditTask/>} />
                 <Route path="/editBooking/:id" element={<EditBooking />} />
 

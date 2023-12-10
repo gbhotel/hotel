@@ -1,5 +1,5 @@
 const initialState = {
-     Tasks: null,
+     Tasks: [],
 };
 
 const tasksReducer = (state = initialState, action) => {
@@ -9,6 +9,10 @@ const tasksReducer = (state = initialState, action) => {
                 ...state,
                 Tasks: action.payload,
             };
+        case 'updateTasks' :
+            return {
+
+            }
 
         default:
             return state;

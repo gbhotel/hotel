@@ -25,6 +25,7 @@ export default function EmployeeTasks () {
 
             const abortController = new AbortController();
 
+        const timerInterval = setInterval(() => {
             fetch(`/api/employee/${id}/tasks`, {
                 method: 'POST',
                 headers: {
@@ -48,9 +49,9 @@ export default function EmployeeTasks () {
                     console.error(error);
                 });
 
-            return () => {
-                abortController.abort();
-            }
+        }, 1000)
+        return () => clearInterval(timerInterval);
+
         }, [status]);
 
     const handlePrepareForShow = (id) => {
@@ -97,6 +98,11 @@ export default function EmployeeTasks () {
             const data = await response.json();
             console.log(data.status);
             setStatus(data.status);
+            setTasks(prevState => (
+                prevState.map(task => (
+                    task.id === parseInt(data.taskId) ? { ...task, status: data.status } : task
+                ))
+            ));
         } catch (error) {
             console.error(error);
         } finally {

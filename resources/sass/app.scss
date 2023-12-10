@@ -26,6 +26,7 @@ html {
 
 .width-1200 {
     width: 1200px;
+    margin: 0 auto;
 }
 
 .main-container {
@@ -104,6 +105,9 @@ html {
     background-color: #9155FD;
     color: #fffdfd;
     border: #b4a2e1;
+}
+.border-purple {
+    border:1px solid #69248d;
 }
 
 .blue-button {
@@ -452,6 +456,9 @@ button:hover {
 .text-gray {
     color: #949494;
 }
+.text-green {
+    color: #4CAF50;
+}
 
 .trophy {
     position: absolute;
@@ -616,6 +623,11 @@ button:hover {
 .task-box {
     border-right: 1px solid #bfbfbf;
     padding-right: 50px;
+}
+
+.progress-box {
+    border-right: 1px solid #bfbfbf;
+    padding-right: 20px;
 }
 
 .btn-add:hover .link {

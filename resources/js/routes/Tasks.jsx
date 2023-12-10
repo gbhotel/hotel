@@ -9,26 +9,58 @@ import {setStaffAction} from "../store/actions/staff_actions.jsx";
 import {setTasksNameAction} from "../store/actions/tasksName_action.jsx";
 import {setRoomsAction} from "../store/actions/rooms_actions.jsx";
 import CreateTasks from "../routes/CreateTasks.jsx";
+import WorkProgress from "@/components/WorkProgress.jsx";
 
 export default function Tasks() {
 
     const dispatch = useDispatch();
 
     const [tasks, setTasks] = useState([]);
-    const [showCreateTasksComponent, setShowCreateTasksComponent] = useState(true);
+    const [staff, setStaff] = useState([]);
+    const [rooms, setRooms] = useState([]);
+    const [showTasksComponent, setShowTasksCreate] = useState(false);
+    const [showProgress, setShowProgress] = useState(false);
 
     const tasksName = [
         'уборка номера',
         'услуги прачечной',
         'смена белья',
-        'доставка еды в номер',
+        'доставка еды',
         'ремонт'
     ];
 
-    dispatch(setTasksNameAction(tasksName));
+
+    const updateTasks = () => {
+
+        const abortController = new AbortController();
+
+        fetch('/api/admin/tasks', {
+            signal: abortController.signal,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setTasks(data.tasks);
+                dispatch(setTasksAction(data.tasks));
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        return () => {
+            abortController.abort();
+        }
+    }
+
 
     //tasks
     useEffect(() => {
+
+        dispatch(setTasksNameAction(tasksName));
         const abortController = new AbortController();
 
         fetch('/api/admin/tasks', {
@@ -67,6 +99,7 @@ export default function Tasks() {
                 return response.json();
             })
             .then(data => {
+                setStaff(data);
                 dispatch(setStaffAction(data));
 
             })
@@ -89,6 +122,7 @@ export default function Tasks() {
                 return response.json();
             })
             .then(data => {
+                setRooms(data);
                 dispatch(setRoomsAction(data));
             })
             .catch(error => {
@@ -126,85 +160,110 @@ export default function Tasks() {
     }
 
     return (
-        <div>
+        <div style={{flexGrow: 1}} className=" mt-5">
+            <div className="d-flex justify-content-start align-items-center m-3 gap-2 text-center">
+                <button
+                    type="button"
+                    className="btn p-2 btn-add btn-sm uppercase  btn-sm"
+                    onClick={() => {
+                        setShowTasksCreate(false)
+                        setShowProgress(false)
+                    }}
+                >
+                    Список заадч
+                </button>
+                <button
+                    type="button"
+                    className="btn p-2 btn-add btn-sm uppercase  btn-sm"
+                    onClick={() => {
+                        setShowProgress(true)
+                        setShowTasksCreate(false)
+                    }}
+                >
+                    Прогресс выполнения
+                </button>
+                <button
+                    type="button"
+                    className="btn p-2 btn-add btn-sm uppercase btn-sm"
+                    onClick={() => {
+                        setShowTasksCreate(true)
+                        setShowProgress(false)
+                    }}
+                >
+                    Сформировать задачу
+                </button>
+            </div>
             {
-                showCreateTasksComponent ? (
-                    <div className=" ml-40px flex-grow-0_1 mt-5 col-7 col-md-7">
-                        <div className=" d-flex justify-content-end align-items-center m-3 text-center">
-                            <button
-                                type="button"
-                                className="btn p-2 btn-task btn-sm uppercase text-white btn-sm"
-                                onClick={() => setShowCreateTasksComponent(false)}
-                            >
-                                Сформировать задачу
-                            </button>
-                        </div>
-                        <div className="row g-0 p-4 my-5 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                showTasksComponent ?
+                    (
+                       <CreateTasks updateTasks = {updateTasks}/>
+                    ): showProgress ?
+                        (
+                            <WorkProgress/>
+                        ): (
+                                <div style = {{width: "1000px"}}>
+                                   <div className="row g-0 p-4 my-5 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 
-                            <Row className=" uppercase align-items-center">
-                                <Col className="my-3" lg={2} xs={1}>
-                                    <b>задача</b>
-                                </Col>
-                                <Col className="my-3" lg={1} xs={1}>
-                                    <b>номер</b>
-                                </Col>
-                                <Col className="my-3" lg={2} xs={1}>
-                                    <b>сотрудник</b>
-                                </Col>
-                                <Col className="my-3" lg={2} xs={1}>
-                                    <b>составлена</b>
-                                </Col>
-                                <Col className="my-3" lg={2} xs={1}>
-                                    <b>статус</b>
-                                </Col>
+                                            <Row className=" uppercase align-items-center">
+                                                <Col className="my-3" lg={2} xs={1}>
+                                                    <b>задача</b>
+                                                </Col>
+                                                <Col className="my-3" lg={1} xs={1}>
+                                                    <b>номер</b>
+                                                </Col>
+                                                <Col className="my-3" lg={2} xs={1}>
+                                                    <b>сотрудник</b>
+                                                </Col>
+                                                <Col className="my-3" lg={2} xs={1}>
+                                                    <b>составлена</b>
+                                                </Col>
+                                                <Col className="my-3" lg={2} xs={1}>
+                                                    <b>статус</b>
+                                                </Col>
 
-                                <Col className="my-3 flex-grow-1" lg={2} xs={1}>
-                                    <b></b>
-                                </Col>
-                            </Row>
-                            {
-                                tasks.map((item, index) => (
-                                    <Row key={index} className="align-items-center border-top">
-                                        <Col className="my-3" lg={2} xs={1}>
-                                            {item.name}
-                                        </Col>
-                                        <Col className="my-3" lg={1} xs={1}>
-                                            {item.id_room}
-                                        </Col>
-                                        <Col className="my-3" lg={2} xs={2}>
-                                            {item.employee_name}
-                                        </Col>
-                                        <Col className="my-3" lg={2} xs={2}>
-                                            {item.created_date}
-                                        </Col>
-                                        <Col className="my-3" lg={2} xs={1}>
+                                                <Col className="my-3 flex-grow-1" lg={2} xs={1}>
+                                                    <b></b>
+                                                </Col>
+                                            </Row>
+                                            {
+                                                tasks.map((item, index) => (
+                                                    <Row key={index} className="align-items-center border-top">
+                                                        <Col className="my-3" lg={2} xs={1}>
+                                                            {item.name}
+                                                        </Col>
+                                                        <Col className="my-3" lg={1} xs={1}>
+                                                            {item.id_room}
+                                                        </Col>
+                                                        <Col className="my-3" lg={2} xs={2}>
+                                                            {item.employee_name}
+                                                        </Col>
+                                                        <Col className="my-3" lg={2} xs={2}>
+                                                            {item.created_date}
+                                                        </Col>
+                                                        <Col className="my-3" lg={2} xs={1}>
 
-                                            {item.status === 'сделано'? (<img alt="done" className="done-icon m-auto" src={done}/>):
-                                                (item.status) }
-                                        </Col>
-                                        <Col className="my-3 flex-grow-1 d-flex justify-content-center" lg={2}
-                                             xs={2}>
-                                            <button type="button"
-                                                    className="btn  btn-sm uppercase btn-border-purple-angle"
-                                            >
-                                                <Link to={`/editTask/${item.id}`} className="  link text-decoration-none text-black">Редактировать</Link>
-                                            </button>
-                                            <button type="button"
-                                                    className="btn btn-sm uppercase btn-purple-angle"
-                                                    onClick={() => deleteTask(item.id)}
-                                            >Удалить
-                                            </button>
-                                        </Col>
-                                    </Row>
-                                ))
-                            }
-                        </div>
-                    </div>
-                ): ( <div>
-                        <CreateTasks/>
-                    </div>
-
-                )
+                                                            {item.status === 'сделано'? (<img alt="done" className="done-icon m-auto" src={done}/>):
+                                                                (item.status) }
+                                                        </Col>
+                                                        <Col className="my-3 flex-grow-1 d-flex justify-content-center" lg={2}
+                                                             xs={2}>
+                                                            <button type="button"
+                                                                    className="btn  btn-sm uppercase btn-border-purple-angle"
+                                                            >
+                                                                <Link to={`/editTask/${item.id}`} className="  link text-decoration-none text-black">Редактировать</Link>
+                                                            </button>
+                                                            <button type="button"
+                                                                    className="btn btn-sm uppercase btn-purple-angle"
+                                                                    onClick={() => deleteTask(item.id)}
+                                                            >Удалить
+                                                            </button>
+                                                        </Col>
+                                                    </Row>
+                                                ))
+                                            }
+                                        </div>
+                                </div>
+                            )
             }
         </div>
     )

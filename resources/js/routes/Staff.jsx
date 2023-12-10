@@ -5,6 +5,7 @@ import StaffAdmin from '../components/Admin/Staff/Staff.jsx'
 export default function Staff() {
     const [data, setData] = useState([]);
     document.getElementById('auth').innerHTML = '';
+
     useEffect(() => {
         const abortController = new AbortController();
 

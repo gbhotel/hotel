@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from "react";
 import StatusBtn from "../components/Status.jsx";
-import { useNavigate } from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import done from "../../img/done.svg";
+import {setTasksAction} from "@/store/actions/admin_actions.jsx";
 
 
-export default function CreateTasks() {
+export default function CreateTasks(props) {
 
-    const [date, setDate] = useState('');
-    const [currentDate, setCurrentDate] = useState('');
+    const { updateTasks } = props;
+
+    const dispatch = useDispatch();
+    const currentDate = new Date();
+    const dateOnly = currentDate.toISOString().split('T')[0];
     const [roomForCleaning, setRoomForCleaning] = useState([]);
     const [guestRequest, setGuestRequest] = useState([]);
     const [createdTask, setCreatedTask ] = useState([]);
@@ -16,9 +20,12 @@ export default function CreateTasks() {
 
 
     const staff = useSelector((state)=> state.setStaffAction.Staff);
+    const tasks = useSelector((state)=> state.setTasksAction.Tasks);
 
     const [countTasksForEmployee, setCountTasksForEmployee ] = useState(() => {
-            return staff.map(employee => ({ id: employee.id, tasks: 0 }));
+            return staff.map(employee => ({ id: employee.id, tasks:
+                tasks.filter(task => task.id_staff === employee.id && task.created_date === dateOnly).length
+            }));
     });
     const tasksName = useSelector((state)=> state.setTasksNameAction.TasksName);
     const rooms = useSelector(state => state.setRoomsAction.Rooms);
@@ -37,7 +44,6 @@ export default function CreateTasks() {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 setRoomForCleaning(data);
             })
             .catch(error => {
@@ -85,8 +91,10 @@ export default function CreateTasks() {
 
             if (response.ok) {
                 const data = await response.json();
+                // dispatch(setTasksAction(tasks.replace()));
                 setResponse(data);
                 setSuccess(true);
+                updateTasks();
             } else {
                 console.error('Ошибка при выполнении fetch-запроса');
             }
@@ -94,19 +102,6 @@ export default function CreateTasks() {
             console.error('Произошла ошибка:', error);
         }
     };
-
-
-    // useEffect для обновления даты при монтировании компонента
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-
-            setCurrentDate(new Date());
-        }, 3600000);
-
-        // Очистка интервала при размонтировании компонента
-        return () => clearInterval(intervalId);
-    }, []);
-
 
     return (
         <div className="d-flex flex-column gap-3 mt-5">
@@ -135,14 +130,14 @@ export default function CreateTasks() {
                                 <label className="uppercase">Исполнители</label>
                                 <ul className="add-scroll dropdown-menu position-static d-grid gap-1 p-2 mx-0 shadow">
                                     {
-                                        staff.map((item, index) => (
+                                        staff.filter(item => item.position === 'горничная').map((item, index) => (
                                             <li
-                                                className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
-                                                key={index}
-                                                value ={item.id}
-                                                onClick={(e)=> handleTasks(e)}
+                                               className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
+                                               key={index}
+                                               value ={item.id}
+                                               onClick={(e)=> handleTasks(e)}
                                             >
-                                                {item.first_name} {item.last_name} ({item.position})
+                                               {item.first_name} {item.last_name} ({item.position})
                                             </li>
                                         ))
                                     }
@@ -186,25 +181,34 @@ export default function CreateTasks() {
                             <ul className=" add-scroll dropdown-menu position-static d-grid gap-1 p-2 mx-0 shadow w-220px">
 
                                 {
-                                    guestRequest.map((item, index) => (
+                                    guestRequest.map((request, index) => (
 
                                         // item.created_date === '2023-11-12' ? (
                                         <li
                                             className="d-flex align-items-center dropdown-item rounded-2 gap-4 "
                                             key={index}
-                                            value={item.id}
-                                            onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_room']: item.id_room, ['task_name']: item.name}))}
+                                            value={request.id}
+                                            onClick={(e)=> {
+                                                setCreatedTask(prevState => ({...prevState,['id_request']: request.id, ['id_room']: request.id_room, ['task_name']: request.name}))
+                                            }}
                                         >
                                             <div className="name-block d-flex flex-column justify-content-center align-items-center">
-                                                {item.name.split(' ').map((word, wordIndex) => (
-                                                    <div key={wordIndex}>{word}</div>
+                                                {request.name.split(' ').map((word, wordIndex) => (
+                                                    <div>{word}</div>
                                                 ))}
                                             </div>
 
                                             <div>
-                                                <p className="m-0">Дата составления: {item.created_date}</p>
-                                                <p className="m-0">Номер комнаты: {item.id_room}</p>
-                                                <p className="m-0">Комментарий гостя: "{item.comment?? "здесь пока ничего не оставили..."}"</p>
+                                                <p className="m-0">Дата составления: {request.created_date}</p>
+                                                <p className="m-0">Номер комнаты: {request.id_room}</p>
+                                                <p className="m-0">Комментарий гостя: "{request.comment?? "здесь пока ничего не оставили..."}"</p>
+                                            </div>
+                                            <div className="d-flex flex-grow-1 justify-content-end">
+                                                {
+                                                    tasks.filter(task => task.id_guest_request === request.id).length !== 0 && (
+                                                        <img src={done} alt="Завешено" className="done-icon" />
+                                                    )
+                                                }
                                             </div>
 
 
@@ -225,7 +229,6 @@ export default function CreateTasks() {
                             {
                                 createdTask.task_name ? (
                                     <div>
-
                                         <div className="text-bold">  {createdTask.task_name}</div>
                                     </div>
                                 ) : (<div className="text-bold text-red"> Выберите задачу </div>)
@@ -267,7 +270,7 @@ export default function CreateTasks() {
                                 countTasksForEmployee.map(item => (
                                     <div>
                                         {
-                                            staff.filter((employee) => employee.id == item.id).map(employee => (
+                                            staff.filter((employee) => employee.id === parseInt(item.id)).map(employee => (
                                                 <div className="text-bold">
                                                     {employee.first_name} {employee.last_name} :
                                                     {item.tasks !== 0 &&(<span className="text-gray"> {item.tasks}</span> )}
@@ -278,12 +281,13 @@ export default function CreateTasks() {
                                 ))
                             }
                             <div className="text-gray text-bold mt-2">Общее количество задач:
-                                <span>
-                                {
-                                    countTasksForEmployee.reduce((accumulator, currentValue) => accumulator + currentValue.tasks, 0) !== 0 && (
-                                         countTasksForEmployee.reduce((accumulator, currentValue) => accumulator + currentValue.tasks, 0)
-                                    )
-                                }
+                                <span className="m-1">
+                                    {
+                                        countTasksForEmployee.reduce((accumulator, currentValue) => accumulator + currentValue.tasks, 0) !== 0 &&
+                                        (
+                                            countTasksForEmployee.reduce((accumulator, currentValue) => accumulator + currentValue.tasks, 0)
+                                        )
+                                    }
                                 </span>
                             </div>
                         </div>
@@ -328,51 +332,3 @@ export default function CreateTasks() {
         </div>
     )
 }
-
-// <label>Номер</label>
-// <select
-//     className="form-control h-37"
-//     id="employeeSelector"
-//     onClick={(e)=> addTask(e, 'id_room')}
-// >
-//     {
-//         rooms.map((item, index) => (
-//             <option key={index} value ={item.id}>
-//                 Номер комнаты: {item.number} {item.status}
-//
-//                 {(item.checkOut === currentDate )? ' clean': ''}
-//
-//                 {roomForCleaning.map((room,index) => ((item.id === room.id_room)? ' clean': ''))}
-//
-//             </option>
-//         ))
-//     }
-// </select>
-
-{/*<select*/}
-{/*    className="form-control"*/}
-{/*    id="taskSelector"*/}
-{/*    onClick={(e)=> addTask(e, 'task_name')}*/}
-{/*>*/}
-{/*    {*/}
-
-{/*        tasksName.map((item, index)=>(*/}
-{/*            <option key={index} value={item}>{item}</option>*/}
-{/*        ))*/}
-{/*    }*/}
-{/*</select>*/}
-
-{/*<select*/}
-{/*    className="form-control"*/}
-{/*    id="employeeSelector"*/}
-{/*    onClick={(e)=> addTask(e, 'id_staff')}*/}
-{/*>*/}
-{/*    {*/}
-{/*        staff.map((item, index) => (*/}
-{/*            <option key={index} value = {item.id}>*/}
-{/*                {item.first_name} {item.last_name}*/}
-{/*                  ({item.position})*/}
-{/*            </option>*/}
-{/*        ))*/}
-{/*    }*/}
-{/*</select>*/}
