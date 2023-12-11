@@ -118,7 +118,7 @@ export default function CreateTasks(props) {
                                                 className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
                                                 key={index}
                                                 value={index}
-                                                onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['task_name']:tasksName[e.target.value] }))}
+                                                onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_request']:null, ['task_name']:tasksName[e.target.value] }))}
                                             >
                                                 {item}
                                             </li>

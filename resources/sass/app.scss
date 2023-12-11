@@ -334,7 +334,6 @@ button:hover {
 
 .tasks-section {
     text-align: center;
-    padding: 20px;
 }
 
 .room-info ul {
@@ -854,3 +853,22 @@ textarea {
     z-index: 1000; /* Установите z-index так, чтобы ваш фон находился под модальным окном */
 }
 
+//.accordion-content {
+//    max-height: 0;
+//    overflow: hidden;
+//    transition: max-height 0.6s ease-in-out; /* Настройте длительность и кривую перехода по своему усмотрению */
+//}
+//
+///* Установите максимальную высоту только для активных элементов */
+//.accordion-content + .active {
+//    max-height: 500px; /* Задайте значение в пикселях или других единицах измерения */
+//}
+
+.block-info-parent {
+    position: relative;
+}
+
+.block-info-child {
+    position: absolute;
+    z-index: 1;
+}
