@@ -142,7 +142,8 @@ class TasksController extends Controller
             'task_name',
             'id_staff',
             'id_room',
-            'id_request'
+            'id_request',
+            'comment'
         ]);
 
         $id = DB::table('tasks')
@@ -153,6 +154,7 @@ class TasksController extends Controller
                 'id_guest_request' => $data['id_request'],
                 'created_date' => date(now()),
                 'updated_at' => $dateTime,
+                'comment' =>  $data['comment']
 
 
             ]);

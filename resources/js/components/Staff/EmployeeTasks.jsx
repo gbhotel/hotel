@@ -185,7 +185,7 @@ export default function EmployeeTasks () {
                             ))
                         }
                     </ul>
-                    <h3 className="text-purple">Пожелания гостей</h3>
+                    <h3 className="text-purple">Комментарий</h3>
                     <p className="text-gray">{
                         selectedTask.comment?
                             (
