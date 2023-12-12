@@ -75,9 +75,10 @@ export default function EmployeeTasks () {
                 status: 'в процессе',
             };
         } else if (task.status === 'в процессе') {
-            setTimeout(()=> {
-                setCount((prevState)=>(prevState + 1));
-            },2000)
+            // setCount((prevState)=>(prevState + 1))
+            // setTimeout(()=> {
+            //     ;
+            // },1000)
             request = {
                 taskId: task.id,
                 status: 'сделано',
@@ -98,6 +99,7 @@ export default function EmployeeTasks () {
             const data = await response.json();
             console.log(data.status);
             setStatus(data.status);
+            set
             setTasks(prevState => (
                 prevState.map(task => (
                     task.id === parseInt(data.taskId) ? { ...task, status: data.status } : task
