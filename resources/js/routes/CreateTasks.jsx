@@ -1,15 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import StatusBtn from "../components/Status.jsx";
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import done from "../../img/done.svg";
-import {setTasksAction} from "@/store/actions/admin_actions.jsx";
-
+import TasksBlock from "../components/Admin/TasksBlock.jsx";
 
 export default function CreateTasks(props) {
 
     const { updateTasks } = props;
 
-    const dispatch = useDispatch();
     const currentDate = new Date();
     const dateOnly = currentDate.toISOString().split('T')[0];
     const [roomForCleaning, setRoomForCleaning] = useState([]);
@@ -18,17 +16,16 @@ export default function CreateTasks(props) {
     const [success, setSuccess] = useState(false);
     const [response , setResponse ] = useState([]);
 
-
     const staff = useSelector((state)=> state.setStaffAction.Staff);
     const tasks = useSelector((state)=> state.setTasksAction.Tasks);
+
+    const rooms = useSelector(state => state.setRoomsAction.Rooms);
 
     const [countTasksForEmployee, setCountTasksForEmployee ] = useState(() => {
             return staff.map(employee => ({ id: employee.id, tasks:
                 tasks.filter(task => task.id_staff === employee.id && task.created_date === dateOnly).length
             }));
     });
-    const tasksName = useSelector((state)=> state.setTasksNameAction.TasksName);
-    const rooms = useSelector(state => state.setRoomsAction.Rooms);
 
 
     useEffect(() => {
@@ -73,11 +70,6 @@ export default function CreateTasks(props) {
             });
     }, []);
 
-
-    const handleTasks = (e) => {
-        setCreatedTask(prevState => ({...prevState, ['id_staff']: e.target.value}));
-    }
-
     const generateTask = async () => {
         try {
             const response = await fetch('/api/admin/addTask', {
@@ -91,7 +83,6 @@ export default function CreateTasks(props) {
 
             if (response.ok) {
                 const data = await response.json();
-                // dispatch(setTasksAction(tasks.replace()));
                 setResponse(data);
                 setSuccess(true);
                 updateTasks();
@@ -109,23 +100,7 @@ export default function CreateTasks(props) {
                 <div className="d-flex flex-column task-box">
                     <div className="d-flex justify-content-between gap-5  mt-5">
                         <div className="d-flex justify-content-between flex-column">
-                            <div className="text-center">
-                                <label className="uppercase mb-1">Задачи</label>
-                                <ul className=" dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-                                    {
-                                        tasksName.map((item, index) => (
-                                            <li
-                                                className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
-                                                key={index}
-                                                value={index}
-                                                onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_request']:null, ['task_name']:tasksName[e.target.value] }))}
-                                            >
-                                                {item}
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
-                            </div>
+                            <TasksBlock setCreatedTask = {setCreatedTask}/>
                             <div className="text-center mt-4">
                                 <label className="uppercase">Исполнители</label>
                                 <ul className="add-scroll dropdown-menu position-static d-grid gap-1 p-2 mx-0 shadow">
@@ -135,7 +110,7 @@ export default function CreateTasks(props) {
                                                className=" d-flex justify-content-between dropdown-item rounded-2 gap-4 "
                                                key={index}
                                                value ={item.id}
-                                               onClick={(e)=> handleTasks(e)}
+                                               onClick={(e) => (setCreatedTask(prevState => ({...prevState, ['id_staff']: e.target.value})))}
                                             >
                                                {item.first_name} {item.last_name} ({item.position})
                                             </li>
@@ -159,11 +134,6 @@ export default function CreateTasks(props) {
                                             <div className={`d-flex ${item.number === '10' ? 'gap-3' : 'gap-4'}`} > Комната номер - {item.number}
                                                 <StatusBtn status={item.status} />
                                             </div>
-
-                                            {/*<div> {(item.checkOut === currentDate)?*/}
-                                            {/*    <StatusBtn status='clean'/>: ''}*/}
-                                            {/*</div>*/}
-
                                             <div>
                                                 {roomForCleaning.map((room,index) => ((item.id === room.id_room)?
                                                     <StatusBtn key = {index} status='clean'/>: ''))}
@@ -182,14 +152,12 @@ export default function CreateTasks(props) {
 
                                 {
                                     guestRequest.map((request, index) => (
-
-                                        // item.created_date === '2023-11-12' ? (
                                         <li
                                             className="d-flex align-items-center dropdown-item rounded-2 gap-4 "
                                             key={index}
                                             value={request.id}
                                             onClick={(e)=> {
-                                                setCreatedTask(prevState => ({...prevState,['id_request']: request.id, ['id_room']: request.id_room, ['task_name']: request.name}))
+                                                setCreatedTask(prevState => ({...prevState,['id_request']: request.id,  ['id_room']: request.id_room, ['task_name']: request.name, ['comment']: request.comment}))
                                             }}
                                         >
                                             <div className="name-block d-flex flex-column justify-content-center align-items-center">
@@ -210,10 +178,7 @@ export default function CreateTasks(props) {
                                                     )
                                                 }
                                             </div>
-
-
                                         </li>
-                                        // ) : null
                                     ))
                                 }
                             </ul>
@@ -225,7 +190,6 @@ export default function CreateTasks(props) {
                         <label className="uppercase">Текущая задача</label>
                         <div style = {{minWidth: "255px"}}  className=" d-flex flex-column text-center p-3 dropdown-menu position-static shadow">
                             <div className="text-gray">Название:</div>
-
                             {
                                 createdTask.task_name ? (
                                     <div>
@@ -257,7 +221,20 @@ export default function CreateTasks(props) {
                                     </div>
                                 ) : (<div className="text-bold text-red"> Выберите номер комнаты  </div>)
                             }
-                        </div>
+                            <div>
+                                <label  className="text-gray mt-2" htmlFor="feedback">Комментарий:</label>
+                                <textarea
+                                    style={{backgroundColor: "transparent"}}
+                                    className="request-textarea"
+                                    id="feedback"
+                                    name="feedback"
+                                    rows="4"
+                                    value={createdTask.comment}
+                                    placeholder="Оставьте комментарий..."
+                                    onChange={(e) => setCreatedTask(prevState => ({...prevState, ['comment']:e.target.value}))}
+                                ></textarea>
+                            </div>
+                            </div>
                         <div className="align-self-center mt-3 w-100">
                             <button className=" btn btn-add py-3 px-4 w-100" onClick={generateTask}>Сформировать задачу</button>
                         </div>
@@ -265,7 +242,6 @@ export default function CreateTasks(props) {
                     <div className="p-3 text-center">
                         <label className="uppercase">Распределение нагрузки</label>
                         <div style = {{minWidth: "255px"}} className=" d-flex flex-column justify-content-start gap-2 p-3 dropdown-menu position-static shadow">
-
                             {
                                 countTasksForEmployee.map(item => (
                                     <div>
@@ -317,7 +293,7 @@ export default function CreateTasks(props) {
                                                 setSuccess(false)
                                                 setCountTasksForEmployee(prevState => prevState.map(employee => (employee.id == createdTask.id_staff ? {
                                                     ...employee, tasks:employee.tasks + 1}: employee )))
-                                                setCreatedTask([])
+                                                setCreatedTask(prevState => ({...prevState, ['id_room']: null, ['id_staff']: null, ['task_name']: '',  ['comment']: ''}));
                                             }
                                             }
                                     >
@@ -327,7 +303,6 @@ export default function CreateTasks(props) {
                         </div>
                     </div>
                 </div>
-
             )}
         </div>
     )
