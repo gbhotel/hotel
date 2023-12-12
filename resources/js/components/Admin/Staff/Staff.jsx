@@ -151,9 +151,7 @@ export default function Staff() {
                             <p className="m-0" >{item.status}</p>
                         </Col>
                         <Col xs={2}>
-                            {/*<button type="button" className="w-100 btn btn-sm btn-outline-secondary">*/}
-                            <Link to={`/employee/${index}`} className="text-decoration-none w-100 btn btn-sm btn-outline-secondary">Карточка</Link>
-                            {/*</button>*/}
+                            <Link to={`/employee/${item.id}`} className="text-decoration-none w-100 btn btn-sm btn-outline-secondary">Карточка</Link>
                         </Col>
                         <Col xs={5}>
                             <form id="workForm"
