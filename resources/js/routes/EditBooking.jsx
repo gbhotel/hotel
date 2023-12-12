@@ -9,12 +9,16 @@ function test() {
     alert('Ok');
 }
 
-export default function EditBooking() {
-
+export default function EditBooking(props) {
+    const { idFromCheckIn, callBackFunc } = props;
     const id = useParams();
+    let urlBooking = '';
 
     //API:
-    const urlBooking = `/api/admin/booking/get/${id.id}`;
+    if (idFromCheckIn)
+        urlBooking = `/api/admin/booking/get/${idFromCheckIn}`;
+    else
+        urlBooking = `/api/admin/booking/get/${id.id}`;
 
 
     /**
@@ -76,8 +80,14 @@ export default function EditBooking() {
 
 
     function goBack(event) {
-        event.preventDefault();
-        window.location.href = '/booking';
+        if (idFromCheckIn) {
+            callBackFunc(1);
+        }
+
+        else {
+            event.preventDefault();
+            window.location.href = '/booking';
+        }
     }
     const handleSearchRooms = async () => {
         try {
@@ -151,8 +161,13 @@ export default function EditBooking() {
             body: JSON.stringify(requestData),
         }).then(response => response.json())
             .then(data => {
-                if (data['saved'] === 'OK')
-                    window.location.href = '/booking';
+                if (data['saved'] === 'OK') {
+                    if (idFromCheckIn) {
+                        callBackFunc(1);
+                    }
+                    else
+                        window.location.href = '/booking';
+                }
                 else alert('При сохранении данных произошла ошибка!');
             })
             .catch(error => {
@@ -255,14 +270,15 @@ export default function EditBooking() {
                             </Col>
                             <Col xs={3}>
                                 <div onClick={goBack} className="mx-2 btn btn-primary">
-                                    Назад к бронированиям
+                                    {idFromCheckIn && ('Назад к заселению')}
+                                    {!idFromCheckIn && ('Назад к бронированиям')}
                                 </div>
                             </Col>
                         </Row>
                     </Container>
                 </form>
             </div>
-            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms} isEditing={true} callBack={newRoom}></FreeRooms>
+            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms} onUpdateFreeRooms={() => { }} isEditing={true} callBack={newRoom}></FreeRooms>
         </div >
 
     );

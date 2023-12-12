@@ -1,23 +1,24 @@
-import React, {useEffect, useRef, useState} from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
 import star from "../../img/star3.svg";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-slideshow-image/dist/styles.css'
 import { Fade } from 'react-slideshow-image';
 import star_full from '../../img/star-full.svg';
-import {useNavigate} from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 export default function FreeRooms(props) {
 
     const navigate = useNavigate();
 
-    const { checkinDate, checkoutDate, freeRooms, onUpdateFreeRooms} = props;
+    const { checkinDate, checkoutDate, freeRooms, onUpdateFreeRooms, isEditing, callBack, isCheckInWithoutBooking, saveCheckIn } = props;
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [selectedRoomComfort, setSelectedRoomComfort] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
     const [isBooking, setIsBooking] = useState(false);
     const [response, setResponse] = useState(false);
+
     const [bookingNumber, setBookingNumber] = useState('');
 
     const [bookingData, setBookingData] = useState({
@@ -29,30 +30,33 @@ export default function FreeRooms(props) {
         phone: ""
     });
 
+    console.log('freeRoom')
+    console.log(freeRooms);
 
-        const [isDragging, setIsDragging] = useState(false);
-        const modalRef = useRef(null);
-        const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
+    const modalRef = useRef(null);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
 
-        const handleMouseDown = (e) => {
-            setIsDragging(true);
-            const offsetX = e.clientX - modalRef.current.getBoundingClientRect().left;
-            const offsetY = e.clientY - modalRef.current.getBoundingClientRect().top;
-            setPosition({ x: offsetX, y: offsetY });
-        };
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        const offsetX = e.clientX - modalRef.current.getBoundingClientRect().left;
+        const offsetY = e.clientY - modalRef.current.getBoundingClientRect().top;
+        setPosition({ x: offsetX, y: offsetY });
+    };
 
-        const handleMouseMove = (e) => {
-            if (isDragging) {
-                const x = e.clientX - position.x;
-                const y = e.clientY - position.y;
-                modalRef.current.style.left = `${x}px`;
-                modalRef.current.style.top = `${y}px`;
-            }
-        };
+    const handleMouseMove = (e) => {
+        if (isDragging) {
+            const x = e.clientX - position.x;
+            const y = e.clientY - position.y;
+            modalRef.current.style.left = `${x}px`;
+            modalRef.current.style.top = `${y}px`;
+        }
+    };
 
-        const handleMouseUp = () => {
-            setIsDragging(false);
-        };
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
 
 
     useEffect(() => {
@@ -95,8 +99,10 @@ export default function FreeRooms(props) {
         }
 
         setIsBooking(false);
-        setResponse(true);
-
+        if (isCheckInWithoutBooking)
+            saveCheckIn();
+        else
+            setResponse(true);
     }
 
 
@@ -114,8 +120,8 @@ export default function FreeRooms(props) {
     };
 
     const showBookingForm = () => {
-            setIsBooking(true);
-            setModalOpen(false);
+        setIsBooking(true);
+        setModalOpen(false);
     }
 
     const closeBookingResponse = () => {
@@ -123,6 +129,17 @@ export default function FreeRooms(props) {
         onUpdateFreeRooms();
 
     }
+
+    const checkEditing = (room) => {
+        if (!isEditing)
+            showBookingForm();
+
+        else {
+            setModalOpen(false);
+            callBack(room);
+        }
+    }
+
 
     return (<div className='my-4 justify-content-center container d-flex flex-wrap gap-5' >
         {freeRooms.map((freeRoom, index) => (
@@ -287,13 +304,14 @@ export default function FreeRooms(props) {
         )}
 
         {response && (
+
             <div className="overlay">
                 <div className="modal"
-                     ref={modalRef}
-                     style={{ display: "block" }}
-                     onMouseDown={handleMouseDown}
-                     onMouseMove={handleMouseMove}
-                     onMouseUp={handleMouseUp}
+                    ref={modalRef}
+                    style={{ display: "block" }}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
                 >
                     <div className="modal-dialog" role="document">
                         <div className="modal-content rounded-3 shadow">
@@ -304,12 +322,13 @@ export default function FreeRooms(props) {
                             </div>
                             <div className="modal-footer flex-nowrap p-0">
                                 <button type="button"
-                                        className="btn btn-lg text-purple fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
-                                        onClick={closeBookingResponse}
+                                    className="btn btn-lg text-purple fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
+                                    onClick={closeBookingResponse}
                                 >
                                     <strong>Закрыть</strong>
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -318,4 +337,3 @@ export default function FreeRooms(props) {
 
     </div>)
 }
-

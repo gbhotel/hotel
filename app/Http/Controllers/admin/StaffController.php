@@ -35,7 +35,6 @@ class StaffController extends Controller
         $tomorrow = (clone $today)->add(new DateInterval("PT24H"));
         $yesterday = (clone $today)->sub(new DateInterval("PT24H"));
 
-        //Определяем статус
         foreach ($staff as $key => $item)
         {
             $working = DB::table('working_hours')
@@ -47,63 +46,6 @@ class StaffController extends Controller
                 })
                 ->select('id_staff', 'beginning', 'end', 'work_in', 'work_out')
                 ->first();
-
-            $todayStr = $today->format('Y-m-d H:i:s');
-            $todayDateStr = $today->format('Y-m-d');
-            $todayTimeStr = $today->format('H:i:s');
-
-            $beginning = new DateTime($working->beginning);
-            $beginningDateStr = $beginning->format('Y-m-d');
-            $beginningTimeStr = $beginning->format('H:i:s');
-
-            $end = new DateTime($working->end);
-            $endDateStr = $end->format('Y-m-d');
-            $endTimeStr = $end->format('H:i:s');
-
-            if($beginningDateStr == $todayDateStr && $endDateStr == $todayDateStr && $beginningTimeStr >= $todayTimeStr){
-                $staff[$key]->status = 'Начнется';
-            }elseif($beginningDateStr == $todayDateStr && $endDateStr == $todayDateStr && $endTimeStr >= $todayTimeStr){
-                $staff[$key]->status = 'Закончилась';
-            }elseif($beginningDateStr == $todayDateStr && $endDateStr == $todayDateStr && $beginningTimeStr <= $todayTimeStr && $endTimeStr >= $todayTimeStr){
-                $staff[$key]->status = 'Смена';
-
-            }elseif($beginningDateStr == $todayDateStr && $endDateStr > $todayDateStr && $beginningTimeStr >= $todayTimeStr){
-                $staff[$key]->status = 'Начнется';
-            }elseif($beginningDateStr <= $todayDateStr && $endDateStr == $todayDateStr && $endTimeStr >= $todayTimeStr){
-                $staff[$key]->status = 'Закончилась';
-            }elseif($beginningDateStr == $todayDateStr && $endDateStr >= $todayDateStr && $beginningTimeStr <= $todayTimeStr){
-                $staff[$key]->status = 'Смена';
-            }elseif($beginningDateStr <= $todayDateStr && $endDateStr == $todayDateStr && $endTimeStr >= $todayTimeStr){
-                $staff[$key]->status = 'Смена';
-            }else{
-                $staff[$key]->status = 'Отдых';
-            }
-
-
-
-//            if($todayStr >= $working->beginning && $todayStr <= $working->end)
-//            {
-//                $staff[$key]->status = 'Смена';
-//
-//            }else{
-//                $staff[$key]->status = 'Oтдых';
-//            }
-//
-//            if($working->work_in == null && $working->work_out == null)
-//            {
-//                $working->fact = 'Еще не пришёл';
-//            }
-//            elseif($working->work_in != null && $working->work_out == null) {
-//                $working->fact = 'На смене';
-//            }
-//            elseif($working->work_in != null && $working->work_out != null) {
-//                $working->fact = 'Уже ушёл';
-//            }
-//            else{
-//                $working->fact = 'Сбой';
-//            }
-
-            $working->fact = '???';
 
             $staff[$key]->working = $working;
         }
@@ -119,12 +61,10 @@ class StaffController extends Controller
                 'passport' => $employee->user->passport,
                 'employment_date' => $employee->employment_date,
                 'position' => $employee->position->name,
-                'status' => $employee->status,
                 'birthday' => $employee->user->birthday,
                 'gender' =>  $employee->user->gender,
                 'photo' => $employee->user->photo,
                 'username' => $employee->user->username,
-                'statusFact' => $employee->working->fact,
                 'working' => $employee->working,
             ];
         }
@@ -226,8 +166,7 @@ class StaffController extends Controller
             return response()->json($data);
         }
         $data['auth'] = true;
-
-        $work_in = $data['work_in'];
+        $work_in = $data['work'];
 
         try {
             $count = DB::table('working_hours')
@@ -273,20 +212,19 @@ class StaffController extends Controller
                 return response()->json($data);
             }
             $data['auth'] = true;
-//            return response()->json($data['work_in']);
-            $work_in = $data['work_in'];
+            $work_out = $data['work'];
 
             try {
                 $count = DB::table('working_hours')
                     ->where('id_staff', '=', $data['id_staff'])
                     ->where('beginning', '=', $data['beginning'])
-                    ->update(['work_out' => $work_in, 'id_admin2' => $id_admin2]);
+                    ->update(['work_out' => $work_out, 'id_admin2' => $id_admin2]);
 
                 if ($count == 1) {
                     $data['count'] = $count;
                     $data['answer'] = true;
                     $data['db'] = true;
-                    $data['message'] = 'Время прихода на работу успешно отмечено.';
+                    $data['message'] = 'Время ухода с работы успешно отмечено.';
                     return response()->json($data);
                 } else if ($count == 0) {
                     $data['message'] = 'В базе данных не завиксировано изменений.';

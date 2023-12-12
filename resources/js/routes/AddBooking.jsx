@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import FreeRooms from "../components/FreeRooms.jsx";
 import people from "../../img/people.svg";
 import arrow from "../../img/arrow.svg";
 
 
 
-export default function AddBooking() {
+export default function AddBooking(props) {
+    const { isCheckInWithoutBooking, callBackFunc, inDate } = props;
 
-    const [checkinDate, setCheckinDate] = useState('');
+    const [checkinDate, setCheckinDate] = useState(inDate);
     const [checkoutDate, setCheckoutDate] = useState('');
     const [freeRooms, setFreeRooms] = useState([]);
     const currentDate = new Date();
@@ -15,7 +16,6 @@ export default function AddBooking() {
     const [showGuestsAmount, setShowGuestsAmount] = useState(false);
     const [adultCount, setAdultCount] = useState(0);
     const [childrenCount, setChildrenCount] = useState(0);
-
 
     useEffect(() => {
         fetch('/api/admin/free-rooms-period')
@@ -74,26 +74,27 @@ export default function AddBooking() {
             <div className=" mt-5 container col-11">
                 <div className="d-flex gap-3 justify-content-around p-3 justify-content-around purple-background">
                     <div className=" d-flex flex-grow-0_5 col-3 p-0">
-                            <input
-                                placeholder="Дата заезда"
-                                type="text"
-                                className=" flex-grow-1 form-control uppercase py-2"
-                                id="checkinDate"
-                                onChange={(e) => setCheckinDate(e.target.value)}
-                                onBlur={(e) => e.target.type ='text'}
-                                onFocus={(e) => e.target.type ='date'}
-                            />
+                        <input
+                            placeholder="Дата заезда"
+                            type="text"
+                            className=" flex-grow-1 form-control uppercase py-2"
+                            id="checkinDate"
+                            defaultValue={inDate}
+                            onChange={(e) => setCheckinDate(e.target.value)}
+                            onBlur={(e) => e.target.type = 'text'}
+                            onFocus={(e) => e.target.type = 'date'}
+                        />
                     </div>
                     <div className=" d-flex flex-grow-0_5 col-3  p-0">
-                            <input
-                                placeholder="Дата выезда"
-                                type="text"
-                                className="flex-grow-1 form-control uppercase py-2"
-                                id="checkoutDate"
-                                onChange={(e) => setCheckoutDate(e.target.value)}
-                                onBlur={(e) => e.target.type ='text'}
-                                onFocus={(e) => e.target.type ='date'}
-                            />
+                        <input
+                            placeholder="Дата выезда"
+                            type="text"
+                            className="flex-grow-1 form-control uppercase py-2"
+                            id="checkoutDate"
+                            onChange={(e) => setCheckoutDate(e.target.value)}
+                            onBlur={(e) => e.target.type = 'text'}
+                            onFocus={(e) => e.target.type = 'date'}
+                        />
                     </div>
                     <div
                         className=" d-flex p-0 text-center"
@@ -104,7 +105,7 @@ export default function AddBooking() {
                         >
                             <img alt="people" src={people} />
                             <span>{adultCount} взрослых {childrenCount} детей</span>
-                            <img  style={{ marginLeft: '3px' }} alt="arrow" src={arrow} className="ml-1" />
+                            <img style={{ marginLeft: '3px' }} alt="arrow" src={arrow} className="ml-1" />
                             {
                                 showGuestsAmount && (
                                     <div className="d-flex text-black gap-3 flex-column block-guest-amount border-with-shadow">
@@ -112,25 +113,25 @@ export default function AddBooking() {
                                             <p className="mb-0  text-bold text-black">Взрослые</p>
                                             <div
                                                 className="d-flex gap-3 px-3 py-2 border-without-shadow justify-content-between"
-                                                onClick={(event)=> event.stopPropagation()}
+                                                onClick={(event) => event.stopPropagation()}
                                             >
                                                 <div
                                                     className="px-2"
-                                                    onClick={(event)=> {
+                                                    onClick={(event) => {
                                                         event.stopPropagation();
-                                                            if (adultCount > 0) {
-                                                                setAdultCount(prevState => --prevState);
-                                                            }
+                                                        if (adultCount > 0) {
+                                                            setAdultCount(prevState => --prevState);
+                                                        }
                                                     }}
                                                 > - </div>
                                                 <div>{adultCount}</div>
                                                 <div
                                                     className="px-2"
-                                                    onClick={(event)=> {
+                                                    onClick={(event) => {
                                                         event.stopPropagation();
                                                         setAdultCount((prevState) => (++prevState))
                                                     }
-                                                }
+                                                    }
                                                 > + </div>
                                             </div>
                                         </div>
@@ -138,11 +139,11 @@ export default function AddBooking() {
                                             <div className="flex-grow-1 mb-0 text-bold text-black">Дети</div>
                                             <div
                                                 className="d-flex gap-3 px-3 py-2 border-without-shadow justify-content-between"
-                                                onClick={(event)=> event.stopPropagation()}
+                                                onClick={(event) => event.stopPropagation()}
                                             >
                                                 <div
                                                     className="px-2"
-                                                    onClick={(event)=> {
+                                                    onClick={(event) => {
                                                         event.stopPropagation();
                                                         if (childrenCount > 0) {
                                                             setChildrenCount(prevState => --prevState);
@@ -153,20 +154,21 @@ export default function AddBooking() {
                                                 <div
                                                     className="px-2"
                                                     onClick={
-                                                    (event)=> {
-                                                        event.stopPropagation();
-                                                        setChildrenCount((prevState)=>(++prevState))
-                                                    }
+                                                        (event) => {
+                                                            event.stopPropagation();
+                                                            setChildrenCount((prevState) => (++prevState))
                                                         }
+                                                    }
                                                 > + </div>
                                             </div>
                                         </div>
                                         <button
                                             type="submit"
                                             className=" btn-border-purple btn text-20 uppercase"
-                                            onClick={(event)=>{
+                                            onClick={(event) => {
                                                 event.stopPropagation();
-                                                handleShowGuestsAmount()}
+                                                handleShowGuestsAmount()
+                                            }
                                             }
                                         >
                                             Сделано
@@ -188,7 +190,7 @@ export default function AddBooking() {
                     </div>
                 </div>
             </div>
-            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms} onUpdateFreeRooms={updateFreeRooms}></FreeRooms>
+            <FreeRooms checkinDate={checkinDate} checkoutDate={checkoutDate} freeRooms={freeRooms} onUpdateFreeRooms={updateFreeRooms} isEditing={false} callBack={() => { }} isCheckInWithoutBooking={isCheckInWithoutBooking} saveCheckIn={callBackFunc}></FreeRooms>
         </div>
 
     );
