@@ -15,7 +15,7 @@ export default function EmployeeTasks () {
     const [date, setDate] = useState('');
     const [tasks, setTasks] = useState([]);
     const [name, setName] = useState('');
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(tasks.length);
     const [sets, setSets] = useState({});
     const [status, setStatus] = useState('');
     const [selectedTask, setSelectedTask] = useState({});
@@ -25,6 +25,7 @@ export default function EmployeeTasks () {
 
             const abortController = new AbortController();
 
+            const timerInterval = setInterval(() => {
             fetch(`/api/employee/${id}/tasks`, {
                 method: 'POST',
                 headers: {
@@ -41,21 +42,21 @@ export default function EmployeeTasks () {
                 })
                 .then(data => {
                     setTasks(data);
+                    setCount(data.filter(task => task.status === "сделано").length);
                     setName(data[0].employee_name);
                     // setCount(data.length);
                 })
                 .catch(error => {
                     console.error(error);
                 });
+            }, 1000)
 
-            return () => {
-                abortController.abort();
-            }
+        return () => clearInterval(timerInterval);
+
         }, [status]);
 
     const handlePrepareForShow = (id) => {
         setShowRoom((prevState)=>(!prevState));
-        // setSelectedTask(id);
         const selectedTask = tasks.find(task => task.id === id);
         setSelectedTask(selectedTask);
         setSets(JSON.parse(selectedTask["room_sets"]));
@@ -74,9 +75,10 @@ export default function EmployeeTasks () {
                 status: 'в процессе',
             };
         } else if (task.status === 'в процессе') {
-            setTimeout(()=> {
-                setCount((prevState)=>(prevState + 1));
-            },2000)
+            // setCount((prevState)=>(prevState + 1))
+            // setTimeout(()=> {
+            //     ;
+            // },1000)
             request = {
                 taskId: task.id,
                 status: 'сделано',
@@ -97,6 +99,12 @@ export default function EmployeeTasks () {
             const data = await response.json();
             console.log(data.status);
             setStatus(data.status);
+            set
+            setTasks(prevState => (
+                prevState.map(task => (
+                    task.id === parseInt(data.taskId) ? { ...task, status: data.status } : task
+                ))
+            ));
         } catch (error) {
             console.error(error);
         } finally {
@@ -107,20 +115,23 @@ export default function EmployeeTasks () {
 
 
     return (
-        <div className="d-flex flex-row gap-3">
-            <section className="tasks-section mt-5 mx-5 p-5 d-flex gap-3 flex-column">
-                    {/*<input*/}
-                    {/*    type="date"*/}
-                    {/*    className="form-control mb-4"*/}
-                    {/*    id="checkinDate"*/}
-                    {/*    onChange={(e) => setDate(e.target.value)}*/}
-                    {/*/>*/}
-                <ul className="list-group d-flex flex-row gap-3">
-
+        <div   className="d-flex flex-row gap-3">
+            <section style = {{width: "895px"}} className="tasks-section mt-5 py-5 d-flex gap-3 flex-column">
+                <ul className="list-group d-flex flex-wrap flex-row gap-3">
                     {
-                        tasks.map((task, index)=>{
+                        // tasks.sort((a, b) => {
+                        // // Custom sorting function to prioritize tasks with 'в процессе' status
+                        // if (a.status === 'в процессе' && b.status !== 'в процессе') {
+                        // return 1;
+                        // } else if (a.status !=='в процессе' && b.status === 'в процессе') {
+                        //     return -1;
+                        // } else {
+                        //     return 0;
+                        // }
+                    // })
+                    tasks.map((task, index)=>{
                             return (
-                                <li key={index} className=" li-task d-flex justify-content-between gap-4 flex-column py-3 px-4"
+                                <li key={index} style={{minWidth: "210px"}} className=" li-task d-flex justify-content-between gap-4 flex-column py-3 px-4"
                                     onClick={() => handlePrepareForShow(task.id)}
                                 >
                                     <span className="task-description text-bold uppercase">Номер {task.room_number}</span>
@@ -129,7 +140,7 @@ export default function EmployeeTasks () {
                                     <div className="d-flex gap-2 mx-auto">
 
                                         {task.status === 'сделано' ? (
-                                            <img src={done} alt="Завешено" className="done-icon m-auto" />
+                                            <img src={done} alt="Завершено" className="done-icon m-auto" />
                                         ) : (
                                             <button
                                                 className="btn uppercase btn-task blue-button start-task"
@@ -148,7 +159,7 @@ export default function EmployeeTasks () {
                 </ul>
                 {
                     count === tasks.length && (
-                        <div className="trophy-block d-flex p-3 flex-column justify-content-start align-content-start">
+                        <div  className={`${count === 0 ? "invisible": ""} trophy-block d-flex p-3 flex-column justify-content-start align-content-start`}>
                             <div  className="d-flex text-bold">Отлично поработали сегодня!</div>
                             <div className="d-flex text-bold-purple" >{name}</div>
                             <div className="d-flex text-gray" > Выполнено {tasks.length} задачи</div>
@@ -160,7 +171,7 @@ export default function EmployeeTasks () {
             </section>
 
             {showRoom && (
-            <div className="room-info-container mt-5">
+            <div className="room-info-container mt-5 py-5">
                 <div className="room-info">
                     <h3 className="text-purple">Категория номера</h3>
                         <p className="uppercase text-bold" >"{selectedTask.room_category}"</p>
@@ -168,14 +179,23 @@ export default function EmployeeTasks () {
                     <ul className="d-flex flex-column justify-content-start">
                         {
                             Object.keys(sets).map(key => (
-                                <li className=" li-task d-flex m-0" key={key}>
+                                <li className="li-task d-flex m-0" key={key}>
                                     {key}: {sets[key]} шт.
                                 </li>
                             ))
                         }
                     </ul>
                     <h3 className="text-purple">Пожелания гостей</h3>
-                    <p>{selectedTask.comment}</p>
+                    <p className="text-gray">{
+                        selectedTask.comment?
+                            (
+                                selectedTask.comment
+                            ):(
+                                "здесь пока ничего не оставили..."
+                            )
+                    }
+
+                    </p>
                 </div>
             </div>
         )}

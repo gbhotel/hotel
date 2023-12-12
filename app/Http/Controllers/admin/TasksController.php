@@ -5,7 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Room_cleaning;
 use App\Models\Tasks;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
@@ -35,11 +37,14 @@ class TasksController extends Controller
                 'name' => $task->name,
                 'id_room' => $task->room->number,
                 'id_staff' => $task->id_staff,
+                'id_guest_request' => $task->id_guest_request,
                 'employee_name' => $task->employee->user->first_name . ' ' . $task->employee->user->last_name,
                 'created_date' => $task->created_date,
                 'execution_date' => $task->execution_date,
+                'execution_time' => $task->execution_time,
                 'comment' => $task->comment,
-                'status' => $task->status
+                'status' => $task->status,
+                'updated_at' => $task->updated_at
             ];
         }
         return response()->json($result);
@@ -47,13 +52,15 @@ class TasksController extends Controller
 
     public function getTasksForEmployee($id) {
 
+        $currentDateAndTime = Carbon::now();
+        $dateOnly = $currentDateAndTime->toDateString();
 
         $result = [];
 
         $tasks = Tasks::query()
                       ->with('employee.user')
                       ->with('room.category')
-                      ->where('created_date', "=", '2023-11-18')
+                      ->where('created_date', "=", $dateOnly)
                       ->where('id_staff', '=', $id )
                       ->orderBy('id')
                       ->get();
@@ -66,6 +73,7 @@ class TasksController extends Controller
                 'id_staff' => $task->employee->id,
                 'name' => $task->name,
                 'room_number' => $task->room->number,
+                'execution_time' => $task->execution_time,
                 'comment' => $task->comment,
                 'status' => $task->status,
                 'room_sets' => $task->room->sets,
@@ -78,6 +86,8 @@ class TasksController extends Controller
 
     public function changeTaskStatus(Request $request) {
 
+        $currentDateAndTime = Carbon::now();
+
         $data = $request->only([
             'taskId',
             'status'
@@ -87,35 +97,63 @@ class TasksController extends Controller
             return response()->json(['message' => 'Задание не найдено'], 404);
         }
 
-        if(Tasks::query()
-            ->where('id', '=', $data['taskId'])
-            ->update([
-                'status' => $data['status'],
-//                'execution_date' => now()->format('y-m-d'),
-                ])) {
+        if($data['status'] === 'в процессе') {
+            Tasks::query()
+                 ->where('id', '=', $data['taskId'])
+                 ->update([
+                     'status' => $data['status'],
+                     'updated_at' => $currentDateAndTime,
+                 ]);
+
+            return response()->json(['status' => $data['status']]);
+        } else if ($data['status'] === 'сделано') {
+
+            $updatedAt = Tasks::query()
+                 ->where('id', '=', $data['taskId'])
+                ->value('updated_at');
+
+            $updatedAt = Carbon::parse($updatedAt);
+
+            $diff = $currentDateAndTime->diffInSeconds($updatedAt);
+
+//            $formattedDiff = $diff->format('%H часов, %I минут, %S секунд');
+
+            Tasks::query()
+                 ->where('id', '=', $data['taskId'])
+                 ->update([
+                     'status' => $data['status'],
+                     'execution_date' => $currentDateAndTime,
+                     'execution_time' => $diff,
+                 ]);
+
             return response()->json(['status' => $data['status']]);
         }
+
         return response()->json(['message' => 'Статус не обновился'], 404);
     }
 
     public function addTask(Request $request)
     {
 
-
+        $dateTime = new DateTime();
 
         $data = $request->only([
             'room_number',
             'task_name',
             'id_staff',
-            'id_room'
+            'id_room',
+            'id_request'
         ]);
 
-        DB::table('tasks')
-            ->insert([
+        $id = DB::table('tasks')
+            ->insertGetId([
                 'name' => $data['task_name'],
                 'id_room' => $data['id_room'],
                 'id_staff' => $data['id_staff'],
+                'id_guest_request' => $data['id_request'],
                 'created_date' => date(now()),
+                'updated_at' => $dateTime,
+
 
             ]);
 

@@ -18,8 +18,10 @@ return new class extends Migration
                   ->constrained('rooms')->cascadeOnDelete();
             $table->foreignId('id_staff')->nullable()
                   ->constrained('staff')->cascadeOnDelete();
+            $table->foreignId('id_guest_request')->nullable()->constrained('guest_requests')->cascadeOnDelete();
             $table->date('created_date');
-            $table->date('execution_date')->nullable();
+            $table->dateTime('execution_date')->nullable();
+            $table->integer('execution_time')->nullable();
             $table->string('comment')->nullable();
             $table->string('status')->default('не сделано');
             $table->dateTime('updated_at')->nullable();
