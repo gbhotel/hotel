@@ -225,7 +225,7 @@ export default function FreeRooms(props) {
                             <button
                                 className="btn w-25 align-self-end btn-task rounded-pill px-3"
                                 type="button"
-                                onClick={() => showBookingForm(selectedRoom)}
+                                onClick={() => checkEditing(selectedRoom)}
                             >Забронировать
                             </button>
                         </div>

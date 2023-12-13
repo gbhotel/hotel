@@ -32,6 +32,8 @@ export default function EditBooking(props) {
     const checkInRef = useRef();
     const checkOutRef = useRef();
     const roomIdRef = useRef();
+    const checkInDateRef = useRef('');
+    const checkOutDateRef = useRef('');
 
 
     const [booking, setBooking] = useState({});
@@ -42,6 +44,7 @@ export default function EditBooking(props) {
     const [freeRooms, setFreeRooms] = useState([]);
     const [adultCount, setAdultCount] = useState(0);
     const [childrenCount, setChildrenCount] = useState(0);
+    const [isOccupied, setIsOccupied] = useState(false);
 
 
 
@@ -63,7 +66,9 @@ export default function EditBooking(props) {
                 setRoom(data[1]);
                 setImages(data[2].images);
                 setCheckinDate(data[0].check_in);
+                checkInDateRef.current = data[0].check_in;
                 setCheckoutDate(data[0].check_out);
+                checkOutDateRef.current = data[0].check_out;
                 console.log(data);
 
             })
@@ -136,7 +141,7 @@ export default function EditBooking(props) {
         let editedBooking = booking;
         editedBooking.room_id = rm.id;
         setBooking(editedBooking);
-
+        setIsOccupied(false);
     }
 
     const saveEditedBooking = async () => {
@@ -153,7 +158,41 @@ export default function EditBooking(props) {
             '_token': _token,
         }
 
-        const response = await fetch('/api/admin/save-edited-booking', {
+        if (!isOccupied) {
+            const response = await fetch('/api/admin/save-edited-booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+            }).then(response => response.json())
+                .then(data => {
+                    if (data['saved'] === 'OK') {
+                        if (idFromCheckIn) {
+                            callBackFunc(1);
+                        }
+                        else
+                            window.location.href = '/booking';
+                    }
+                    else alert('При сохранении данных произошла ошибка!');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+    }
+
+    const checkRoomOnChangeDate = async () => {
+        let requestData = {
+            'bookingId': booking.booking_number,
+            'newCheckIn': checkInDateRef.current,
+            'newCheckOut': checkOutDateRef.current,
+            'roomId': booking.room_id,
+            '_token': _token,
+        }
+
+        const response = await fetch('/api/admin/check-room-on-change-date', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -161,19 +200,27 @@ export default function EditBooking(props) {
             body: JSON.stringify(requestData),
         }).then(response => response.json())
             .then(data => {
-                if (data['saved'] === 'OK') {
-                    if (idFromCheckIn) {
-                        callBackFunc(1);
-                    }
-                    else
-                        window.location.href = '/booking';
+                if (data['status'] == 'OK') {
+                    setIsOccupied(data['occupied']);
+                    console.log('Occupied: ' + data['occupied']);
                 }
-                else alert('При сохранении данных произошла ошибка!');
+                else alert('check-room-on-change-date: Ошибка при выполнении запроса');
             })
             .catch(error => {
                 console.error(error);
             });;
+    }
 
+    const changeCheckIn = (e) => {
+        setCheckinDate(e.target.value);
+        checkInDateRef.current = e.target.value;
+        checkRoomOnChangeDate();
+    }
+
+    const changeCheckOut = (e) => {
+        setCheckoutDate(e.target.value);
+        checkOutDateRef.current = e.target.value;
+        checkRoomOnChangeDate();
     }
 
     return (
@@ -218,7 +265,7 @@ export default function EditBooking(props) {
                                 Заезд:
                             </Col>
                             <Col xs={3}>
-                                <input type="date" onChange={(e) => setCheckinDate(e.target.value)} required className="form-control" id="check_in_date" ref={checkInRef} defaultValue={booking.check_in} />
+                                <input type="date" onChange={(e) => changeCheckIn(e)} required className="form-control" id="check_in_date" ref={checkInRef} defaultValue={booking.check_in} />
                             </Col>
                             <Col xs={6}>
 
@@ -229,12 +276,19 @@ export default function EditBooking(props) {
                                 Выезд
                             </Col>
                             <Col xs={3}>
-                                <input type="date" onChange={(e) => setCheckoutDate(e.target.value)} required className="form-control" id="check_out_date" ref={checkOutRef} defaultValue={booking.check_out} />
+                                <input type="date" onChange={(e) => changeCheckOut(e)} required className="form-control" id="check_out_date" ref={checkOutRef} defaultValue={booking.check_out} />
                             </Col>
                             <Col xs={6}>
 
                             </Col>
                         </Row>
+                        {isOccupied && (
+                            <Row className="align-items-center m-3 text-center text-danger" >
+                                <Col xs={12}>
+                                    На указанные даты номер занят. Найдите другой номер.
+                                </Col>
+                            </Row>
+                        )}
                         <Row className="align-items-center m-3 text-center" >
                             <Col xs={3}>
                                 Номер:

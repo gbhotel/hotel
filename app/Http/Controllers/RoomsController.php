@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class RoomsController extends Controller
 {
-    public function getRooms ()
+    public function getRooms()
     {
         $date = now()->toDateTimeString();
 
@@ -44,7 +44,7 @@ class RoomsController extends Controller
             ->leftjoin('check_in', 'booking.id', '=', 'check_in.id_booking')
             ->whereDate('booking.check_in', '<=', $date)
             ->whereDate('booking.check_out', '>=', $date)
-            ->whereNull( 'check_in.id_booking')
+            ->whereNull('check_in.id_booking')
             ->select('rooms.id', 'rooms.number',  'check_in', 'check_out')
             ->get();
 
@@ -56,18 +56,16 @@ class RoomsController extends Controller
 
         $allRooms = DB::table('rooms')->select('id', 'number')->get();
 
-        $free =[];
-        foreach ($allRooms as $room)
-        {
+        $free = [];
+        foreach ($allRooms as $room) {
             $b = false;
-            foreach ($notFree as $id)
-            {
-                if($id->id == $room->id){
+            foreach ($notFree as $id) {
+                if ($id->id == $room->id) {
                     $b = true;
                     break;
                 }
             }
-            if(!$b){
+            if (!$b) {
                 $free[] = $room;
             }
         }
@@ -76,7 +74,7 @@ class RoomsController extends Controller
             $item->status = 'free';
         }
 
-        $data = [...$free, ...$checkIn, ...$booking, ...$closed ];
+        $data = [...$free, ...$checkIn, ...$booking, ...$closed];
 
         return response()->json($data);
     }
@@ -126,29 +124,28 @@ class RoomsController extends Controller
         //Собираем полученые id в один неименованый массив
         $arrId = [...$closedId, ...$bookingId];
         $arrSortId = [];
-        foreach ($arrId as $item)
-        {
+        foreach ($arrId as $item) {
             $arrSortId[] = $item->id;
         }
 
         //Получаем данные на комнаты, id которых нет в массиве $arrSortId
         $data = DB::table('booking')
-            ->leftJoin( 'rooms', 'rooms.id', '=', 'booking.id_room')
-            ->leftJoin( 'categories', 'rooms.id_category', '=', 'categories.id')
-            ->where ('rooms.max_guests', '>=', (string)$peopleCount['adultCount'])
+            ->leftJoin('rooms', 'rooms.id', '=', 'booking.id_room')
+            ->leftJoin('categories', 'rooms.id_category', '=', 'categories.id')
+            ->where('rooms.max_guests', '>=', (string)$peopleCount['adultCount'])
             ->whereNotIn('rooms.id', $arrSortId)
             ->orderBy('rooms.number')
             ->distinct('rooms.number')
             ->get();
 
-//        $data = DB::table('rooms')
-//            ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
-//            ->join( 'categories', 'rooms.id_category', '=', 'categories.id')
-//            ->whereDate('booking.check_out', '<', $dateIn)
-//            ->orWhereDate('booking.check_in', '>', $dateOut)
-//            ->orderBy('rooms.number')
-//            ->distinct('rooms.number')
-//            ->get();
+        //        $data = DB::table('rooms')
+        //            ->join( 'booking', 'rooms.id', '=', 'booking.id_room')
+        //            ->join( 'categories', 'rooms.id_category', '=', 'categories.id')
+        //            ->whereDate('booking.check_out', '<', $dateIn)
+        //            ->orWhereDate('booking.check_in', '>', $dateOut)
+        //            ->orderBy('rooms.number')
+        //            ->distinct('rooms.number')
+        //            ->get();
 
         foreach ($data as $oneData) {
             $freeRooms[] = [
@@ -164,23 +161,68 @@ class RoomsController extends Controller
         return response()->json($freeRooms);
     }
 
-    public function getRoomsForCleaning() {
+    public function getRoomsForCleaning()
+    {
 
         $date = '2023-11-12';
 
         $roomsForCleaning = DB::table('rooms')
-                              ->leftJoin('tasks', 'rooms.id', '=', 'tasks.id_room')
-                              ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
-                              ->leftJoin('check_in', 'booking.id','=','check_in.id_booking')
-                              ->where('tasks.name', '=', 'уборка номера')
-                              ->whereDate('check_in.checkOut', '>=', $date)
-                              ->groupBy('tasks.id_room')
-                              ->havingRaw('MAX(tasks.execution_date) <= ?', [now()->subDays(3)])
-                              ->selectRaw('tasks.id_room, MAX(tasks.execution_date) as max_execution_date')
-                              ->get();
+            ->leftJoin('tasks', 'rooms.id', '=', 'tasks.id_room')
+            ->leftJoin('booking', 'rooms.id', '=', 'booking.id_room')
+            ->leftJoin('check_in', 'booking.id', '=', 'check_in.id_booking')
+            ->where('tasks.name', '=', 'уборка номера')
+            ->whereDate('check_in.checkOut', '>=', $date)
+            ->groupBy('tasks.id_room')
+            ->havingRaw('MAX(tasks.execution_date) <= ?', [now()->subDays(3)])
+            ->selectRaw('tasks.id_room, MAX(tasks.execution_date) as max_execution_date')
+            ->get();
 
         return response()->json($roomsForCleaning);
     }
 
-
+    public function checkRoomOnChangeDate(Request $request)
+    {
+        $response = [
+            'status' => 'error',
+            'occupied' => false,
+        ];
+        $isOccupied = false;
+        if (isset($request['roomId']) &&  isset($request['newCheckIn']) && isset($request['newCheckOut']) && isset($request['bookingId'])) {
+            $closedRooms = DB::table('rooms_closed')->where('id_rooms', $request['roomId'])->get();
+            foreach ($closedRooms as $room) {
+                if ($room->closure_at <= $request['newCheckIn'] && $room->opening_at >= $request['newCheckOut']) {
+                    $isOccupied = true;
+                    break;
+                }
+                if ($room->closure_at >= $request['newCheckIn'] && $room->closure_at < $request['newCheckOut']) {
+                    $isOccupied = true;
+                    break;
+                }
+                if ($room->opening_at > $request['newCheckIn'] && $room->opening_at <= $request['newCheckOut']) {
+                    $isOccupied = true;
+                    break;
+                }
+            }
+            if (!$isOccupied) {
+                $bookings = DB::table('booking')->where('id_room', $request['roomId'])->where('id', '<>', $request['bookingId'])->get();
+                foreach ($bookings as $booking) {
+                    if ($booking->check_in <= $request['newCheckIn'] && $booking->check_out >= $request['newCheckOut']) {
+                        $isOccupied = true;
+                        break;
+                    }
+                    if ($booking->check_in >= $request['newCheckIn'] && $booking->check_in < $request['newCheckOut']) {
+                        $isOccupied = true;
+                        break;
+                    }
+                    if ($booking->check_out > $request['newCheckIn'] && $booking->check_out <= $request['newCheckOut']) {
+                        $isOccupied = true;
+                        break;
+                    }
+                }
+            }
+            $response['status'] = 'OK';
+            $response['occupied'] = $isOccupied;
+        }
+        return response()->json($response);
+    }
 }

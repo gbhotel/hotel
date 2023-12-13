@@ -37,6 +37,7 @@ Route::get('admin/roomsForCleaning', [RoomsController::class, 'getRoomsForCleani
 Route::post('admin/free-rooms-period', [RoomsController::class, 'getFreeRoomsPeriod'])->name('admin.free-rooms-period')->middleware('can:get-free-rooms-period');
 Route::get('admin/room/{id}/get-room', [RoomController::class, 'getRoom'])->name('admin.room.get-room')->middleware('can:get-room');
 Route::get('admin/room/{id}/get-room-info', [RoomController::class, 'getRoomInfo'])->name('admin.room.get-room-info')->middleware('can:admin-get-room-info');
+Route::post('admin/check-room-on-change-date', [RoomsController::class, 'checkRoomOnChangeDate'])->name('admin.checkRoomOnChangeDate')->middleware('can:check-room-on-change-date');
 
 Route::put('admin/room/cancel-book-room', [RoomController::class, 'cancelBookRoom'])->name('admin.room.cancel-book-room')->middleware('can:cancel-book-room');
 Route::post('admin/room/check-in-room', [RoomController::class, 'checkInRoom'])->name('admin.room.check-in-room')->middleware('can:check-in-room');
@@ -60,10 +61,10 @@ Route::post('admin/addTask', [TasksController::class, 'addTask'])->name('admin.a
 Route::put('admin/updateTask', [TasksController::class, 'updateTask'])->name('admin.updateTask')->middleware('can:update-task');
 Route::delete('admin/deleteTask/{id}', [TasksController::class, 'deleteTask'])->name('admin.deleteTask')->middleware('can:delete-task');
 
-Route::post('admin/checkin/add', [CheckInController::class, 'checkIn'])->name('admin.checkin');
-Route::get('admin/nocheckin/booking', [BookingController::class, 'getNoCheckInBooking'])->name('admin.no.checkin.booking');
-Route::get('admin/checkin/{date}/get', [CheckInController::class, 'getCheckIns'])->name('admin.get.checkins');
-Route::post('admin/checkout', [CheckInController::class, 'checkOut'])->name('admin.checkout');
+Route::post('admin/checkin/add', [CheckInController::class, 'checkIn'])->name('admin.checkin')->middleware('can:admin-add-checkin');
+Route::get('admin/nocheckin/booking', [BookingController::class, 'getNoCheckInBooking'])->name('admin.no.checkin.booking')->middleware('can:admin-no-checkin-booking');
+Route::get('admin/checkin/{date}/get', [CheckInController::class, 'getCheckIns'])->name('admin.get.checkins')->middleware('can:admin-get-checkins');
+Route::post('admin/checkout', [CheckInController::class, 'checkOut'])->name('admin.checkout')->middleware('can:admin-checkout');
 
 
 //роуты гостя
