@@ -32,7 +32,7 @@ export default function CheckInGuest() {
     }
 
     return (<>
-        <div className="container-fluid">
+        <div className=" mt-5 container-fluid">
             <div className="check-in-nav">
                 <div className={"mx-2 btn " + styles[0]}
                     onClick={() => selectTab(0)}
