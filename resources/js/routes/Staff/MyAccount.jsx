@@ -166,32 +166,32 @@ export default function MyAccount () {
             {
                 showForm && (
                     <div className="d-flex gap-1 flex-column purple-form border-with-shadow">
-                        <Row>
-                            <form method="POST"
-                                  id="formEditPhoto"
-                                  name="formEditPhoto"
-                                  onSubmit={handleUpload}
-                            >
-                                <Col xs={12} className="d-flex align-items-center justify-content-center">
-                                    <div className="p-2" style={{width:'300px'}}>
-                                        <input type="file"
-                                               // onChange={onImageChange}
-                                               required
-                                               className="form-control"
-                                               aria-label="avatar"
-                                               id="avatar"
-                                               accept="image/*"
-                                        />
-                                    </div>
-                                </Col>
-                                <button type="submit"
-                                        form="formEditPhoto"
-                                        className="w-100 btn btn-sm btn-outline-secondary"
-                                >
-                                    загрузить
-                                </button>
-                            </form>
-                        </Row>
+                        {/*<Row>*/}
+                        {/*    <form method="POST"*/}
+                        {/*          id="formEditPhoto"*/}
+                        {/*          name="formEditPhoto"*/}
+                        {/*          onSubmit={handleUpload}*/}
+                        {/*    >*/}
+                        {/*        <Col xs={12} className="d-flex align-items-center justify-content-center">*/}
+                        {/*            <div className="p-2" style={{width:'300px'}}>*/}
+                        {/*                <input type="file"*/}
+                        {/*                       // onChange={onImageChange}*/}
+                        {/*                       required*/}
+                        {/*                       className="form-control"*/}
+                        {/*                       aria-label="avatar"*/}
+                        {/*                       id="avatar"*/}
+                        {/*                       accept="image/*"*/}
+                        {/*                />*/}
+                        {/*            </div>*/}
+                        {/*        </Col>*/}
+                        {/*        <button type="submit"*/}
+                        {/*                form="formEditPhoto"*/}
+                        {/*                className="w-100 btn btn-sm btn-outline-secondary"*/}
+                        {/*        >*/}
+                        {/*            загрузить*/}
+                        {/*        </button>*/}
+                        {/*    </form>*/}
+                        {/*</Row>*/}
                         {/*<div >*/}
                         {/*    <input*/}
                         {/*        type="file"*/}
