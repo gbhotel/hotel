@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AddBooking from "./AddBooking";
+import AddBooking from "../Booking/AddBooking.jsx";
 
 export default function CheckInWithoutBooking(props) {
     const { callBackFunc } = props;

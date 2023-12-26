@@ -2,14 +2,14 @@ import React, {useEffect, useState} from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {Link} from "react-router-dom";
-import done from "../../img/done.svg";
+import done from "../../../../img/done.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {setTasksAction} from "../store/actions/admin_actions";
-import {setStaffAction} from "../store/actions/staff_actions.jsx";
-import {setTasksNameAction} from "../store/actions/tasksName_action.jsx";
-import {setRoomsAction} from "../store/actions/rooms_actions.jsx";
-import CreateTasks from "../routes/CreateTasks.jsx";
-import WorkProgress from "@/components/WorkProgress.jsx";
+import {setTasksAction} from "../../../store/actions/admin_actions.jsx";
+import {setStaffAction} from "../../../store/actions/staff_actions.jsx";
+import {setTasksNameAction} from "../../../store/actions/tasksName_action.jsx";
+import {setRoomsAction} from "../../../store/actions/rooms_actions.jsx";
+import CreateTasks from "./CreateTasks.jsx";
+import WorkProgress from "../../../components/Admin/Tasks/WorkProgress.jsx";
 
 export default function Tasks() {
 

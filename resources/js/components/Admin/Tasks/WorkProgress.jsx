@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
-import TimerComponent from "../components/Timer.jsx";
-import formatElapsedTime from "../services/formatElapsedTime.js";
-import {setTasksAction} from "@/store/actions/admin_actions.jsx";
+import TimerComponent from "../Tasks/Timer";
+import formatElapsedTime from "../../../services/formatElapsedTime.js";
+import {setTasksAction} from "../../../store/actions/admin_actions.jsx";
 
 export default function WorkProgress() {
 
@@ -11,23 +11,15 @@ export default function WorkProgress() {
     const dispatch = useDispatch();
 
     const dateOnly = currentDate.toISOString().split('T')[0];
-    const [invisible, setInvisible] = useState(false);
     const [expandedEmployee, setExpandedEmployee] = useState(null);
     const staff = useSelector((state)=> state.setStaffAction.Staff);
     const tasks = useSelector((state)=> state.setTasksAction.Tasks);
-    // const [countTasksForEmployee, setCountTasksForEmployee ] = useState(0);
 
     const [countTasksForEmployee, setCountTasksForEmployee ] = useState(() => {
         return staff.map(employee => ({ id: employee.id, tasks:
             tasks.filter(task => task.id_staff === employee.id && task.created_date === dateOnly).length
         }));
     });
-
-    // const[arrayLength, setArrayLength] = useState(() => { return tasks.filter(task => task.id_staff === employee.id && task.created_date === dateOnly).length});
-
-
-    // const tasks = useSelector((state)=> state.setTasksAction.Tasks);
-
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -43,7 +35,6 @@ export default function WorkProgress() {
                     return response.json();
                 })
                 .then(data => {
-                    // setTasks(data.tasks);
                     dispatch(setTasksAction(data.tasks));
 
                 })
@@ -58,10 +49,6 @@ export default function WorkProgress() {
 
     const handleInvisible = (status) =>{
         if (status === 'сделано') {
-
-            // setTimeout(() => {
-            // },5000)
-
             return true;
         }
     }
@@ -129,7 +116,6 @@ export default function WorkProgress() {
 
                                                 ${handleInvisible(task.status)? "invisible": ""}
                                                `}
-                                                       // ${index >= 4? "invisible": ""}
                                                        key={index}
                                                    >
                                                        <div className="text-bold">{task.name}</div>
@@ -177,17 +163,9 @@ export default function WorkProgress() {
                                </div>
                            )}
                        </div>
-
-
                    ))
-
                }
            </div>
        </div>
-
-
-
-
-
     )
 }

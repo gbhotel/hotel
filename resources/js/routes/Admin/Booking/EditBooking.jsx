@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import FreeRooms from "../components/FreeRooms.jsx";
-import { Link, useParams } from "react-router-dom";
+import FreeRooms from "../../../components/Admin/Booking/FreeRooms.jsx";
+import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import formatElapsedTime from "../services/formatElapsedTime.js";
+import formatElapsedTime from "../../../services/formatElapsedTime.js";
 
 const TimerComponent = ({ task }) => {
     const [elapsedTime, setElapsedTime] = useState(0);
