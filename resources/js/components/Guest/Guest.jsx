@@ -1,10 +1,10 @@
 import React from "react";
-import GuestNavbar from "../components/Guest/GuestNavbar.jsx";
+import GuestNavbar from "./GuestNavbar.jsx";
 import {Route, Routes} from "react-router-dom";
 
-import GuestRoom from "../routes/Guest/GuestRoom.jsx";
-import GuestFeedback from "../routes/Guest/GuestFeedback.jsx";
-import GuestRequests from "../routes/Guest/GuestRequests.jsx";
+import GuestRoom from "../../routes/Guest/GuestRoom.jsx";
+import GuestFeedback from "../../routes/Guest/GuestFeedback.jsx";
+import GuestRequests from "../../routes/Guest/GuestRequests.jsx";
 
 export default function Guest (){
 

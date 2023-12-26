@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import FreeRooms from "../components/FreeRooms.jsx";
-import people from "../../img/people.svg";
-import arrow from "../../img/arrow.svg";
-
-
+import FreeRooms from "../../../components/Admin/Booking/FreeRooms.jsx";
+import people from "../../../../img/people.svg";
+import arrow from "../../../../img/arrow.svg";
 
 export default function AddBooking(props) {
     const { isCheckInWithoutBooking, callBackFunc, inDate } = props;

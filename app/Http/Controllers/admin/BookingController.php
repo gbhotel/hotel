@@ -124,7 +124,6 @@ class BookingController extends Controller
                 }
             }
 
-            //dump($booking, $user, $guest);
         }
         return response()->json($data);
     }

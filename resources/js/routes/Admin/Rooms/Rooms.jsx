@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import StatusBtn from "../components/Status.jsx";
+import StatusBtn from "../../../components/Status.jsx";
 import {Link} from "react-router-dom";
 
 export default function Rooms() {

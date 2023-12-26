@@ -1,5 +1,5 @@
 import React from "react";
-import StaffAdmin from '../components/Admin/Staff/Staff.jsx'
+import StaffAdmin from '../../../components/Admin/Staff/Staff.jsx'
 
 export default function Staff() {
     return (

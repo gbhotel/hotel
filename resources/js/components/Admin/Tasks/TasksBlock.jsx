@@ -15,7 +15,7 @@ export default function TasksBlock({setCreatedTask}) {
                             className="p-0 d-flex dropdown-item rounded-2 py-2 px-3"
                             key={index}
                             value={index}
-                            onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_request']:null, ['task_name']:tasksName[e.target.value] }))}
+                            onClick={(e)=> setCreatedTask(prevState => ({...prevState, ['id_request']:null, ['comment']:null, ['task_name']:tasksName[e.target.value] }))}
                         >
                             {item}
                         </li>
