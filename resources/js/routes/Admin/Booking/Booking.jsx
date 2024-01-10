@@ -17,7 +17,6 @@ export default function Booking() {
     const [filteredBooking, setFilteredBooking] = useState([]);
 
     useEffect(() => {
-        // const abortController = new AbortController();
         request('/api/admin/booking')
             .then(data => {setBooking(data)})
             .catch(error => {
