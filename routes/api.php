@@ -54,6 +54,9 @@ Route::get('admin/booking', [BookingController::class, 'getBooking'])->name('adm
 Route::post('admin/room/book-room', [RoomController::class, 'bookRoom'])->name('admin.room.book-room')->middleware('can:book-room');
 Route::delete('/admin/booking/{id}/delete', [BookingController::class, 'deleteBooking'])->name('admin.delete.booking')->middleware('can:admin-delete-booking');
 Route::get('/admin/booking/get/{id}', [BookingController::class, 'getOneBooking'])->name('admin.get.one.booking')->middleware('can:admin-get-one-booking');
+Route::get('/admin/booking/getByData/{id}', [BookingController::class, 'getBookingByData'])->name('admin.get.booking.by')->middleware('can:admin-get-one-booking');
+Route::get('/admin/booking/getByDate/{date}', [BookingController::class, 'getBookingByDate'])->name('admin.get.booking.byDate')->middleware('can:admin-get-booking-byDate');
+
 Route::post('/admin/save-edited-booking', [BookingController::class, 'saveEditedBooking'])->name('admin.save.edited.booking')->middleware('can:admin-save-edited-booking');
 
 Route::get('admin/tasks', [TasksController::class, 'getTasks'])->name('admin.tasks')->middleware('can:get-tasks');

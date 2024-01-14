@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 export default function AllBooking(props) {
 
-    const {booking, deleteBooking, editBooking} = props;
+    const {booking, deleteBooking} = props;
 
     return (booking.map((item, index) => (
             <Row key={index} className="align-items-center border-top">

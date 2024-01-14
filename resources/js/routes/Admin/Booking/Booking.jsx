@@ -7,26 +7,86 @@ import FilterBookingId from "./FilterBookingId.jsx";
 import FilterBookingDate from "./FilterBookingDate.jsx";
 import {createOptions} from "../../../services/requestFunction.js";
 import {request} from "../../../services/requestFunction.js";
+import {request2} from "../../../services/requestFunction.js";
 import AllBooking from "./AllBooking";
 import FilteredBooking from "./FilteredBooking.jsx";
+import Pagination from "./Pagination.jsx";
 
 export default function Booking() {
 
     let currentDate = new Date();
     const [booking, setBooking] = useState([]);
-    const [filteredBooking, setFilteredBooking] = useState([]);
+    const [bookingOnPage, setBookingOnPage] = useState([])
+    const [filteredBooking, setFilteredBooking] = useState({});
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [recordsPerPage] = useState(5);
+    const [nPages, setNPages ] = useState(0);
+    const [indexOfLastRecord, seIndexOfLastRecord] = useState();
+    const [indexOfFirstRecord, seIndexOfFirstRecord] = useState();
+
 
     useEffect(() => {
-        // const abortController = new AbortController();
         request('/api/admin/booking')
-            .then(data => {setBooking(data)})
+            .then(data => {
+                setBooking(data)
+                setBookingOnPage(data.slice(indexOfFirstRecord, indexOfLastRecord));
+                setNPages(Math.ceil(data.length / recordsPerPage));
+            })
             .catch(error => {
                 console.error(error);
             });
     }, []);
 
+    useEffect(()=> {
+
+        seIndexOfLastRecord( () => {
+            console.log("seIndexOfLastRecord called")
+            return  currentPage * recordsPerPage
+        })
+
+        seIndexOfFirstRecord( () => {
+            console.log("seIndexOfFirstRecord called")
+            return  indexOfLastRecord - recordsPerPage
+        })
+
+        setBookingOnPage( () => {
+                console.log("setBookingOnPage called")
+            console.log(indexOfFirstRecord);
+            return booking.slice(indexOfFirstRecord, indexOfLastRecord)
+        })
+
+        console.log(" useEffect on currentPage " + currentPage)
+    }, [currentPage, indexOfLastRecord, indexOfFirstRecord, booking])
+
+
+    const changePage = (pgNumber) => {
+
+            setCurrentPage(prevState => {
+                // return  prevState + 1
+                if(prevState < pgNumber) {
+                    console.log(" setCurrentPage up called " + prevState)
+                    return  prevState + 1
+                }else if (prevState > pgNumber) {
+                    console.log(" setCurrentPage down called " + prevState)
+                    return  prevState - 1
+                } else {
+                    return  prevState
+                }
+
+            })
+    }
+
     const filterByBookingId = (e) => {
-        setFilteredBooking(booking.filter((item) => item.booking_number === parseInt(e.target.value)));
+        if(e.target.value) {
+            request(`api/admin/booking/get/${e.target.value}`)
+                .then(data => {
+                    setFilteredBooking([data[0]])
+                })
+        } else {
+            setFilteredBooking({})
+        }
+
     }
 
     const filterByBookingDate = (date) => {
@@ -35,21 +95,28 @@ export default function Booking() {
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
+
+        if(formattedDate) {
+            request(`api/admin/booking/getByDate/${formattedDate}`)
+                .then(data => {
+                    setFilteredBooking(data)
+                })
+        } else {
+            setFilteredBooking({})
+        }
+
         setFilteredBooking(booking.filter((item) => item.check_in === formattedDate));
     };
 
     const deleteBooking = (booking_id) => {
+        if (!confirm('Вы уверены, что хотите удалить бронь №' + booking_id + '?')) {
+            return;
+        }
 
-        if (confirm('Вы уверены, что хотите удалить бронь №' + booking_id + '?'))
-
-                request(`/api/admin/booking/${booking_id}/delete`, createOptions('DELETE'))
-                .then((data) => {
-                    if (data['delete'] === 'OK') {
-                        let d_booking = booking.filter(value => value.booking_number !== booking_id)
+        request2(`/api/admin/booking/${booking_id}/delete`, createOptions('DELETE'))
+                .then(() => {
+                        const d_booking = booking.filter(value => value.booking_number !== booking_id)
                         setBooking(d_booking);
-                    }
-                    else
-                        console.log('Ошибка удаления брони');
                 })
                 .catch((error) => {
                     console.error(error);
@@ -98,12 +165,18 @@ export default function Booking() {
                         </Col>
                     </Row>
                     {
-                        filteredBooking.length === 0 ?
-                            <AllBooking booking = {booking} deleteBooking = {deleteBooking}/>
+                        Object.keys(filteredBooking).length === 0 ?
+                            <AllBooking booking = {bookingOnPage} deleteBooking = {deleteBooking}/>
                              :
                             <FilteredBooking filteredBooking = {filteredBooking} deleteBooking = {deleteBooking}/>
                     }
                 </div>
+                <Pagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    changePage = {changePage}
+                    setCurrentPage={setCurrentPage}
+                />
             </div>
         </>
     )
