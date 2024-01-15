@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import AllCheckIns from "./AllCheckIns";
-import CheckInWithBooking from "./CheckInWithBooking";
-import CheckInWithoutBooking from "./CheckInWithoutBooking";
-import EditBooking from "./EditBooking";
+import AllCheckIns from "./AllCheckIns.jsx";
+import CheckInWithBooking from "./CheckInWithBooking.jsx";
+import CheckInWithoutBooking from "./CheckInWithoutBooking.jsx";
+import EditBooking from "../Booking/EditBooking.jsx";
 
 export default function CheckInGuest() {
     const [styles, setStyles] = useState(['btn-primary', 'btn-outline-secondary', 'btn-outline-secondary']);

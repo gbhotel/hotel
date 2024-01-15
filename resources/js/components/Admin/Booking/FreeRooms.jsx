@@ -1,11 +1,11 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import star from "../../img/star3.svg";
+import star from "../../../../img/star3.svg";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-slideshow-image/dist/styles.css'
 import { Fade } from 'react-slideshow-image';
-import star_full from '../../img/star-full.svg';
+import star_full from '../../../../img/star-full.svg';
 import { useNavigate } from "react-router-dom";
 
 export default function FreeRooms(props) {

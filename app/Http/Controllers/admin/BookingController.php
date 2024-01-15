@@ -92,7 +92,6 @@ class BookingController extends Controller
         ];
         $room = Rooms::where('id', $booking->id_room)->with('category')->get()->first();
         $data = [
-
             'number' => $room->number,
             'price' => $room->price,
             'max_guests' => $room->max_guests,
@@ -105,28 +104,40 @@ class BookingController extends Controller
         ];
 
         $result = [$result, $data, $data_arrays];
+
         return response()->json($result);
     }
 
     public function deleteBooking($id)
     {
-        $data['delete'] = 'error';
-        $booking = Booking::where('id', $id)->get()->first();
-        if ($booking) {
-            $guest_id = $booking->id_guest;
-            $guest = Guests::where('id', $guest_id)->get()->first();
-            if ($guest) {
-                $user_id = $guest->id_user;
-                $user = User::where('id', $user_id)->get()->first();
-                if ($user) {
-                    $user->delete();
-                    $data['delete'] = 'OK';
-                }
-            }
-
-            //dump($booking, $user, $guest);
+        $booking = Booking::find($id);
+        if($booking) {
+            $booking->delete();
         }
-        return response()->json($data);
+    }
+
+    public function getBookingByDate($date) {
+        $booking = Booking::where('check_in', $date)
+                          ->with('room')
+                          ->with('guest.user')
+                          ->get();
+
+
+
+        if($booking) {
+
+            $result = [
+                'booking_number' => $booking->id,
+                'room_number' => $booking->room->id,
+                'guest_phone' => $booking->guest->user->phone,
+                'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->user->last_name,
+                'check_in' => $booking->ckeck_in,
+                'check_out' => $booking->ckeck_out,
+
+            ];
+
+            return response()->json($result);
+        }
     }
 
     public function saveEditedBooking(Request $request)

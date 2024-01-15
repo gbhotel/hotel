@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 
-import { request } from "../services/http.js";
+import { request } from "../../../services/http.js";
 
 export default function Employee() {
+
     const { id } = useParams();
 
     const [loading, setLoading] = useState(false);
@@ -114,7 +115,7 @@ export default function Employee() {
                     </div>
                     <div className="d-flex justify-content-end">
                         <div className="d-flex  mr_auto align-items-center">
-                            <h3 className="mb-0 mr_auto">Принят: </h3><form action=""></form>
+                            <h3 className="mb-0 mr_auto">Принят: </h3><form action="../."></form>
                             <input
                                 disabled={disable}
                                 type="text"

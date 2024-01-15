@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import StatusBtn from "../components/Status.jsx";
+import StatusBtn from "../../../components/Status.jsx";
 import { useSelector } from "react-redux";
-import done from "../../img/done.svg";
-import TasksBlock from "../components/Admin/TasksBlock.jsx";
+import done from "../../../../img/done.svg";
+import TasksBlock from "../../../components/Admin/Tasks/TasksBlock.jsx";
 
 export default function CreateTasks(props) {
 
@@ -13,6 +13,8 @@ export default function CreateTasks(props) {
     const [roomForCleaning, setRoomForCleaning] = useState([]);
     const [guestRequest, setGuestRequest] = useState([]);
     const [createdTask, setCreatedTask ] = useState([]);
+    const [allTasks, setAllTasks ] = useState([]);
+    const [taskExist, setTaskExist] = useState(false);
     const [success, setSuccess] = useState(false);
     const [response , setResponse ] = useState([]);
 
@@ -70,29 +72,45 @@ export default function CreateTasks(props) {
             });
     }, []);
 
+
     const generateTask = async () => {
         try {
-            const response = await fetch('/api/admin/addTask', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': _token,
-                },
-                body: JSON.stringify(createdTask),
-            });
+                setAllTasks(prevState => [...prevState, createdTask]);
 
-            if (response.ok) {
-                const data = await response.json();
-                setResponse(data);
-                setSuccess(true);
-                updateTasks();
-            } else {
-                console.error('Ошибка при выполнении fetch-запроса');
-            }
+                const response = await fetch('/api/admin/addTask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': _token,
+                    },
+                    body: JSON.stringify(createdTask),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setResponse(data);
+                    setSuccess(true);
+                    updateTasks();
+                } else {
+                    console.error('Ошибка при выполнении fetch-запроса');
+                }
         } catch (error) {
             console.error('Произошла ошибка:', error);
         }
     };
+
+    const checkTaskExist = () => {
+        if(allTasks.includes(createdTask)) {
+
+            console.log('задача существует');
+
+            setTaskExist(true);
+            alert('Такая задача уже существует');
+        }else {
+            generateTask();
+        }
+    }
+
 
     return (
         <div className="d-flex flex-column gap-3 mt-5">
@@ -236,7 +254,12 @@ export default function CreateTasks(props) {
                             </div>
                             </div>
                         <div className="align-self-center mt-3 w-100">
-                            <button className=" btn btn-add py-3 px-4 w-100" onClick={generateTask}>Сформировать задачу</button>
+                            <button
+                                className=" btn btn-add py-3 px-4 w-100"
+                                onClick={checkTaskExist}
+                            >
+                                Сформировать задачу
+                            </button>
                         </div>
                     </div>
                     <div className="p-3 text-center">
