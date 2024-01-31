@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'birthday' => '1990-12-11',
             'gender' => 'м',
             'passport' => '987001',
-            'photo' => 'img/director.jpg'
+            'photo' => '../img/director.jpg'
         ]);
 //---------------------------------------------------------
         \App\Models\User::query()->create([
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'passport' => '987002',
             'birthday' => '1986-09-09',
             'gender' => 'м',
-            'photo' => 'img/admin1.png'
+            'photo' => '../img/admin1.png'
         ]);
         \App\Models\User::query()->create([
             'first_name' => fake()->firstName(),
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
             'passport' => '987005',
             'birthday' => '1995-08-15',
             'gender' => 'ж',
-            'photo' => 'img/maid1.jpg'
+            'photo' => '../img/maid1.jpg'
         ]);
         \App\Models\User::query()->create([
             'first_name' => fake()->firstName(),
@@ -90,7 +90,7 @@ class UserSeeder extends Seeder
             'passport' => '987006',
             'birthday' => '1983-06-17',
             'gender' => 'ж',
-            'photo' => 'img/maid1.jpg'
+            'photo' => '../img/maid1.jpg'
         ]);
         \App\Models\User::query()->create([
             'first_name' => fake()->firstName(),

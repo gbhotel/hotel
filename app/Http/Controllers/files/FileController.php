@@ -3,33 +3,37 @@
 namespace App\Http\Controllers\files;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use function PHPUnit\Framework\throwException;
 
 class FileController extends Controller
 {
+    /**
+     * @throws HttpException
+     */
     public function upload(Request $request)
     {
-        $answer = [];
 
-        $response = $request->all();
-//         Validate the uploaded file
-//        $request->validate([
-//            'file' => 'required|mimes:pdf,doc,docx|max:2048', // Adjust the allowed file types and size
-//        ]);
-        if (!$request->hasFile('photo')) {
-            $answer['condition'] = false;
-            $answer['message'] = 'Сервер не получил файл';
-            return response()->json($answer);
+        if(!$request->hasFile('avatar')) {
+            throw new HttpException(400,'Отсутствует обязательный файл "avatar" в запросе');
         }
 
-//         Get the uploaded file
-        $file = $request->file('photo');
+        $user = Auth::user();
 //
-//        // Store the file on disk (e.g., in the 'public' disk)
-//        $path = $file->store('uploads', 'public');
+        $fileName = $user->getAuthIdentifier() . time();
 
-        // Do any additional processing if needed (e.g., save the file path to a database)
+        $path = Storage::url('img/avatars/' . $fileName);
 
-        return response()->json(['message' => $file]);
-    }
+        if($request->file('avatar')->isValid()) {
+            $request->file('avatar')->storeAs('img/avatars', $fileName, 'public');
+            }
+
+        $user->update([
+            'photo' => $path
+        ]);
+
+        }
 }

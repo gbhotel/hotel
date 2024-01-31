@@ -9,6 +9,16 @@
     }
 }
 
+ export function createOptions2(method, data = null) {
+     return {
+         method: method,
+         headers: {
+             'X-CSRF-Token': _token,
+         },
+         body: data
+     }
+ }
+
  export function request(url, options = {}) {
    return  fetch(url, options).then(response =>  response.json())
 }

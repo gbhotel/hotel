@@ -78,10 +78,12 @@ class BookingController extends Controller
 
     public function getOneBooking($id)
     {
-        $booking = Booking::where('id', $id)->with('guest.user')->get()->first();
+        $booking = Booking::where('id', $id)->with('room')->with('guest.user')->get()->first();
         $result = [
             'booking_number' => $booking->id,
             'room_id' => $booking->id_room,
+            'room_number' => $booking->room->id,
+            'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->user->last_name,
             'guest_firstname' => $booking->guest->user->first_name,
             'guest_lastname' => $booking->guest->user->last_name,
             'guest_phone' => $booking->guest->user->phone,
@@ -117,27 +119,28 @@ class BookingController extends Controller
     }
 
     public function getBookingByDate($date) {
-        $booking = Booking::where('check_in', $date)
+
+
+        $bookings = Booking::where('check_in', $date)
                           ->with('room')
                           ->with('guest.user')
                           ->get();
 
+        $result = [];
 
-
-        if($booking) {
-
-            $result = [
-                'booking_number' => $booking->id,
-                'room_number' => $booking->room->id,
-                'guest_phone' => $booking->guest->user->phone,
-                'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->user->last_name,
-                'check_in' => $booking->ckeck_in,
-                'check_out' => $booking->ckeck_out,
-
-            ];
-
-            return response()->json($result);
+        if($bookings) {
+            foreach ($bookings as $booking) {
+                $result[] = [
+                    'booking_number' => $booking->id,
+                    'room_number' => $booking->room->id,
+                    'guest_phone' => $booking->guest->user->phone,
+                    'guest_name' => $booking->guest->user->first_name . ' ' . $booking->guest->user->last_name,
+                    'check_in' => $booking->check_in,
+                    'check_out' => $booking->check_out,
+                ];
+            }
         }
+            return response()->json($result);
     }
 
     public function saveEditedBooking(Request $request)
