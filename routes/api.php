@@ -103,6 +103,6 @@ Route::post('director/profile/change-photo', [ProfileController::class, 'changeP
 Route::get('isauth', [AuthController::class, 'isAuth']);
 Route::get('userRole', [AuthController::class, 'getRole']);
 Route::get('user', [AuthController::class, 'getCurrentUser']);
-Route::put('user/update', [AuthController::class, 'update']);
+Route::post('user/update', [AuthController::class, 'update']);
 
 Route::post('/upload', [FileController::class, 'upload']);

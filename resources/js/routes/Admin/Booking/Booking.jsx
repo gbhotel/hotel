@@ -15,6 +15,7 @@ import Pagination from "./Pagination.jsx";
 export default function Booking() {
 
     let currentDate = new Date();
+    const[selectedDate, setSelectedDate] = useState();
     const [booking, setBooking] = useState([]);
     const [bookingOnPage, setBookingOnPage] = useState([])
     const [filteredBooking, setFilteredBooking] = useState({});
@@ -22,8 +23,8 @@ export default function Booking() {
     const [currentPage, setCurrentPage] = useState(1);
     const [recordsPerPage] = useState(5);
     const [nPages, setNPages ] = useState(0);
-    const [indexOfLastRecord, seIndexOfLastRecord] = useState();
-    const [indexOfFirstRecord, seIndexOfFirstRecord] = useState();
+    const [indexOfLastRecord, seIndexOfLastRecord] = useState(4);
+    const [indexOfFirstRecord, seIndexOfFirstRecord] = useState(0);
 
 
     useEffect(() => {
@@ -91,11 +92,16 @@ export default function Booking() {
 
     const filterByBookingDate = (date) => {
 
+        if(!date) {
+            setSelectedDate();
+        }
+
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
 
+        setSelectedDate(date);
         if(formattedDate) {
             request(`api/admin/booking/getByDate/${formattedDate}`)
                 .then(data => {
@@ -105,7 +111,6 @@ export default function Booking() {
             setFilteredBooking({})
         }
 
-        setFilteredBooking(booking.filter((item) => item.check_in === formattedDate));
     };
 
     const deleteBooking = (booking_id) => {
@@ -136,7 +141,7 @@ export default function Booking() {
                 </div>
                 <div className="d-flex mb-3">
                     <FilterBookingId filterByBookingId={filterByBookingId}/>
-                    <FilterBookingDate currentDate={currentDate} filterByBookingDate={filterByBookingDate}/>
+                    <FilterBookingDate  selectedDate={selectedDate} currentDate={currentDate} filterByBookingDate={filterByBookingDate}/>
                 </div>
                 <div
                     className="row p-4 border rounded overflow-hidden">

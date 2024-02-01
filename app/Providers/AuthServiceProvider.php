@@ -37,6 +37,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
+        Gate::define('update', function (User $user) {
+            return in_array($this->getRole($user), ['директор', 'администратор', 'горничная']);
+        });
+
         Gate::define('get-booking', function (User $user) {
             return in_array($this->getRole($user), ['директор', 'администратор']);
         });
