@@ -484,9 +484,10 @@ button:hover {
     width: 35px;
 }
 
-.photo-size {
+.avatar {
     height: 230px;
     width: 350px;
+    object-fit: cover;
 }
 
 .photo-edit-booking {
@@ -582,7 +583,7 @@ button:hover {
 
 .hammer {
     position: absolute;
-    width: 30px;
+    //width: 30px;
     right: 20px;
 }
 
@@ -894,5 +895,39 @@ textarea {
 .block-info-child {
     position: absolute;
     z-index: 1;
+}
+.avatar-block {
+    position: relative;
+}
+
+.camera-icon {
+    position: absolute;
+    cursor: pointer;
+    top: 220px;
+    left: 310px;
+}
+
+.photo-block {
+    position: absolute;
+    top: 280px;
+    left: 740px;
+    background-color: #f8f9fa;
+    padding: 75px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.photo-block-img {
+    height: 230px;
+    width: 350px;
+    object-fit: cover;
+}
+
+.download-icon {
+    position: absolute;
+    top: 310px;
+    left: 430px;
+    box-shadow: whitesmoke;
 }
 

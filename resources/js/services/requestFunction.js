@@ -2,7 +2,7 @@
     return {
         method: method,
         headers: {
-            'Content-Type': 'application.json',
+            'Content-Type': 'application/json',
             'X-CSRF-Token': _token,
         },
         body: JSON.stringify(data)
