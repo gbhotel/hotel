@@ -105,4 +105,4 @@ Route::get('userRole', [AuthController::class, 'getRole']);
 Route::get('user', [AuthController::class, 'getCurrentUser']);
 Route::post('user/update', [AuthController::class, 'update']);
 
-Route::post('/upload', [FileController::class, 'upload']);
+Route::post('/download', [FileController::class, 'download']);
